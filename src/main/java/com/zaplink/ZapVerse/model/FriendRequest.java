@@ -25,7 +25,7 @@ public class FriendRequest {
     private Profile profile;
 
     @ManyToOne
-    @JoinColumn(name = "reciever_id")
+    @JoinColumn(name = "receiver_id")
     private Profile receiver;
 }
 
