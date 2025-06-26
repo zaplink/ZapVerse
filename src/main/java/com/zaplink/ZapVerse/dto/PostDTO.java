@@ -1,7 +1,9 @@
 package com.zaplink.ZapVerse.dto;
 
 import com.zaplink.ZapVerse.model.Tag;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -10,6 +12,8 @@ import java.util.Set;
 
 @Setter
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PostDTO {
 
     private int id;

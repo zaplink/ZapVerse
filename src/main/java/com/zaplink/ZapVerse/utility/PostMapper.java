@@ -2,6 +2,7 @@ package com.zaplink.ZapVerse.utility;
 
 import com.zaplink.ZapVerse.dto.PostCreateDTO;
 import com.zaplink.ZapVerse.dto.PostDTO;
+import com.zaplink.ZapVerse.dto.PostUpdateDTO;
 import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.model.Tag;
@@ -58,6 +59,31 @@ public class PostMapper {
         }
 
         post.setTags(tags);
+        return post;
+    }
+
+    public static Post fromUpdateDTO(Post post, PostUpdateDTO postUpdateDTO, Profile profile) {
+        post.setTopic(postUpdateDTO.getTopic());
+        post.setContent(postUpdateDTO.getContent());
+        post.setCreatedAt(post.getCreatedAt());
+        post.setModifiedAt(postUpdateDTO.getModifiedAt());
+        post.setProfile(profile);
+
+        Set<Tag> tags = new HashSet<>();
+        for(String tagStr : postUpdateDTO.getTags()) {
+            try {
+                Tag tag = new Tag();
+                tag.setTagType(TagType.valueOf(tagStr.toUpperCase()));
+                tag.setPost(post);
+                tag.setProfile(profile);
+                tags.add(tag);
+            }catch (Exception ex) {
+                System.out.println("Error with tags");
+            }
+        }
+
+        post.getTags().clear();
+        post.getTags().addAll(tags);
         return post;
     }
 }

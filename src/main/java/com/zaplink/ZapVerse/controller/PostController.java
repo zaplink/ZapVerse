@@ -2,6 +2,7 @@ package com.zaplink.ZapVerse.controller;
 
 import com.zaplink.ZapVerse.dto.PostCreateDTO;
 import com.zaplink.ZapVerse.dto.PostDTO;
+import com.zaplink.ZapVerse.dto.PostUpdateDTO;
 import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.model.TagType;
 import com.zaplink.ZapVerse.service.PostService;
@@ -64,6 +65,11 @@ public class PostController {
     public ResponseEntity<PostDTO> createPost(@RequestBody PostCreateDTO postCreateDTO) {
         Post post = postService.createPost(postCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
+    }
 
+    @PutMapping("/post/{postId}")
+    public ResponseEntity<PostDTO> updatePost(@PathVariable  int postId, @RequestBody PostUpdateDTO postUpdateDTO) {
+        Post post = postService.updatePost(postId, postUpdateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
     }
 }

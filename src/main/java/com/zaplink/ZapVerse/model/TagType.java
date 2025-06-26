@@ -5,5 +5,8 @@ public enum TagType {
     AI,
     PROGRAMMING,
     HISTORY,
-    SCIENCE
+    SCIENCE,
+    UNIX,
+    LINUX,
+    SYSTEMS
 }

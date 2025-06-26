@@ -1,6 +1,7 @@
 package com.zaplink.ZapVerse.service;
 
 import com.zaplink.ZapVerse.dto.PostCreateDTO;
+import com.zaplink.ZapVerse.dto.PostUpdateDTO;
 import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.model.TagType;
@@ -55,5 +56,22 @@ public class PostService {
 
         Post post = PostMapper.fromCreateDTO(postCreateDTO, profile);
         return postRepository.save(post);
+    }
+
+    public Post updatePost(int postId, PostUpdateDTO postUpdateDTO) {
+        Post post = postRepository
+                .findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found!"));
+
+        Profile profile = profileRepository
+                .findById(postUpdateDTO.getProfileId())
+                .orElseThrow(() -> new RuntimeException("Profile not found!"));
+
+        Post newPost = PostMapper.fromUpdateDTO(post, postUpdateDTO, profile);
+
+        newPost.setId(postId);
+
+        return postRepository.save(newPost);
+
     }
 }
