@@ -4,7 +4,7 @@ import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.model.React;
 import com.zaplink.ZapVerse.model.ReactionType;
-import com.zaplink.ZapVerse.repository.LikeRespository;
+import com.zaplink.ZapVerse.repository.ReactRespository;
 import com.zaplink.ZapVerse.repository.PostRepository;
 import com.zaplink.ZapVerse.repository.ProfileRepository;
 import jakarta.annotation.PostConstruct;
@@ -19,13 +19,13 @@ public class DataLoader {
 
     private ProfileRepository profileRepository;
     private PostRepository postRepository;
-    private LikeRespository likeRespository;
+    private ReactRespository reactRespository;
 
     @Autowired
-    public DataLoader(ProfileRepository profileRepository, PostRepository postRepository, LikeRespository likeRespository) {
+    public DataLoader(ProfileRepository profileRepository, PostRepository postRepository, ReactRespository reactRespository) {
         this.profileRepository = profileRepository;
         this.postRepository = postRepository;
-        this.likeRespository = likeRespository;
+        this.reactRespository = reactRespository;
     }
 
     @PostConstruct
@@ -58,7 +58,7 @@ public class DataLoader {
         react.setPost(post);
         react.setReaction(ReactionType.LIKE);
         react.setProfile(profile2);
-        likeRespository.save(react);
+        reactRespository.save(react);
 
         System.out.println("\nData saved to profile\n");
     }
