@@ -24,9 +24,9 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Profile profile;
 
     @OneToMany
-    private List<Like> likes;
+    private List<React> reacts;
 
 }

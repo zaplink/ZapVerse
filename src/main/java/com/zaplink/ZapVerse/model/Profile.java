@@ -8,12 +8,12 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Entity(name = "user")
+@Entity(name = "profile")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class User {
+public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -17,14 +17,15 @@ public class FriendRequest {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Enumerated(EnumType.STRING)
     private RequestStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Profile profile;
 
     @ManyToOne
     @JoinColumn(name = "reciever_id")
-    private User receiver;
+    private Profile receiver;
 }
 
