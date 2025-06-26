@@ -1,5 +1,6 @@
 package com.zaplink.ZapVerse.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class Profile {
     private String lname;
 
     @OneToMany
+    @JsonIgnore
     private List<Post> posts;
 
     @OneToMany
