@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -45,4 +47,7 @@ public class Post {
 
     @OneToMany(mappedBy = "post")
     private Set<Tag> tags;
+
+    private LocalDate createdAt;
+    private LocalDate modifiedAt;
 }

@@ -4,6 +4,8 @@ import com.zaplink.ZapVerse.model.Tag;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Setter
@@ -14,4 +16,6 @@ public class PostDTO {
     private String topic;
     private String content;
     private Set<String> tags;
+    private LocalDate createdAt;
+    private LocalDate modifiedAt;
 }

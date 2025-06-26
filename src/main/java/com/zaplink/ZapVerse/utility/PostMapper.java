@@ -15,6 +15,8 @@ public class PostMapper {
             postDTO.setTopic(post.getTopic());
             postDTO.setContent(post.getContent());
             postDTO.setTags(TagMapper.toDTO(post.getTags()));
+            postDTO.setCreatedAt(post.getCreatedAt());
+            postDTO.setModifiedAt(post.getModifiedAt());
             return postDTO;
     }
 

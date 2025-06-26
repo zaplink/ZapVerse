@@ -9,6 +9,8 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,6 +66,8 @@ public class DataLoader {
         Post post1 = new Post();
         post1.setTopic("Computing Vision");
         post1.setContent("Envisioned the first algorithm way before computers existed.");
+        post1.setCreatedAt(LocalDate.of(2025, 2, 1));
+        post1.setModifiedAt(LocalDate.of(2025, 6, 2));
         post1.setProfile(profile1);
 
         Tag tag1 = new Tag();
@@ -85,6 +89,8 @@ public class DataLoader {
         Post post2 = new Post();
         post2.setTopic("Programming Languages");
         post2.setContent("Developed the first compiler and influenced modern programming languages.");
+        post2.setCreatedAt(LocalDate.of(2024, 4, 12));
+        post2.setModifiedAt(LocalDate.of(2024, 8, 20));
         post2.setProfile(profile3);
         post2 = postRepository.save(post2);
 
@@ -107,6 +113,8 @@ public class DataLoader {
         Post post3 = new Post();
         post3.setTopic("Artificial Intelligence");
         post3.setContent("Pioneered ideas that became the foundation of AI.");
+        post3.setCreatedAt(LocalDate.of(2026, 1, 9));
+        post3.setModifiedAt(LocalDate.of(2026, 2, 2));
         post3.setProfile(profile2);
         post3 = postRepository.save(post3);
 
@@ -125,6 +133,8 @@ public class DataLoader {
         Post post4 = new Post();
         post4.setTopic("Compiler Security");
         post4.setContent("Early thoughts on securing compilers and runtime.");
+        post4.setCreatedAt(LocalDate.of(2023, 12, 1));
+        post4.setModifiedAt(LocalDate.of(2023, 12, 1));
         post4.setProfile(profile3);
         post4 = postRepository.save(post4);
 
@@ -143,6 +153,8 @@ public class DataLoader {
         Post post5 = new Post();
         post5.setTopic("Operating Systems");
         post5.setContent("Helped create Unix, influencing all modern OSes.");
+        post5.setCreatedAt(LocalDate.of(2025, 7, 1));
+        post5.setModifiedAt(LocalDate.of(2025, 12, 31));
         post5.setProfile(profile4);
         post5 = postRepository.save(post5);
 
