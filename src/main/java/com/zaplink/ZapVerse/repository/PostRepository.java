@@ -1,6 +1,6 @@
-package repository;
+package com.zaplink.ZapVerse.repository;
 
-import model.Post;
+import com.zaplink.ZapVerse.model.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

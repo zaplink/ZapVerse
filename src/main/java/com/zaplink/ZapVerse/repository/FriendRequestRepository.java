@@ -1,6 +1,6 @@
-package repository;
+package com.zaplink.ZapVerse.repository;
 
-import model.FriendRequest;
+import com.zaplink.ZapVerse.model.FriendRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

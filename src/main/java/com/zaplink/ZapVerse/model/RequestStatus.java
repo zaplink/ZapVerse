@@ -1,4 +1,4 @@
-package model;
+package com.zaplink.ZapVerse.model;
 
 public enum RequestStatus {
     PENDING,
