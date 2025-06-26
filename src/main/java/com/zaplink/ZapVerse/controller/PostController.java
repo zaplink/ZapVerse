@@ -1,5 +1,6 @@
 package com.zaplink.ZapVerse.controller;
 
+import com.zaplink.ZapVerse.dto.PostCreateDTO;
 import com.zaplink.ZapVerse.dto.PostDTO;
 import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.model.TagType;
@@ -57,5 +58,12 @@ public class PostController {
         }else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete post!");
         }
+    }
+
+    @PostMapping("/post")
+    public ResponseEntity<PostDTO> createPost(@RequestBody PostCreateDTO postCreateDTO) {
+        Post post = postService.createPost(postCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
+
     }
 }
