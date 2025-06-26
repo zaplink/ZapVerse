@@ -110,12 +110,13 @@
 
         /* Example post styles */
         .post {
-          background-color: #3a7d68;
-          margin: 1rem auto; /* center horizontally with vertical margin */
+          margin: 1rem auto; /* vertical margin, centered horizontally */
           border-radius: 12px;
           padding: 0.75rem;
           box-sizing: border-box;
           max-width: 600px; /* match container width */
+          color: #f8f8f8;
+          background-color: #3a7d68; /* default green */
         }
 
         .post-header {
@@ -157,6 +158,7 @@
           position: relative;
           border-radius: 10px;
           overflow: hidden;
+          background: inherit; /* inherit parent's bg color */
         }
 
         .post-content-overlay {
@@ -166,25 +168,30 @@
           height: 100%;
           background: rgba(0,0,0,0.4);
           z-index: 1;
+          border-radius: 10px;
         }
 
         .post-content {
           position: relative;
           z-index: 2;
           padding: 0.75rem;
-          color: #f8f8f8;
         }
 
         .post-topic {
-          font-weight: 700;
-          font-size: 1rem;
-          margin-bottom: 0.4rem;
+          font-weight: 600;       /* Bold */
+          font-size: 1.1rem;      /* Slightly larger */
+          letter-spacing: 0.03em; /* Subtle letter spacing */
+          color: #f0f0f0;         /* A tiny bit brighter */
+          margin-bottom: 0.6rem;
         }
 
         .post-text {
-          font-size: 0.95rem;
+          font-weight: 400;       /* Normal */
+          font-size: 0.95rem;     /* Slightly smaller */
+          color: #ddd;            /* Slightly dimmer than topic */
           line-height: 1.5;
         }
+
     </style>
 </head>
 <body>
@@ -201,8 +208,8 @@
     <div id="content-count" class="char-count">0 / 256</div>
 </div>
 
-<!-- Example post -->
-<div class="container post">
+<!-- First Example Post -->
+<div class="post" style="background-color: #3a7d68;">
     <div class="post-header">
         <img src="/avatars/layla.png" alt="Avatar" class="avatar" />
         <div class="post-user-info">
@@ -217,6 +224,27 @@
             <div class="post-topic">The Green Reset Button</div>
             <div class="post-text">
                 Sometimes stepping away and breathing in nature helps reboot everything. Don’t underestimate a walk under the trees.
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Second Example Post -->
+<div class="post" style="background-color: #7e57c2;">
+    <div class="post-header">
+        <img src="/avatars/zara.png" alt="Avatar" class="avatar" />
+        <div class="post-user-info">
+            <div class="post-user-name">Zara M.</div>
+            <div class="post-date-time">Jun 27, 2025 · 10:45 AM</div>
+        </div>
+    </div>
+
+    <div class="post-content-wrapper">
+        <div class="post-content-overlay"></div>
+        <div class="post-content">
+            <div class="post-topic">Evening Reflections</div>
+            <div class="post-text">
+                The sunset painted the sky in shades of purple, reminding me to pause and appreciate the quiet moments.
             </div>
         </div>
     </div>
