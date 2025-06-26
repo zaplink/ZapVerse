@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "post")
 @AllArgsConstructor
@@ -41,4 +42,7 @@ public class Post {
     @OneToMany(mappedBy = "post")
     @JsonManagedReference
     private List<React> reactions;
+
+    @OneToMany
+    private Set<Tag> tags;
 }

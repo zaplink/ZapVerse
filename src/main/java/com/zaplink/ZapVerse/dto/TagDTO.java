@@ -6,12 +6,8 @@ import lombok.Setter;
 
 import java.util.Set;
 
-@Setter
 @Getter
-public class PostDTO {
-
-    private int id;
-    private String topic;
-    private String content;
+@Setter
+public class TagDTO {
     private Set<String> tags;
 }

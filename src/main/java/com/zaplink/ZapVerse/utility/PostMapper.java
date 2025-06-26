@@ -2,6 +2,7 @@ package com.zaplink.ZapVerse.utility;
 
 import com.zaplink.ZapVerse.dto.PostDTO;
 import com.zaplink.ZapVerse.model.Post;
+import com.zaplink.ZapVerse.model.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class PostMapper {
             postDTO.setId(post.getId());
             postDTO.setTopic(post.getTopic());
             postDTO.setContent(post.getContent());
+            postDTO.setTags(TagMapper.toDTO(post.getTags()));
             return postDTO;
     }
 

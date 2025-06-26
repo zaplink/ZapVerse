@@ -1,17 +1,17 @@
 package com.zaplink.ZapVerse.utility;
 
-import com.zaplink.ZapVerse.model.Post;
-import com.zaplink.ZapVerse.model.Profile;
-import com.zaplink.ZapVerse.model.React;
-import com.zaplink.ZapVerse.model.ReactionType;
+import com.zaplink.ZapVerse.model.*;
 import com.zaplink.ZapVerse.repository.ReactRespository;
 import com.zaplink.ZapVerse.repository.PostRepository;
 import com.zaplink.ZapVerse.repository.ProfileRepository;
+import com.zaplink.ZapVerse.repository.TagRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Component
@@ -20,12 +20,14 @@ public class DataLoader {
     private ProfileRepository profileRepository;
     private PostRepository postRepository;
     private ReactRespository reactRespository;
+    private TagRepository tagRepository;
 
     @Autowired
-    public DataLoader(ProfileRepository profileRepository, PostRepository postRepository, ReactRespository reactRespository) {
+    public DataLoader(ProfileRepository profileRepository, PostRepository postRepository, ReactRespository reactRespository, TagRepository tagRepository) {
         this.profileRepository = profileRepository;
         this.postRepository = postRepository;
         this.reactRespository = reactRespository;
+        this.tagRepository = tagRepository;
     }
 
     @PostConstruct
@@ -63,6 +65,18 @@ public class DataLoader {
         post1.setTopic("Computing Vision");
         post1.setContent("Envisioned the first algorithm way before computers existed.");
         post1.setProfile(profile1);
+
+        Tag tag1 = new Tag();
+        tag1.setTagType(TagType.PROGRAMMING);
+        tag1.setPost(post1);
+        tag1.setProfile(profile1);
+
+        Set<Tag> tags1 = new HashSet<>();
+        tags1.add(tag1);
+        post1 = postRepository.save(post1);
+        tagRepository.save(tag1);
+
+        post1.setTags(tags1);
         post1 = postRepository.save(post1);
 
         profile1.setPosts(List.of(post1));
