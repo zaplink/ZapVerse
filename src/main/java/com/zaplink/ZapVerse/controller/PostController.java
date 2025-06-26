@@ -1,8 +1,11 @@
 package com.zaplink.ZapVerse.controller;
 
+import com.zaplink.ZapVerse.dto.PostDTO;
 import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.service.PostService;
+import com.zaplink.ZapVerse.utility.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +20,8 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public Post getPost(@PathVariable int postId) {
-        return postService.getPostById(postId);
+    public ResponseEntity<PostDTO> getPostByID(@PathVariable int postId) {
+        Post post = postService.getPostById(postId);
+        return ResponseEntity.ok(PostMapper.toDTO(post));
     }
 }
