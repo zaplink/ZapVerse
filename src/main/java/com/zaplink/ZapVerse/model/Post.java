@@ -9,7 +9,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "post")
 @AllArgsConstructor
@@ -38,7 +41,13 @@ public class Post {
     @JsonIgnoreProperties("posts")
     private Profile profile;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<React> reactions;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Tag> tags;
+
+    private LocalDate createdAt;
+    private LocalDate modifiedAt;
 }
