@@ -43,6 +43,6 @@ public class Post {
     @JsonManagedReference
     private List<React> reactions;
 
-    @OneToMany
+    @OneToMany(mappedBy = "post")
     private Set<Tag> tags;
 }

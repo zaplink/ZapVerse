@@ -2,6 +2,7 @@ package com.zaplink.ZapVerse.controller;
 
 import com.zaplink.ZapVerse.dto.PostDTO;
 import com.zaplink.ZapVerse.model.Post;
+import com.zaplink.ZapVerse.model.TagType;
 import com.zaplink.ZapVerse.service.PostService;
 import com.zaplink.ZapVerse.utility.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,20 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public ResponseEntity<List<PostDTO>> getAllPosts() {
-        List<Post> allPosts= postService.getAllPosts();
-        return ResponseEntity.ok(PostMapper.toDTO(allPosts));
+    public ResponseEntity<List<PostDTO>> getAllPosts(@RequestParam(required = false) String tag) {
+        List<Post> posts;
+        if((tag != null) && (!tag.isEmpty())) {
+            TagType tagType;
+            try {
+                tagType = TagType.valueOf(tag.toUpperCase());
+            }catch (Exception ex) {
+                return ResponseEntity.ok(null);
+            }
+            posts = postService.getPostsByTag(tagType);
+        }else {
+            posts= postService.getAllPosts();
+        }
+        return ResponseEntity.ok(PostMapper.toDTO(posts));
     }
 
 

@@ -1,6 +1,7 @@
 package com.zaplink.ZapVerse.service;
 
 import com.zaplink.ZapVerse.model.Post;
+import com.zaplink.ZapVerse.model.TagType;
 import com.zaplink.ZapVerse.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,9 @@ public class PostService {
 
     public List<Post> getAllPosts() {
         return postRepository.findAll();
+    }
+
+    public List<Post> getPostsByTag(TagType tagType) {
+        return postRepository.findDistinctByTags_TagType(tagType);
     }
 }
