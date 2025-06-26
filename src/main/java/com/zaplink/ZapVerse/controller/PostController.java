@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("api/post")
+@RequestMapping("/api")
 public class PostController {
 
     PostService postService;
@@ -19,9 +21,17 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/{postId}")
+    @GetMapping("/post/{postId}")
     public ResponseEntity<PostDTO> getPostByID(@PathVariable int postId) {
         Post post = postService.getPostById(postId);
         return ResponseEntity.ok(PostMapper.toDTO(post));
     }
+
+    @GetMapping("/posts")
+    public ResponseEntity<List<PostDTO>> getAllPosts() {
+        List<Post> allPosts= postService.getAllPosts();
+        return ResponseEntity.ok(PostMapper.toDTO(allPosts));
+    }
+
+
 }

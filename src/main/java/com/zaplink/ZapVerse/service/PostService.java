@@ -4,6 +4,8 @@ import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.repository.PostRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostService {
 
@@ -15,5 +17,9 @@ public class PostService {
 
     public Post getPostById(int postId) {
         return postRepository.findById(postId).orElse(null);
+    }
+
+    public List<Post> getAllPosts() {
+        return postRepository.findAll();
     }
 }

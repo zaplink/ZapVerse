@@ -45,20 +45,49 @@ public class DataLoader {
         profile2.setPassword("enigma123");
         profile2 = profileRepository.save(profile2);
 
-        Post post = new Post();
-        post.setTopic("Computing Vision");
-        post.setContent("Envisioned the first algorithm way before computers existed.");
-        post.setProfile(profile1);
-        post = postRepository.save(post);
+        Profile profile3 = new Profile();
+        profile3.setFname("Grace");
+        profile3.setLname("Hopper");
+        profile3.setEmail("grace@zapverse.dev");
+        profile3.setPassword("compiler456");
+        profile3 = profileRepository.save(profile3);
 
-        profile1.setPosts(List.of(post));
+        Profile profile4 = new Profile();
+        profile4.setFname("Dennis");
+        profile4.setLname("Ritchie");
+        profile4.setEmail("dennis@zapverse.dev");
+        profile4.setPassword("unix789");
+        profile4 = profileRepository.save(profile4);
+
+        Post post1 = new Post();
+        post1.setTopic("Computing Vision");
+        post1.setContent("Envisioned the first algorithm way before computers existed.");
+        post1.setProfile(profile1);
+        post1 = postRepository.save(post1);
+
+        profile1.setPosts(List.of(post1));
         profileRepository.save(profile1);
 
+        Post post2 = new Post();
+        post2.setTopic("Programming Languages");
+        post2.setContent("Developed the first compiler and influenced modern programming languages.");
+        post2.setProfile(profile3);
+        post2 = postRepository.save(post2);
+
+        profile3.setPosts(List.of(post2));
+        profileRepository.save(profile3);
+
         React react = new React();
-        react.setPost(post);
+        react.setPost(post1);
         react.setReaction(ReactionType.LIKE);
         react.setProfile(profile2);
         reactRespository.save(react);
+
+        React react2 = new React();
+        react2.setPost(post2);
+        react2.setReaction(ReactionType.LOVE);
+        react2.setProfile(profile4);
+        reactRespository.save(react2);
 
         System.out.println("\nData saved to profile\n");
     }
