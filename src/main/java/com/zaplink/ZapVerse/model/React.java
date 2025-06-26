@@ -1,5 +1,6 @@
 package com.zaplink.ZapVerse.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,13 +15,17 @@ import lombok.Setter;
 public class React {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
+    @JsonBackReference
     private Post post;
 
+    @ManyToOne
+    @JsonBackReference
+    private Profile profile;
 
-
+    @Enumerated(EnumType.STRING)
+    private ReactionType reaction;
 }

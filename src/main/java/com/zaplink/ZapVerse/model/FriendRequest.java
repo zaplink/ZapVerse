@@ -1,5 +1,6 @@
 package com.zaplink.ZapVerse.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,10 +23,12 @@ public class FriendRequest {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private Profile profile;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
+    @JsonBackReference
     private Profile receiver;
 }
 
