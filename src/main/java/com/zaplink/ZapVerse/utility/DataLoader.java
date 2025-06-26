@@ -6,7 +6,7 @@ import com.zaplink.ZapVerse.model.React;
 import com.zaplink.ZapVerse.model.ReactionType;
 import com.zaplink.ZapVerse.repository.LikeRespository;
 import com.zaplink.ZapVerse.repository.PostRepository;
-import com.zaplink.ZapVerse.repository.UserRepository;
+import com.zaplink.ZapVerse.repository.ProfileRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,13 +17,13 @@ import java.util.List;
 @Component
 public class DataLoader {
 
-    private UserRepository userRepository;
+    private ProfileRepository profileRepository;
     private PostRepository postRepository;
     private LikeRespository likeRespository;
 
     @Autowired
-    public DataLoader(UserRepository userRepository, PostRepository postRepository, LikeRespository likeRespository) {
-        this.userRepository = userRepository;
+    public DataLoader(ProfileRepository profileRepository, PostRepository postRepository, LikeRespository likeRespository) {
+        this.profileRepository = profileRepository;
         this.postRepository = postRepository;
         this.likeRespository = likeRespository;
     }
@@ -36,14 +36,14 @@ public class DataLoader {
         profile1.setLname("Lovelace");
         profile1.setEmail("ada@zapverse.dev");
         profile1.setPassword("analytical123");
-        profile1 = userRepository.save(profile1);
+        profile1 = profileRepository.save(profile1);
 
         Profile profile2 = new Profile();
         profile2.setFname("Alan");
         profile2.setLname("Turing");
         profile2.setEmail("alan@zapverse.dev");
         profile2.setPassword("enigma123");
-        profile2 = userRepository.save(profile2);
+        profile2 = profileRepository.save(profile2);
 
         Post post = new Post();
         post.setTopic("Computing Vision");
@@ -52,12 +52,14 @@ public class DataLoader {
         post = postRepository.save(post);
 
         profile1.setPosts(List.of(post));
-        userRepository.save(profile1);
+        profileRepository.save(profile1);
 
         React react = new React();
         react.setPost(post);
         react.setReaction(ReactionType.LIKE);
         react.setProfile(profile2);
         likeRespository.save(react);
+
+        System.out.println("\nData saved to profile\n");
     }
 }

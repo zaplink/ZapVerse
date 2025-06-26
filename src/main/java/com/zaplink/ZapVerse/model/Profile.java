@@ -1,7 +1,5 @@
 package com.zaplink.ZapVerse.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +16,7 @@ import java.util.List;
 public class Profile {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String email;
@@ -27,19 +25,12 @@ public class Profile {
     private String lname;
 
     @OneToMany
-    @JsonManagedReference
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "profile")
-    @JsonManagedReference
+    @OneToMany
     private List<FriendRequest> sentRequests;
 
-    @OneToMany(mappedBy = "receiver")
-    @JsonManagedReference
+    @OneToMany
     private List<FriendRequest> receivedRequests;
 
-    @OneToMany(mappedBy = "profile")
-    @JsonManagedReference
-//    @JsonIgnoreProperties("profile")
-    private List<React> reacts;
 }
