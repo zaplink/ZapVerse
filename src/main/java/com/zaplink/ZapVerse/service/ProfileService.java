@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -47,6 +48,20 @@ public class ProfileService {
     // deleteProfile
     public void deleteProfile(Integer id){
         profileRepository.deleteById(id);
+    }
+
+    // authenticateUser
+    public Profile authenticateUser(String email, String password){
+        Optional<Profile> userProfile = profileRepository.findByEmail(email);
+
+        if(userProfile.isPresent()){
+            if(userProfile.get().getPassword().equals(password)){
+                return userProfile.get();
+            }else {
+                throw new RuntimeException("Invalid Password");
+            }
+        }
+        throw new RuntimeException("Invalid email");
     }
 
 }
