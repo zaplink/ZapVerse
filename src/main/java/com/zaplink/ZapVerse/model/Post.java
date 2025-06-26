@@ -41,11 +41,11 @@ public class Post {
     @JsonIgnoreProperties("posts")
     private Profile profile;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<React> reactions;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Tag> tags;
 
     private LocalDate createdAt;

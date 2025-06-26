@@ -27,4 +27,18 @@ public class PostService {
     public List<Post> getPostsByTag(TagType tagType) {
         return postRepository.findDistinctByTags_TagType(tagType);
     }
+
+    public boolean deletePostById(int postId) {
+        try {
+            postRepository.deleteById(postId);
+            return true;
+        }catch (Exception ex) {
+            return false;
+        }
+
+    }
+
+    public boolean existById(int postId) {
+        return postRepository.existsById(postId);
+    }
 }

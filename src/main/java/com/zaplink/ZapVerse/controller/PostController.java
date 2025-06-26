@@ -6,6 +6,7 @@ import com.zaplink.ZapVerse.model.TagType;
 import com.zaplink.ZapVerse.service.PostService;
 import com.zaplink.ZapVerse.utility.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,16 @@ public class PostController {
         return ResponseEntity.ok(PostMapper.toDTO(posts));
     }
 
+    @DeleteMapping("/post/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable int postId) {
+        if(!(postService.existById(postId))) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post with id: " + postId + " not found!");
+        }
 
-
-
+        if(postService.deletePostById(postId)) {
+            return ResponseEntity.ok("Post deleted successfully!");
+        }else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete post!");
+        }
+    }
 }
