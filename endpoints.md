@@ -1,19 +1,19 @@
 
 ## Get post by id
 ```
-.../api/post/{id}
+/api/post/{id}
 ```
 Example: 
-`.../api/post/1`
+`/api/post/1`
 
 ## Get all posts
 ```
-.../api/posts
+/api/posts
 ```
 
 ## Get all posts (filter by a tag)
 ```
-.../api/posts?tag={tag-name}
+/api/posts?tag={tag-name}
 ```
 Example:
 `/api/posts?tag=programming`

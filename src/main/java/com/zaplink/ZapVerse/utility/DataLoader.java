@@ -103,6 +103,60 @@ public class DataLoader {
         react2.setProfile(profile4);
         reactRespository.save(react2);
 
+        // Post 3 - Alan with AI tag
+        Post post3 = new Post();
+        post3.setTopic("Artificial Intelligence");
+        post3.setContent("Pioneered ideas that became the foundation of AI.");
+        post3.setProfile(profile2);
+        post3 = postRepository.save(post3);
+
+        Tag tag3 = new Tag();
+        tag3.setTagType(TagType.AI);
+        tag3.setPost(post3);
+        tag3.setProfile(profile2);
+        tagRepository.save(tag3);
+
+        Set<Tag> tags3 = new HashSet<>();
+        tags3.add(tag3);
+        post3.setTags(tags3);
+        postRepository.save(post3);
+
+// Post 4 - Grace with SECURITY tag
+        Post post4 = new Post();
+        post4.setTopic("Compiler Security");
+        post4.setContent("Early thoughts on securing compilers and runtime.");
+        post4.setProfile(profile3);
+        post4 = postRepository.save(post4);
+
+        Tag tag4 = new Tag();
+        tag4.setTagType(TagType.PROGRAMMING);
+        tag4.setPost(post4);
+        tag4.setProfile(profile3);
+        tagRepository.save(tag4);
+
+        Set<Tag> tags4 = new HashSet<>();
+        tags4.add(tag4);
+        post4.setTags(tags4);
+        postRepository.save(post4);
+
+// Post 5 - Dennis with SYSTEMS tag
+        Post post5 = new Post();
+        post5.setTopic("Operating Systems");
+        post5.setContent("Helped create Unix, influencing all modern OSes.");
+        post5.setProfile(profile4);
+        post5 = postRepository.save(post5);
+
+        Tag tag5 = new Tag();
+        tag5.setTagType(TagType.SCIENCE);
+        tag5.setPost(post5);
+        tag5.setProfile(profile4);
+        tagRepository.save(tag5);
+
+        Set<Tag> tags5 = new HashSet<>();
+        tags5.add(tag5);
+        post5.setTags(tags5);
+        postRepository.save(post5);
+
         System.out.println("\nData saved to profile\n");
     }
 }
