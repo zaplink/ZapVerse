@@ -2,96 +2,107 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Smooth Typing Effect with Avatar and Char Count</title>
+    <title>MindSpace - ZapVerse</title>
     <style>
+        :root {
+          --max-topic: 72;
+          --max-content: 256;
+        }
+
         body {
           background-color: #2f2f2f;
           color: #ddd;
           font-family: Arial, sans-serif;
-          padding: 1rem;
+          padding: 0.5rem;
         }
+
         .container {
           max-width: 600px;
           margin: 0 auto;
           background: #444;
-          padding: 1rem;
+          padding: 0.75rem;
           border-radius: 12px;
         }
+
         .topic-row {
           display: flex;
           align-items: center;
-          margin-bottom: 0.15rem;
+          margin-bottom: 0.25rem;
         }
+
         .topic-row img.avatar {
-          width: 48px;
-          height: 48px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
-          margin-right: 0.5rem;
+          margin-right: 0.4rem;
           flex-shrink: 0;
           object-fit: cover;
           border: 2px solid #666;
         }
+
         input.topic {
           flex-grow: 1;
           font-weight: 700;
           color: #ddd;
           background: transparent;
           border: none;
-          padding: 0.3em 0.5em;
-          font-size: 1.1rem;
-          border-radius: 6px;
+          padding: 0.2em 0.4em;
+          font-size: 1rem;
+          border-radius: 4px;
           transition: color 0.15s ease-in-out;
           outline: none;
         }
+
         input.topic.typing {
           color: #bbb;
         }
+
         textarea.content {
           width: 100%;
-          height: 1.7em; /* ~1 line */
           resize: none;
           overflow-y: auto;
           font-weight: 700;
           color: #ddd;
           background: transparent;
           border: none;
-          padding: 0.3em 0.5em;
-          font-size: 1.1rem;
-          border-radius: 6px;
+          padding: 0.2em 0.4em;
+          font-size: 1rem;
+          border-radius: 4px;
           transition: color 0.15s ease-in-out;
           outline: none;
           scrollbar-width: thin;
           scrollbar-color: #888 transparent;
-          line-height: 1.7em;
-          margin-bottom: 0.15rem;
+          line-height: 1.6em;
           box-sizing: border-box;
-          min-height: 1.7em; /* min 1 line */
-          max-height: 6.8em; /* max 4 lines */
+          min-height: 1.6em;
+          max-height: 6.4em;
         }
+
         textarea.content.typing {
           color: #bbb;
         }
+
         textarea.content::-webkit-scrollbar {
           width: 6px;
         }
-        textarea.content::-webkit-scrollbar-track {
-          background: transparent;
-        }
+
         textarea.content::-webkit-scrollbar-thumb {
           background-color: #888;
           border-radius: 3px;
         }
+
         .char-count {
-          font-size: 0.75rem;
+          font-size: 0.65rem;
           color: #999;
           opacity: 0;
           transition: opacity 0.4s ease;
           text-align: right;
           user-select: none;
           height: 1rem;
-          margin-bottom: 0.5rem;
+          margin-bottom: 0.35rem;
           font-family: monospace;
         }
+
         .char-count.visible {
           opacity: 1;
         }
@@ -101,68 +112,48 @@
 <div class="container">
     <div class="topic-row">
         <img src="/avatars/felix.png" alt="Avatar" class="avatar" />
-        <input
-                type="text"
-                class="topic"
-                placeholder="What's the headline?"
-        />
+        <input type="text" class="topic" placeholder="What's the headline?" />
     </div>
-    <div id="topic-count" class="char-count">0 / 48</div>
+    <div id="topic-count" class="char-count">0 / 72</div>
 
-    <textarea
-            class="content"
-            placeholder="Share your thoughts here..."
-            rows="1"
-    ></textarea>
+    <textarea class="content" placeholder="Share your thoughts here..." rows="1"></textarea>
     <div id="content-count" class="char-count">0 / 256</div>
-
-    <!-- Add more content below -->
 </div>
 
 <script>
-    const MAX_TOPIC_LENGTH = 48;
+    const MAX_TOPIC_LENGTH = 72;
     const MAX_CONTENT_LENGTH = 256;
 
-    // Set maxlength attributes from constants
     const topicInput = document.querySelector('input.topic');
     const contentInput = document.querySelector('textarea.content');
+    const topicCount = document.getElementById('topic-count');
+    const contentCount = document.getElementById('content-count');
+
     topicInput.maxLength = MAX_TOPIC_LENGTH;
     contentInput.maxLength = MAX_CONTENT_LENGTH;
 
     function showCharCount(el, countEl, maxLen) {
       countEl.textContent = `${el.value.length} / ${maxLen}`;
       countEl.classList.add('visible');
-
       clearTimeout(el.countTimeout);
-      el.countTimeout = setTimeout(() => {
-        countEl.classList.remove('visible');
-      }, 1500);
+      el.countTimeout = setTimeout(() => countEl.classList.remove('visible'), 1500);
     }
 
     function addTypingClass(el) {
       el.classList.add('typing');
       clearTimeout(el.typingTimeout);
-      el.typingTimeout = setTimeout(() => {
-        el.classList.remove('typing');
-      }, 150);
+      el.typingTimeout = setTimeout(() => el.classList.remove('typing'), 150);
     }
 
     function adjustTextareaHeight(el) {
       const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
-      const minHeight = lineHeight * 1;  // min 1 line
-      const maxHeight = lineHeight * 4;  // max 4 lines
+      const minHeight = lineHeight * 1;
+      const maxHeight = lineHeight * 4;
 
       el.style.height = 'auto';
-      let newHeight = el.scrollHeight;
-
-      if (newHeight < minHeight) newHeight = minHeight;
-      else if (newHeight > maxHeight) newHeight = maxHeight;
-
+      const newHeight = Math.min(Math.max(el.scrollHeight, minHeight), maxHeight);
       el.style.height = newHeight + 'px';
     }
-
-    const topicCount = document.getElementById('topic-count');
-    const contentCount = document.getElementById('content-count');
 
     topicInput.addEventListener('input', () => {
       addTypingClass(topicInput);
@@ -175,9 +166,7 @@
       adjustTextareaHeight(contentInput);
     });
 
-    window.addEventListener('load', () => {
-      adjustTextareaHeight(contentInput);
-    });
+    window.addEventListener('load', () => adjustTextareaHeight(contentInput));
 </script>
 </body>
 </html>
