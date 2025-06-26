@@ -33,11 +33,4 @@ public class Profile {
     @OneToMany
     private List<FriendRequest> receivedRequests;
 
-    // Constructor Without : posts, sentRequests, receivedRequests
-    public Profile(String email, String password, String fname, String lname) {
-        this.email = email;
-        this.password = password;
-        this.fname = fname;
-        this.lname = lname;
-    }
 }
