@@ -12,8 +12,8 @@ Welcome to **ZapVerse**, the social media application built by **ZapLink**, desi
 - **Personalized Feeds**  
   Discover content tailored to your interests, friends, and communities.
 
-- **Rich Media Sharing**  
-  Easily share photos, videos, and stories with powerful editing tools.
+- **Post & Feeds**  
+  Easily share text-only posts.
 
 - **Intuitive User Interface**  
   A clean, modern design focused on ease of use and a delightful user experience.
