@@ -287,6 +287,9 @@
 
 
 
+
+
+
     </style>
 </head>
 <body>
@@ -411,7 +414,8 @@
             </div>
         </div>
     </div>
-    <div class="reaction-buttons" data-post-id="4"> <!-- Use actual postId here -->
+    <div class="reaction-buttons" data-post-id="4">
+
         <button data-reaction="LIKE" onclick="sendReaction(4, 'LIKE')">👍</button>
         <button data-reaction="LOVE" onclick="sendReaction(4, 'LOVE')">❤️</button>
         <button data-reaction="HAHA" onclick="sendReaction(4, 'HAHA')">😂</button>
@@ -420,6 +424,9 @@
         <button data-reaction="ANGRY" onclick="sendReaction(4, 'ANGRY')">😠</button>
 
     </div>
+
+
+
 
 
 </div>
@@ -442,7 +449,8 @@
             </div>
         </div>
     </div>
-    <div class="reaction-buttons" data-post-id="5"> <!-- Use actual postId here -->
+    <div class="reaction-buttons" data-post-id="5">
+
         <button data-reaction="LIKE" onclick="sendReaction(5, 'LIKE')">👍</button>
         <button data-reaction="LOVE" onclick="sendReaction(5, 'LOVE')">❤️</button>
         <button data-reaction="HAHA" onclick="sendReaction(5, 'HAHA')">😂</button>
@@ -451,6 +459,7 @@
         <button data-reaction="ANGRY" onclick="sendReaction(5, 'ANGRY')">😠</button>
 
     </div>
+
 </div>
 
 
@@ -503,9 +512,11 @@
     const profileId = 1; // Replace this with the actual logged-in user ID
 
   function sendReaction(postId, reactionType) {
+
+
     const payload = {
       postId: postId,
-      profileId: 1,
+      profileId: profileId,
       reaction: reactionType
     };
 
@@ -519,42 +530,21 @@
       throw new Error('Failed to send reaction');
     })
     .then(msg => {
-      console.log(msg);
-      alert('Reaction sent!');
+  const container = document.querySelector(`.reaction-buttons[data-post-id="${postId}"]`);
+  const buttons = container.querySelectorAll('button');
 
-const container = document.querySelector(`.reaction-buttons[data-post-id="${postId}"]`);
-    const buttons = container.querySelectorAll('button');
+  buttons.forEach(btn => {
+    btn.classList.remove('selected');
+    if (btn.dataset.reaction === reactionType) {
+      btn.classList.add('selected');
+    }
+  });
 
-    buttons.forEach(btn => {
-      btn.classList.remove('selected');
-     if (btn.dataset.reaction === reactionType) {
-  btn.classList.add('selected');
-}
-
-    });
-
-    })
-
-
-
-
-
-    .catch(err => {
-      console.error(err);
-      alert('Error sending reaction.');
-    });
-  }
-
-    function getEmojiByType(type) {
-  const emojiMap = {
-    LIKE: "👍",
-    LOVE: "❤️",
-    HAHA: "😂",
-    WOW: "😮",
-    SAD: "😢",
-    ANGRY: "😠"
-  };
-  return emojiMap[type];
+  // (Optional) update counts if you're using that
+})
+.catch(err => {
+  console.error('Reaction error:', err);
+});
 }
 
 </script>
