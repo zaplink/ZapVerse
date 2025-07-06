@@ -238,6 +238,35 @@
           color: #ddd;
           line-height: 1.5;
         }
+
+.reaction-buttons {
+  text-align: left;
+  padding: 0.5rem 1rem 1rem 1rem;
+  font-size: 1.2rem;
+  user-select: none;
+}
+
+
+.reaction-buttons button {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+  color: inherit; /* Inherit text color */
+  transition: transform 0.2s ease;
+}
+
+.reaction-buttons button:hover {
+  transform: scale(1.3);
+}
+
+
+
     </style>
 </head>
 <body>
@@ -274,7 +303,7 @@
             </div>
         </div>
     </div>
-    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
         <button onclick="sendReaction(3, 'LIKE')">👍</button>
         <button onclick="sendReaction(3, 'LOVE')">❤️</button>
         <button onclick="sendReaction(3, 'HAHA')">😂</button>
@@ -302,7 +331,7 @@
             </div>
         </div>
     </div>
-    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
         <button onclick="sendReaction(3, 'LIKE')">👍</button>
         <button onclick="sendReaction(3, 'LOVE')">❤️</button>
         <button onclick="sendReaction(3, 'HAHA')">😂</button>
@@ -331,7 +360,7 @@
         </div>
     </div>
 
-    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
         <button onclick="sendReaction(3, 'LIKE')">👍</button>
         <button onclick="sendReaction(3, 'LOVE')">❤️</button>
         <button onclick="sendReaction(3, 'HAHA')">😂</button>
@@ -359,7 +388,7 @@
             </div>
         </div>
     </div>
-    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
         <button onclick="sendReaction(3, 'LIKE')">👍</button>
         <button onclick="sendReaction(3, 'LOVE')">❤️</button>
         <button onclick="sendReaction(3, 'HAHA')">😂</button>
@@ -389,7 +418,7 @@
             </div>
         </div>
     </div>
-    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
         <button onclick="sendReaction(3, 'LIKE')">👍</button>
         <button onclick="sendReaction(3, 'LOVE')">❤️</button>
         <button onclick="sendReaction(3, 'HAHA')">😂</button>
@@ -451,7 +480,7 @@
   function sendReaction(postId, reactionType) {
     const payload = {
       postId: postId,
-      profileId: profileId,
+      profileId: 1,
       reaction: reactionType
     };
 
