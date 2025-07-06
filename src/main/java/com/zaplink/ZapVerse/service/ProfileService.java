@@ -14,6 +14,8 @@ public class ProfileService {
 
     ProfileRepository profileRepository;
 
+
+
     // getProfileById
     public Profile getProfileById(Integer id){
         return profileRepository.findById(id).orElseThrow(
@@ -64,4 +66,10 @@ public class ProfileService {
         throw new RuntimeException("Invalid email");
     }
 
+    public void registerUser(String email, String password) {
+    }
+
+    public void registerUser(String email, String password, String firstName, String lastName) {
+
+    }
 }

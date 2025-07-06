@@ -35,6 +35,23 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/register")
+    public String register(@RequestParam String email,
+                           @RequestParam String password,
+                           @RequestParam String firstName,
+                           @RequestParam String lastName,
+                           Model model) {
+        try {
+            profileService.registerUser(email, password, firstName, lastName);
+            model.addAttribute("success", "Registration successful! You can now login.");
+            return "register"; // Show same register page with success message
+        } catch (Exception e) {
+            model.addAttribute("error", e.getMessage());
+            return "register";
+        }
+    }
+
+
     @GetMapping("/register")
     public String registerPage(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
