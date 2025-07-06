@@ -21,7 +21,15 @@ public class AuthController {
             model.addAttribute("error", "Invalid email or password");
         }
         return "login";
+    }
 
+
+    @GetMapping("/register")
+    public String registerPage(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
+        return "register";
     }
 
 }
