@@ -35,4 +35,12 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/register")
+    public String registerPage(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
+        return "register";
+    }
+
 }
