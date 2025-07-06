@@ -42,7 +42,7 @@ public class SecurityConfig {
 
         https
                 .authorizeHttpRequests( auth -> auth
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/login", "/css/**").permitAll()
                         .anyRequest().authenticated()
                 )
 
