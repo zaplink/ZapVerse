@@ -1,0 +1,44 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #212529; /* Dark background for Bootstrap dark theme */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: #f8f9fa; /* Light text color for dark theme */
+}
+.login-container {
+    background-color: #343a40; /* Darker background for the form */
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5); /* Darker shadow */
+    border: 1px solid #495057; /* Border for the form */
+    max-width: 500px; /* Equivalent to max-w-md */
+    width: 100%;
+}
+.form-control-dark {
+    background-color: #495057; /* Darker input background */
+    color: #f8f9fa; /* Light text in inputs */
+    border: 1px solid #6c757d; /* Darker input border */
+}
+.form-control-dark::placeholder {
+    color: #ced4da; /* Lighter placeholder text */
+    opacity: 0.7;
+}
+.form-control-dark:focus {
+    background-color: #495057;
+    color: #f8f9fa;
+    border-color: #0d6efd; /* Blue focus border */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+.btn-primary-custom {
+    background-color: #0d6efd; /* Bootstrap blue */
+    border-color: #0d6efd;
+    color: white;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+.btn-primary-custom:hover {
+    background-color: #0b5ed7; /* Darker blue on hover */
+    border-color: #0a58ca;
+}
