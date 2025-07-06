@@ -264,6 +264,26 @@
 .reaction-buttons button:hover {
   transform: scale(1.3);
 }
+.reaction-buttons button.selected {
+  position: relative;
+  transform: scale(1.6);
+  transition: transform 0.2s ease;
+  color: #ffd700; /* gold */
+  filter: drop-shadow(0 0 6px #ffd700);
+}
+
+   .reaction-buttons button.selected::after {
+
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  font-size: 0.75rem;
+  background: #333;
+  color: #0f0;
+  border-radius: 50%;
+  padding: 2px;
+  box-shadow: 0 0 4px #0f0;
+}
 
 
 
@@ -303,13 +323,14 @@
             </div>
         </div>
     </div>
-    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
-        <button onclick="sendReaction(3, 'LIKE')">👍</button>
-        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
-        <button onclick="sendReaction(3, 'HAHA')">😂</button>
-        <button onclick="sendReaction(3, 'WOW')">😮</button>
-        <button onclick="sendReaction(3, 'SAD')">😢</button>
-        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+    <div class="reaction-buttons" data-post-id="1"> <!-- Use actual postId here -->
+        <button data-reaction="LIKE" onclick="sendReaction(1, 'LIKE')">👍</button>
+        <button data-reaction="LOVE" onclick="sendReaction(1, 'LOVE')">❤️</button>
+        <button data-reaction="HAHA" onclick="sendReaction(1, 'HAHA')">😂</button>
+        <button data-reaction="WOW" onclick="sendReaction(1, 'WOW')">😮</button>
+        <button data-reaction="SAD" onclick="sendReaction(1, 'SAD')">😢</button>
+        <button data-reaction="ANGRY" onclick="sendReaction(1, 'ANGRY')">😠</button>
+
     </div>
 </div>
 
@@ -331,13 +352,14 @@
             </div>
         </div>
     </div>
-    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
-        <button onclick="sendReaction(3, 'LIKE')">👍</button>
-        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
-        <button onclick="sendReaction(3, 'HAHA')">😂</button>
-        <button onclick="sendReaction(3, 'WOW')">😮</button>
-        <button onclick="sendReaction(3, 'SAD')">😢</button>
-        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+    <div class="reaction-buttons" data-post-id="2"> <!-- Use actual postId here -->
+        <button data-reaction="LIKE" onclick="sendReaction(2, 'LIKE')">👍</button>
+        <button data-reaction="LOVE" onclick="sendReaction(2, 'LOVE')">❤️</button>
+        <button data-reaction="HAHA" onclick="sendReaction(2, 'HAHA')">😂</button>
+        <button data-reaction="WOW" onclick="sendReaction(2, 'WOW')">😮</button>
+        <button data-reaction="SAD" onclick="sendReaction(2, 'SAD')">😢</button>
+        <button data-reaction="ANGRY" onclick="sendReaction(2, 'ANGRY')">😠</button>
+
     </div>
 </div>
 
@@ -361,12 +383,13 @@
     </div>
 
     <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
-        <button onclick="sendReaction(3, 'LIKE')">👍</button>
-        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
-        <button onclick="sendReaction(3, 'HAHA')">😂</button>
-        <button onclick="sendReaction(3, 'WOW')">😮</button>
-        <button onclick="sendReaction(3, 'SAD')">😢</button>
-        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+        <button data-reaction="LIKE" onclick="sendReaction(3, 'LIKE')">👍</button>
+        <button data-reaction="LOVE" onclick="sendReaction(3, 'LOVE')">❤️</button>
+        <button data-reaction="HAHA" onclick="sendReaction(3, 'HAHA')">😂</button>
+        <button data-reaction="WOW" onclick="sendReaction(3, 'WOW')">😮</button>
+        <button data-reaction="SAD" onclick="sendReaction(3, 'SAD')">😢</button>
+        <button data-reaction="ANGRY" onclick="sendReaction(3, 'ANGRY')">😠</button>
+
     </div>
 </div>
 
@@ -388,13 +411,14 @@
             </div>
         </div>
     </div>
-    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
-        <button onclick="sendReaction(3, 'LIKE')">👍</button>
-        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
-        <button onclick="sendReaction(3, 'HAHA')">😂</button>
-        <button onclick="sendReaction(3, 'WOW')">😮</button>
-        <button onclick="sendReaction(3, 'SAD')">😢</button>
-        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+    <div class="reaction-buttons" data-post-id="4"> <!-- Use actual postId here -->
+        <button data-reaction="LIKE" onclick="sendReaction(4, 'LIKE')">👍</button>
+        <button data-reaction="LOVE" onclick="sendReaction(4, 'LOVE')">❤️</button>
+        <button data-reaction="HAHA" onclick="sendReaction(4, 'HAHA')">😂</button>
+        <button data-reaction="WOW" onclick="sendReaction(4, 'WOW')">😮</button>
+        <button data-reaction="SAD" onclick="sendReaction(4, 'SAD')">😢</button>
+        <button data-reaction="ANGRY" onclick="sendReaction(4, 'ANGRY')">😠</button>
+
     </div>
 
 
@@ -418,13 +442,14 @@
             </div>
         </div>
     </div>
-    <div class="reaction-buttons" data-post-id="3"> <!-- Use actual postId here -->
-        <button onclick="sendReaction(3, 'LIKE')">👍</button>
-        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
-        <button onclick="sendReaction(3, 'HAHA')">😂</button>
-        <button onclick="sendReaction(3, 'WOW')">😮</button>
-        <button onclick="sendReaction(3, 'SAD')">😢</button>
-        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+    <div class="reaction-buttons" data-post-id="5"> <!-- Use actual postId here -->
+        <button data-reaction="LIKE" onclick="sendReaction(5, 'LIKE')">👍</button>
+        <button data-reaction="LOVE" onclick="sendReaction(5, 'LOVE')">❤️</button>
+        <button data-reaction="HAHA" onclick="sendReaction(5, 'HAHA')">😂</button>
+        <button data-reaction="WOW" onclick="sendReaction(5, 'WOW')">😮</button>
+        <button data-reaction="SAD" onclick="sendReaction(5, 'SAD')">😢</button>
+        <button data-reaction="ANGRY" onclick="sendReaction(5, 'ANGRY')">😠</button>
+
     </div>
 </div>
 
@@ -496,17 +521,41 @@
     .then(msg => {
       console.log(msg);
       alert('Reaction sent!');
+
+const container = document.querySelector(`.reaction-buttons[data-post-id="${postId}"]`);
+    const buttons = container.querySelectorAll('button');
+
+    buttons.forEach(btn => {
+      btn.classList.remove('selected');
+     if (btn.dataset.reaction === reactionType) {
+  btn.classList.add('selected');
+}
+
+    });
+
     })
+
+
+
+
+
     .catch(err => {
       console.error(err);
       alert('Error sending reaction.');
     });
   }
 
-
-
-
-
+    function getEmojiByType(type) {
+  const emojiMap = {
+    LIKE: "👍",
+    LOVE: "❤️",
+    HAHA: "😂",
+    WOW: "😮",
+    SAD: "😢",
+    ANGRY: "😠"
+  };
+  return emojiMap[type];
+}
 
 </script>
 
