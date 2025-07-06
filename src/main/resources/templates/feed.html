@@ -274,6 +274,14 @@
             </div>
         </div>
     </div>
+    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+        <button onclick="sendReaction(3, 'LIKE')">👍</button>
+        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
+        <button onclick="sendReaction(3, 'HAHA')">😂</button>
+        <button onclick="sendReaction(3, 'WOW')">😮</button>
+        <button onclick="sendReaction(3, 'SAD')">😢</button>
+        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+    </div>
 </div>
 
 <div class="container post zara">
@@ -293,6 +301,14 @@
                 The sunset painted the sky in shades of purple, reminding me to pause and appreciate the quiet moments.
             </div>
         </div>
+    </div>
+    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+        <button onclick="sendReaction(3, 'LIKE')">👍</button>
+        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
+        <button onclick="sendReaction(3, 'HAHA')">😂</button>
+        <button onclick="sendReaction(3, 'WOW')">😮</button>
+        <button onclick="sendReaction(3, 'SAD')">😢</button>
+        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
     </div>
 </div>
 
@@ -314,6 +330,15 @@
             </div>
         </div>
     </div>
+
+    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+        <button onclick="sendReaction(3, 'LIKE')">👍</button>
+        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
+        <button onclick="sendReaction(3, 'HAHA')">😂</button>
+        <button onclick="sendReaction(3, 'WOW')">😮</button>
+        <button onclick="sendReaction(3, 'SAD')">😢</button>
+        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+    </div>
 </div>
 
 <div class="container post milo">
@@ -334,6 +359,16 @@
             </div>
         </div>
     </div>
+    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+        <button onclick="sendReaction(3, 'LIKE')">👍</button>
+        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
+        <button onclick="sendReaction(3, 'HAHA')">😂</button>
+        <button onclick="sendReaction(3, 'WOW')">😮</button>
+        <button onclick="sendReaction(3, 'SAD')">😢</button>
+        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+    </div>
+
+
 </div>
 
 <div class="container post jayden">
@@ -354,7 +389,17 @@
             </div>
         </div>
     </div>
+    <div class="reactions" data-post-id="3"> <!-- Use actual postId here -->
+        <button onclick="sendReaction(3, 'LIKE')">👍</button>
+        <button onclick="sendReaction(3, 'LOVE')">❤️</button>
+        <button onclick="sendReaction(3, 'HAHA')">😂</button>
+        <button onclick="sendReaction(3, 'WOW')">😮</button>
+        <button onclick="sendReaction(3, 'SAD')">😢</button>
+        <button onclick="sendReaction(3, 'ANGRY')">😠</button>
+    </div>
 </div>
+
+
 
 <script>
     const MAX_TOPIC_LENGTH = 72;
@@ -400,6 +445,40 @@
     });
 
     window.addEventListener('load', () => adjustTextareaHeight(contentInput));
+
+    const profileId = 1; // Replace this with the actual logged-in user ID
+
+  function sendReaction(postId, reactionType) {
+    const payload = {
+      postId: postId,
+      profileId: profileId,
+      reaction: reactionType
+    };
+
+    fetch('/api/react', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(res => {
+      if (res.ok) return res.text();
+      throw new Error('Failed to send reaction');
+    })
+    .then(msg => {
+      console.log(msg);
+      alert('Reaction sent!');
+    })
+    .catch(err => {
+      console.error(err);
+      alert('Error sending reaction.');
+    });
+  }
+
+
+
+
+
+
 </script>
 
 </body>
