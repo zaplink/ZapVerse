@@ -3,34 +3,146 @@
 <head>
     <title>Edit Profile - ZapVerse</title>
     <link rel="stylesheet" th:href="@{/css/feed-style.css}">
+    <style>
+        body {
+            background: #181a20;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .profile-container {
+            max-width: 400px;
+            margin: 3rem auto;
+            background: #23272f;
+            color: #fff;
+            border-radius: 18px;
+            padding: 2.5rem 2rem 2rem 2rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+            text-align: center;
+        }
+        .profile-container h2 {
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-size: 2rem;
+            letter-spacing: 1px;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #0d6efd;
+            margin-bottom: 1.2rem;
+            background: #fff;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(13,110,253,0.15);
+        }
+        .form-group {
+            margin-bottom: 1.3rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            color: #bfc9d1;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.55em 1em;
+            border-radius: 7px;
+            border: none;
+            background: #2c313a;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: background 0.2s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            background: #23272f;
+        }
+        .form-actions {
+            margin-top: 1.7rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn {
+            padding: 0.55em 2em;
+            border-radius: 7px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .btn-save {
+            background: #0d6efd;
+            color: #fff;
+        }
+        .btn-save:hover {
+            background: #0b5ed7;
+        }
+        .btn-reset {
+            background: #6c757d;
+            color: #fff;
+            margin-left: 0.7em;
+        }
+        .btn-reset:hover {
+            background: #495057;
+        }
+        .btn-cancel {
+            background: none;
+            color: #fff;
+            text-decoration: underline;
+            border: none;
+            margin-left: 0.7em;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .btn-cancel:hover {
+            color: #0d6efd;
+        }
+    </style>
 </head>
 <body>
-<div class="profile-container" style="max-width:400px;margin:2rem auto;background:#23272f;color:#fff;border-radius:12px;padding:2rem;text-align:center;">
+<div class="profile-container">
     <h2>Edit Profile</h2>
     <form th:action="@{/profile/edit}" method="post">
-        <img th:src="@{'/avatars/' + ${profile.avatar}}" alt="Avatar" style="width:90px;height:90px;border-radius:50%;border:2px solid #666;margin-bottom:1rem;" />
-        <div style="margin-bottom:1rem;">
-            <label>First Name:</label>
-            <input type="text" name="fname" th:value="${profile.fname}" required>
+        <img th:src="@{'/avatars/' + ${profile.avatar}}" alt="Avatar" class="profile-avatar" id="avatar-img"/>
+        <div class="form-group">
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" th:value="${profile.fname}" required>
         </div>
-        <div style="margin-bottom:1rem;">
-            <label>Last Name:</label>
-            <input type="text" name="lname" th:value="${profile.lname}" required>
+        <div class="form-group">
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" th:value="${profile.lname}" required>
         </div>
-        <div style="margin-bottom:1rem;">
-            <label>Email:</label>
-            <input type="email" name="email" th:value="${profile.email}" required>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" th:value="${profile.email}" required>
         </div>
-        <div style="margin-bottom:1rem;">
-            <label>Avatar:</label>
-            <select name="avatar">
+        <div class="form-group">
+            <label for="avatar-select">Avatar:</label>
+            <select name="avatar" id="avatar-select">
                 <option th:each="a : ${avatars}" th:value="${a}" th:text="${a}" th:selected="${a == profile.avatar}"></option>
             </select>
         </div>
-        <button type="submit" style="background:#0d6efd;color:#fff;border:none;padding:0.5em 1.5em;border-radius:6px;font-size:1rem;cursor:pointer;">Save</button>
-        <button type="reset" style="background:#6c757d;color:#fff;border:none;padding:0.5em 1.5em;border-radius:6px;font-size:1rem;cursor:pointer;">Reset</button>
-        <a href="/profile" style="margin-left:1em;color:#fff;">Cancel</a>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-save">Save</button>
+            <button type="reset" class="btn btn-reset">Reset</button>
+            <a href="/profile" class="btn-cancel">Cancel</a>
+        </div>
     </form>
 </div>
+<script>
+    // Instantly update avatar image when dropdown changes
+    document.addEventListener('DOMContentLoaded', function() {
+        const avatarSelect = document.getElementById('avatar-select');
+        const avatarImg = document.getElementById('avatar-img');
+        if (avatarSelect && avatarImg) {
+            avatarSelect.addEventListener('change', function() {
+                avatarImg.src = '/avatars/' + avatarSelect.value;
+            });
+        }
+    });
+</script>
 </body>
 </html>
