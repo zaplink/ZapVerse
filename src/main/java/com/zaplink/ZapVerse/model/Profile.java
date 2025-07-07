@@ -1,5 +1,6 @@
 package com.zaplink.ZapVerse.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class Profile {
     private String fname;
     private String lname;
 
+    @OneToMany
+    @JsonIgnore
     private String avatar;
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
