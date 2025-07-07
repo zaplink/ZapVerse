@@ -24,7 +24,7 @@
         <div style="margin-bottom:1rem;">
             <label>Avatar:</label>
             <select name="avatar">
-                <option th:each="a : ${#lists.arrayList('arthur.png','ava.png','cleo.png','dante.png','eli.png','eliza.png','felix.png','grant.png','jayden.png','jonas.png','lana.png','layla.png','liam.png','malik.png','mei.png','milo.png','naomi.png','noah.png','omar.png')}"th:value="${a}" th:text="${a}" th:selected="${a == profile.avatar}"></option>
+                <option th:each="a : ${avatars}" th:value="${a}" th:text="${a}" th:selected="${a == profile.avatar}"></option>
             </select>
         </div>
         <button type="submit" style="background:#0d6efd;color:#fff;border:none;padding:0.5em 1.5em;border-radius:6px;font-size:1rem;cursor:pointer;">Save</button>

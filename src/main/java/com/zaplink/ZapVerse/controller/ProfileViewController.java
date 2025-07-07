@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 @AllArgsConstructor
 public class ProfileViewController {
@@ -35,6 +37,12 @@ public class ProfileViewController {
             return "profile";
         }
         model.addAttribute("profile", profile);
+        // Pass avatar list
+        model.addAttribute("avatars", List.of(
+                "arthur.png","ava.png","cleo.png","dante.png","eli.png","eliza.png","felix.png","grant.png",
+                "jayden.png","jonas.png","lana.png","layla.png","liam.png","malik.png","mei.png","milo.png",
+                "naomi.png","noah.png","omar.png"
+        ));
         return "profile-edit";
     }
 
