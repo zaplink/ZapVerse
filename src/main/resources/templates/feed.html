@@ -409,8 +409,8 @@
 <body>
 <div class="sidebar">
     <div class="sidebar-header">
-        <img src="/avatars/felix.png" alt="User Avatar" class="sidebar-avatar" />
-        <span class="sidebar-username">Your Name</span>
+        <img th:src="${sidebarAvatar}" src="/avatars/felix.png" alt="User Avatar" class="sidebar-avatar" />
+        <span class="sidebar-username" th:text="${sidebarName}">Your Name</span>
     </div>
     <ul class="sidebar-menu">
         <li><a href="/feed"><span class="sidebar-icon">🏠</span> Home</a></li>
