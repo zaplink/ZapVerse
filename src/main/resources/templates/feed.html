@@ -238,6 +238,20 @@
           color: #ddd;
           line-height: 1.5;
         }
+
+
+        button[type="button"] {
+  background-color: #3a7d68;
+  color: white;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button[type="button"]:hover {
+  background-color: #2f604f;
+}
+
     </style>
 </head>
 <body>
@@ -464,6 +478,7 @@ function appendPostToFeed(post) {
             <div class="post-text">${post.content}</div>
         </div>
     </div>
+
     <div class="reaction-buttons" data-post-id="${post.id}">
         <button data-reaction="LIKE" onclick="sendReaction(${post.id}, 'LIKE')">👍</button>
         <button data-reaction="LOVE" onclick="sendReaction(${post.id}, 'LOVE')">❤️</button>
