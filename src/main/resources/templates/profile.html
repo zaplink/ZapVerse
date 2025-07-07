@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile - ZapVerse</title>
+    <link rel="stylesheet" th:href="@{/css/feed-style.css}">
+    <style>
+        .profile-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            background: #23272f;
+            color: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .profile-avatar {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 2px solid #666;
+            margin-bottom: 1rem;
+        }
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .profile-email {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+        }
+        .edit-btn {
+            background: #0d6efd;
+            color: #fff;
+            border: none;
+            padding: 0.5em 1.5em;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            text-decoration: none;
+        }
+        .edit-btn:hover {
+            background: #0b5ed7;
+        }
+    </style>
+</head>
+<body>
+<div class="profile-container">
+    <img th:src="@{'/avatars/' + ${profile.avatar}}" alt="Avatar" class="profile-avatar" />
+    <div class="profile-name" th:text="${profile.fname} + ' ' + ${profile.lname}">Your Name</div>
+    <div class="profile-email" th:text="${profile.email}">your@email.com</div>
+    <a href="/profile/edit" class="edit-btn">Edit Profile</a>
+</div>
+<div th:if="${error}" style="color: red; margin-bottom: 1em;" th:text="${error}"></div>
+</body>
+</html>
