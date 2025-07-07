@@ -15,7 +15,7 @@ public class AuthController {
 
     ProfileService profileService;
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String loginPage(@RequestParam(value = "error", required = false) String error, Model model){
         if(error != null){
             model.addAttribute("error", "Invalid email or password");
@@ -23,16 +23,6 @@ public class AuthController {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, Model model) {
-        try {
-            Profile userProfile = profileService.authenticateUser(email, password);
-            model.addAttribute("user", userProfile);
-            return "redirect:/feed"; // Redirect to feed page
-        } catch (Exception e) {
-            return "redirect:/?error=true";
-        }
-    }
 
 
     @PostMapping("/register")

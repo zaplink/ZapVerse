@@ -7,6 +7,7 @@ import com.zaplink.ZapVerse.repository.ProfileRepository;
 import com.zaplink.ZapVerse.repository.TagRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -23,13 +24,15 @@ public class DataLoader {
     private PostRepository postRepository;
     private ReactRespository reactRespository;
     private TagRepository tagRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DataLoader(ProfileRepository profileRepository, PostRepository postRepository, ReactRespository reactRespository, TagRepository tagRepository) {
+    public DataLoader(ProfileRepository profileRepository, PostRepository postRepository, ReactRespository reactRespository, TagRepository tagRepository, PasswordEncoder passwordEncoder) {
         this.profileRepository = profileRepository;
         this.postRepository = postRepository;
         this.reactRespository = reactRespository;
         this.tagRepository = tagRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostConstruct
@@ -39,32 +42,36 @@ public class DataLoader {
         profile1.setFname("Ada");
         profile1.setLname("Lovelace");
         profile1.setEmail("ada@zapverse.dev");
-        profile1.setPassword("analytical123");
+        // profile1.setPassword("analytical123");
         profile1.setAvatar("ava.png");
+        profile1.setPassword(passwordEncoder.encode("analytical123"));
         profile1 = profileRepository.save(profile1);
 
         Profile profile2 = new Profile();
         profile2.setFname("Alan");
         profile2.setLname("Turing");
         profile2.setEmail("alan@zapverse.dev");
-        profile2.setPassword("enigma123");
+        // profile2.setPassword("enigma123");
         profile2.setAvatar("jonas.png");
+        profile2.setPassword(passwordEncoder.encode("enigma123"));
         profile2 = profileRepository.save(profile2);
 
         Profile profile3 = new Profile();
         profile3.setFname("Grace");
         profile3.setLname("Hopper");
         profile3.setEmail("grace@zapverse.dev");
-        profile3.setPassword("compiler456");
+        // profile3.setPassword("compiler456");
         profile3.setAvatar("liam.png");
+        profile3.setPassword(passwordEncoder.encode("compiler456"));
         profile3 = profileRepository.save(profile3);
 
         Profile profile4 = new Profile();
         profile4.setFname("Dennis");
         profile4.setLname("Ritchie");
         profile4.setEmail("dennis@zapverse.dev");
-        profile4.setPassword("unix789");
+        // profile4.setPassword("unix789");
         profile4.setAvatar("milo.png");
+        profile4.setPassword(passwordEncoder.encode("unix789"));
         profile4 = profileRepository.save(profile4);
 
         Post post1 = new Post();
