@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Profile - ZapVerse</title>
+    <link rel="stylesheet" th:href="@{/css/feed-style.css}">
+</head>
+<body>
+<div class="profile-container" style="max-width:400px;margin:2rem auto;background:#23272f;color:#fff;border-radius:12px;padding:2rem;text-align:center;">
+    <h2>Edit Profile</h2>
+    <form th:action="@{/profile/edit}" method="post">
+        <img th:src="@{'/avatars/' + ${profile.avatar}}" alt="Avatar" style="width:90px;height:90px;border-radius:50%;border:2px solid #666;margin-bottom:1rem;" />
+        <div style="margin-bottom:1rem;">
+            <label>First Name:</label>
+            <input type="text" name="fname" th:value="${profile.fname}" required>
+        </div>
+        <div style="margin-bottom:1rem;">
+            <label>Last Name:</label>
+            <input type="text" name="lname" th:value="${profile.lname}" required>
+        </div>
+        <div style="margin-bottom:1rem;">
+            <label>Email:</label>
+            <input type="email" name="email" th:value="${profile.email}" required>
+        </div>
+        <div style="margin-bottom:1rem;">
+            <label>Avatar:</label>
+            <select name="avatar">
+                <option th:each="a : ${#lists.arrayList('arthur.png','ava.png','cleo.png','dante.png','eli.png','eliza.png','felix.png','grant.png','jayden.png','jonas.png','lana.png','layla.png','liam.png','malik.png','mei.png','milo.png','naomi.png','noah.png','omar.png')}"th:value="${a}" th:text="${a}" th:selected="${a == profile.avatar}"></option>
+            </select>
+        </div>
+        <button type="submit" style="background:#0d6efd;color:#fff;border:none;padding:0.5em 1.5em;border-radius:6px;font-size:1rem;cursor:pointer;">Save</button>
+        <button type="reset" style="background:#6c757d;color:#fff;border:none;padding:0.5em 1.5em;border-radius:6px;font-size:1rem;cursor:pointer;">Reset</button>
+        <a href="/profile" style="margin-left:1em;color:#fff;">Cancel</a>
+    </form>
+</div>
+</body>
+</html>
