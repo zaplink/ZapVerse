@@ -1,6 +1,7 @@
 package com.zaplink.ZapVerse.controller;
 
 import com.zaplink.ZapVerse.model.Profile;
+import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -23,6 +25,14 @@ public class ProfileViewController {
     public String profilePage(@AuthenticationPrincipal User user, Model model) {
         Profile profile = profileRepository.findByEmail(user.getUsername()).orElse(null);
         model.addAttribute("profile", profile);
+
+        // Fetch posts by this profile and sort by createdAt descending
+        List<Post> posts = profile != null ? profile.getPosts() : List.of();
+        posts = posts.stream()
+                .sorted(Comparator.comparing(Post::getCreatedAt).reversed())
+                .toList();
+        model.addAttribute("posts", posts);
+
         return "profile";
     }
 
@@ -39,10 +49,9 @@ public class ProfileViewController {
         model.addAttribute("profile", profile);
         // Pass avatar list
         model.addAttribute("avatars", List.of(
-                "arthur.png","ava.png","cleo.png","dante.png","eli.png","eliza.png","felix.png","grant.png",
-                "jayden.png","jonas.png","lana.png","layla.png","liam.png","malik.png","mei.png","milo.png",
-                "naomi.png","noah.png","omar.png"
-        ));
+                "arthur.png", "ava.png", "cleo.png", "dante.png", "eli.png", "eliza.png", "felix.png", "grant.png",
+                "jayden.png", "jonas.png", "lana.png", "layla.png", "liam.png", "malik.png", "mei.png", "milo.png",
+                "naomi.png", "noah.png", "omar.png"));
         return "profile-edit";
     }
 
