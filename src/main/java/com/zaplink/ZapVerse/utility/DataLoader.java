@@ -40,6 +40,7 @@ public class DataLoader {
         profile1.setLname("Lovelace");
         profile1.setEmail("ada@zapverse.dev");
         profile1.setPassword("analytical123");
+        profile1.setAvatar("ava.png");
         profile1 = profileRepository.save(profile1);
 
         Profile profile2 = new Profile();
@@ -47,6 +48,7 @@ public class DataLoader {
         profile2.setLname("Turing");
         profile2.setEmail("alan@zapverse.dev");
         profile2.setPassword("enigma123");
+        profile2.setAvatar("jonas.png");
         profile2 = profileRepository.save(profile2);
 
         Profile profile3 = new Profile();
@@ -54,6 +56,7 @@ public class DataLoader {
         profile3.setLname("Hopper");
         profile3.setEmail("grace@zapverse.dev");
         profile3.setPassword("compiler456");
+        profile3.setAvatar("liam.png");
         profile3 = profileRepository.save(profile3);
 
         Profile profile4 = new Profile();
@@ -61,6 +64,7 @@ public class DataLoader {
         profile4.setLname("Ritchie");
         profile4.setEmail("dennis@zapverse.dev");
         profile4.setPassword("unix789");
+        profile4.setAvatar("milo.png");
         profile4 = profileRepository.save(profile4);
 
         Post post1 = new Post();
