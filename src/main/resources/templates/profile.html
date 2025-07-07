@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile - ZapVerse</title>
+    <link rel="stylesheet" th:href="@{/css/feed-style.css}">
+    <style>
+        body {
+            background: #181a20;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        .profile-main-layout {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 3rem auto 0 auto;
+            padding: 0 1rem;
+        }
+        .profile-container {
+            flex: 0 0 370px;
+            background: #23272f;
+            color: #fff;
+            border-radius: 18px;
+            padding: 2.5rem 2rem 2rem 2rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+            text-align: center;
+            min-width: 300px;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #0d6efd;
+            margin-bottom: 1.2rem;
+            background: #fff;
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(13,110,253,0.15);
+        }
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .profile-email {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+        }
+        .edit-btn {
+            background: #0d6efd;
+            color: #fff;
+            border: none;
+            padding: 0.5em 1.5em;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1.2rem;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .edit-btn:hover {
+            background: #0b5ed7;
+        }
+        .posts-section {
+            flex: 1 1 0;
+            max-width: 700px;
+        }
+        .posts-section h3 {
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .post {
+            background: #444;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            transition: box-shadow 0.2s;
+        }
+        .post:hover {
+            box-shadow: 0 4px 16px rgba(13,110,253,0.10);
+        }
+        .post-topic {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #f0f0f0;
+            margin-bottom: 0.4rem;
+        }
+        .post-text {
+            color: #ddd;
+            font-size: 0.98rem;
+            line-height: 1.6;
+        }
+        .post-date-time {
+            color: #aaa;
+            font-size: 0.8rem;
+            margin-top: 0.7rem;
+        }
+        @media (max-width: 900px) {
+            .profile-main-layout {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .profile-container, .posts-section {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="profile-main-layout">
+    <!-- Profile Edit Box (Left) -->
+    <div class="profile-container">
+        <img th:src="@{'/avatars/' + ${profile.avatar}}" alt="Avatar" class="profile-avatar" />
+        <div class="profile-name" th:text="${profile.fname} + ' ' + ${profile.lname}">Your Name</div>
+        <div class="profile-email" th:text="${profile.email}">your@email.com</div>
+        <a href="/profile/edit" class="edit-btn">Edit Profile</a>
+    </div>
+
+    <!-- Post List (Right) -->
+    <div class="posts-section">
+        <h3>Your Posts</h3>
+        <div th:if="${#lists.isEmpty(posts)}" style="color:#aaa;">No posts yet.</div>
+        <div th:each="post : ${posts}" class="post">
+            <div class="post-topic" th:text="${post.topic}">Post Topic</div>
+            <div class="post-text" th:text="${post.content}">Post content goes here...</div>
+            <div class="post-date-time" th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy')}">Date</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

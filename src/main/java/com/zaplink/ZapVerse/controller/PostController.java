@@ -40,29 +40,29 @@ public class PostController {
     @GetMapping("/posts")
     public ResponseEntity<List<PostDTO>> getAllPosts(@RequestParam(required = false) String tag) {
         List<Post> posts;
-        if((tag != null) && (!tag.isEmpty())) {
+        if ((tag != null) && (!tag.isEmpty())) {
             TagType tagType;
             try {
                 tagType = TagType.valueOf(tag.toUpperCase());
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 return ResponseEntity.ok(null);
             }
             posts = postService.getPostsByTag(tagType);
-        }else {
-            posts= postService.getAllPosts();
+        } else {
+            posts = postService.getAllPosts();
         }
         return ResponseEntity.ok(PostMapper.toDTO(posts));
     }
 
     @DeleteMapping("/post/{postId}")
     public ResponseEntity<String> deletePost(@PathVariable int postId) {
-        if(!(postService.existById(postId))) {
+        if (!(postService.existById(postId))) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Post with id: " + postId + " not found!");
         }
 
-        if(postService.deletePostById(postId)) {
+        if (postService.deletePostById(postId)) {
             return ResponseEntity.ok("Post deleted successfully!");
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete post!");
         }
     }
@@ -82,8 +82,9 @@ public class PostController {
     }
 
     @PutMapping("/post/{postId}")
-    public ResponseEntity<PostDTO> updatePost(@PathVariable  int postId, @RequestBody PostUpdateDTO postUpdateDTO) {
+    public ResponseEntity<PostDTO> updatePost(@PathVariable int postId, @RequestBody PostUpdateDTO postUpdateDTO) {
         Post post = postService.updatePost(postId, postUpdateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
     }
+
 }
