@@ -42,6 +42,8 @@ public class DataLoader {
         profile1.setFname("Ada");
         profile1.setLname("Lovelace");
         profile1.setEmail("ada@zapverse.dev");
+        // profile1.setPassword("analytical123");
+        profile1.setAvatar("ava.png");
         profile1.setPassword(passwordEncoder.encode("analytical123"));
         profile1 = profileRepository.save(profile1);
 
@@ -49,6 +51,8 @@ public class DataLoader {
         profile2.setFname("Alan");
         profile2.setLname("Turing");
         profile2.setEmail("alan@zapverse.dev");
+        // profile2.setPassword("enigma123");
+        profile2.setAvatar("jonas.png");
         profile2.setPassword(passwordEncoder.encode("enigma123"));
         profile2 = profileRepository.save(profile2);
 
@@ -56,6 +60,8 @@ public class DataLoader {
         profile3.setFname("Grace");
         profile3.setLname("Hopper");
         profile3.setEmail("grace@zapverse.dev");
+        // profile3.setPassword("compiler456");
+        profile3.setAvatar("liam.png");
         profile3.setPassword(passwordEncoder.encode("compiler456"));
         profile3 = profileRepository.save(profile3);
 
@@ -63,6 +69,8 @@ public class DataLoader {
         profile4.setFname("Dennis");
         profile4.setLname("Ritchie");
         profile4.setEmail("dennis@zapverse.dev");
+        // profile4.setPassword("unix789");
+        profile4.setAvatar("milo.png");
         profile4.setPassword(passwordEncoder.encode("unix789"));
         profile4 = profileRepository.save(profile4);
 

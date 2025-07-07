@@ -25,6 +25,8 @@ public class Profile {
     private String fname;
     private String lname;
 
+    private String avatar;
+
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 

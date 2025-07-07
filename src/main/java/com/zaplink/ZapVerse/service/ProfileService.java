@@ -14,54 +14,64 @@ public class ProfileService {
 
     ProfileRepository profileRepository;
 
-    // getProfileById
     public Profile getProfileById(Integer id){
         return profileRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("[profile_id: "+ id + " ] doesn't exist")
+                () -> new RuntimeException("[profile_id: " + id + " ] doesn't exist")
         );
     }
 
-    // getAllProfiles
     public List<Profile> getAllProfiles(){
         return profileRepository.findAll();
     }
 
-    // createProfile
     public Profile createProfile(Profile profile){
         return profileRepository.save(profile);
     }
 
-    // updateProfile
     public Profile updateProfile(Integer id, Profile profile){
         Profile existingProfile = profileRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("[profile_id: "+ id + " ] doesn't exist")
+                () -> new RuntimeException("[profile_id: " + id + " ] doesn't exist")
         );
 
         existingProfile.setEmail(profile.getEmail());
         existingProfile.setFname(profile.getFname());
         existingProfile.setLname(profile.getLname());
         existingProfile.setPassword(profile.getPassword());
+        existingProfile.setAvatar(profile.getAvatar()); // ✅ if update needed
 
         return profileRepository.save(existingProfile);
     }
 
-    // deleteProfile
     public void deleteProfile(Integer id){
         profileRepository.deleteById(id);
     }
 
-    // authenticateUser
     public Profile authenticateUser(String email, String password){
         Optional<Profile> userProfile = profileRepository.findByEmail(email);
 
         if(userProfile.isPresent()){
             if(userProfile.get().getPassword().equals(password)){
                 return userProfile.get();
-            }else {
+            } else {
                 throw new RuntimeException("Invalid Password");
             }
         }
         throw new RuntimeException("Invalid email");
     }
 
+
+    public void registerUser(String email, String password, String firstName, String lastName, String avatar) {
+        if (profileRepository.findByEmail(email).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        Profile newUser = new Profile();
+        newUser.setEmail(email);
+        newUser.setPassword(password);
+        newUser.setFname(firstName);
+        newUser.setLname(lastName);
+        newUser.setAvatar(avatar);
+
+        profileRepository.save(newUser);
+    }
 }
