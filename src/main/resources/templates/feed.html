@@ -252,7 +252,7 @@
 
     <textarea class="content" placeholder="Share your thoughts here..." rows="1" maxlength="256"></textarea>
     <div id="content-count" class="char-count">0 / 256</div>
-    <button onclick="submitPost()">Post</button>
+    <button type="button"  onclick="submitPost()">Post</button>
 </div>
 
 <!-- Example posts with top ribbons -->
@@ -360,7 +360,7 @@
 <script>
     const MAX_TOPIC_LENGTH = 72;
     const MAX_CONTENT_LENGTH = 256;
-    const profileId = [[${profileId}]];
+    const profileId = 1;;
 
     const topicInput = document.querySelector('input.topic');
     const contentInput = document.querySelector('textarea.content');
@@ -404,11 +404,12 @@
     window.addEventListener('load', () => adjustTextareaHeight(contentInput));
 
     function submitPost() {
+
   const topic = document.querySelector('input.topic').value.trim();
   const content = document.querySelector('textarea.content').value.trim();
 
   if (!topic || !content) {
-    alert("Topic and content cannot be empty.");
+    alert ("Topic and content cannot be empty.");
     return;
   }
 
@@ -438,7 +439,7 @@
 }
 function appendPostToFeed(post) {
   const postContainer = document.createElement('div');
-  postContainer.className = 'container post layla'; // You can randomize or assign ribbon color
+  postContainer.className = 'container post layla';
   postContainer.setAttribute('data-post-id', post.id);
 
   const date = new Date().toLocaleDateString('en-US', {
@@ -452,7 +453,7 @@ function appendPostToFeed(post) {
     <div class="post-header">
         <img src="/avatars/felix.png" alt="Avatar" class="avatar" />
         <div class="post-user-info">
-            <div class="post-user-name">${post.userName}</div>
+
             <div class="post-date-time">${date} · ${time}</div>
         </div>
     </div>

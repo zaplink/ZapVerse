@@ -79,12 +79,7 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
     }
 
-    @GetMapping("/home")
-    public String homePage(Model model, Principal principal) {
-        Profile profile = profileService.findByEmail(principal.getName());
-        model.addAttribute("profileId", profile.getId());
-        return "feed";  // Thymeleaf (or JSP) template named feed.html
-    }
+
 
 
 

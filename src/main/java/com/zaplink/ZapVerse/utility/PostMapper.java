@@ -24,20 +24,6 @@ public class PostMapper {
             postDTO.setCreatedAt(post.getCreatedAt());
             postDTO.setModifiedAt(post.getModifiedAt());
 
-        Profile profile = post.getProfile();
-
-        if (profile != null) {
-            postDTO.setUserName(profile.getFname() + " " + profile.getLname());
-        }
-
-        if (post.getTags() != null) {
-            postDTO.setTags(
-                    post.getTags().stream()
-                            .map(tag -> tag.getTagType().name())
-                            .collect(Collectors.toSet())
-            );
-        }
-
 
 
         return postDTO;

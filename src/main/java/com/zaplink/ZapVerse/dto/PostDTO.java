@@ -23,5 +23,4 @@ public class PostDTO {
     private LocalDate createdAt;
     private LocalDate modifiedAt;
 
-    private String userName;
 }
