@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "profile")
 @AllArgsConstructor
@@ -27,6 +28,9 @@ public class Profile {
 
     @OneToMany
     @JsonIgnore
+    private String avatar;
+
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts;
 
     @OneToMany
@@ -35,11 +39,6 @@ public class Profile {
     @OneToMany
     private List<FriendRequest> receivedRequests;
 
-    // Constructor Without : posts, sentRequests, receivedRequests
-    public Profile(String email, String password, String fname, String lname) {
-        this.email = email;
-        this.password = password;
-        this.fname = fname;
-        this.lname = lname;
-    }
+    @OneToMany
+    private Set<Tag> tags;
 }

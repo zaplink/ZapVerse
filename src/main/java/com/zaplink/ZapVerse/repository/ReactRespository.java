@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LikeRespository extends JpaRepository<React, Integer> {
+public interface ReactRespository extends JpaRepository<React, Integer> {
 }
