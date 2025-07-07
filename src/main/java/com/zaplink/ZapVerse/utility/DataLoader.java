@@ -35,7 +35,7 @@ public class DataLoader {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @PostConstruct
+//    @PostConstruct
     private void init() {
 
         Profile profile1 = new Profile();
