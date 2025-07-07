@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import com.zaplink.ZapVerse.repository.ProfileRepository;
+
 import java.util.List;
 
 @RestController
@@ -19,10 +23,12 @@ import java.util.List;
 public class PostController {
 
     PostService postService;
+    private final ProfileRepository profileRepository;
 
     @Autowired
-    public PostController(PostService postService) {
+    public PostController(PostService postService, ProfileRepository profileRepository) {
         this.postService = postService;
+        this.profileRepository = profileRepository;
     }
 
     @GetMapping("/post/{postId}")
@@ -63,6 +69,14 @@ public class PostController {
 
     @PostMapping("/post")
     public ResponseEntity<PostDTO> createPost(@RequestBody PostCreateDTO postCreateDTO) {
+        // Get authenticated user's email
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        // Find profile by email
+        var profile = profileRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Profile not found!"));
+        // Set the profileId to the authenticated user's id
+        postCreateDTO.setProfileId(profile.getId());
         Post post = postService.createPost(postCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
     }

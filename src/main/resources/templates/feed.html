@@ -417,6 +417,14 @@
         <li><a href="/profile"><span class="sidebar-icon">👤</span> Profile</a></li>
         <li><a href="/settings"><span class="sidebar-icon">⚙️</span> Settings</a></li>
         <li>
+            <a href="#" class="sidebar-friends-toggle" onclick="toggleFriendsMenu(event)"><span class="sidebar-icon">🤝</span> Friends <span id="friends-arrow" style="margin-left:auto;">▼</span></a>
+            <ul id="friends-submenu" class="sidebar-friends-submenu" style="display:none; list-style:none; padding-left:1.5em; margin:0;">
+                <li><a href="/friends/suggestions">Friend Suggestions</a></li>
+                <li><a href="/friends/requests">Friend Requests</a></li>
+                <li><a href="/friends/all">All Friends</a></li>
+            </ul>
+        </li>
+        <li>
             <form action="/logout" method="post" id="logoutForm" style="display:inline;">
                 <button type="submit" class="sidebar-logout-link"><span class="sidebar-icon">🚪</span> Logout</button>
             </form>
@@ -427,14 +435,17 @@
 
 <!-- Post write section -->
 <div class="container">
-    <div class="topic-row">
-        <img src="/avatars/felix.png" alt="Avatar" class="avatar" />
-        <input type="text" class="topic" placeholder="What's the headline?" maxlength="72" />
-    </div>
-    <div id="topic-count" class="char-count">0 / 72</div>
-
-    <textarea class="content" placeholder="Share your thoughts here..." rows="1" maxlength="256"></textarea>
-    <div id="content-count" class="char-count">0 / 256</div>
+    <form id="postForm" autocomplete="off">
+        <div class="topic-row">
+            <img src="/avatars/felix.png" alt="Avatar" class="avatar" />
+            <input type="text" class="topic" name="topic" placeholder="What's the headline?" maxlength="72" required />
+        </div>
+        <div id="topic-count" class="char-count">0 / 72</div>
+        <textarea class="content" name="content" placeholder="Share your thoughts here..." rows="1" maxlength="256" required></textarea>
+        <div id="content-count" class="char-count">0 / 256</div>
+        <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="btn btn-primary mt-2">Post</button>
+    </form>
 </div>
 
 <!-- Example posts with top ribbons -->
@@ -697,7 +708,67 @@
 });
 }
 
+    // Post submit logic
+    const postForm = document.getElementById('postForm');
+    if (postForm) {
+      postForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const topic = postForm.topic.value.trim();
+        const content = postForm.content.value.trim();
+        if (!topic || !content) return;
+        // Get CSRF token name and value
+        const csrfInput = document.getElementById('csrfToken');
+        const csrfHeader = csrfInput ? csrfInput.name : 'X-CSRF-TOKEN';
+        const csrfToken = csrfInput ? csrfInput.value : '';
+        fetch('/api/post', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+          },
+          credentials: 'same-origin',
+          body: JSON.stringify({ topic, content })
+        })
+        .then(res => {
+          if (res.ok) window.location.reload();
+          else return res.text().then(msg => { throw new Error(msg); });
+        })
+        .catch(err => {
+          alert('Failed to post: ' + err.message);
+        });
+      });
+    }
+
+    function toggleFriendsMenu(e) {
+    e.preventDefault();
+    const submenu = document.getElementById('friends-submenu');
+    const arrow = document.getElementById('friends-arrow');
+    if (submenu.style.display === 'none' || submenu.style.display === '') {
+        submenu.style.display = 'block';
+        arrow.textContent = '▲';
+    } else {
+        submenu.style.display = 'none';
+        arrow.textContent = '▼';
+    }
+}
+
 </script>
+
+<style>
+.sidebar-friends-submenu a {
+    font-size: 0.98rem;
+    color: #ccc;
+    padding: 0.3em 0.5em;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 0.2em;
+    transition: background 0.2s;
+}
+.sidebar-friends-submenu a:hover {
+    background: #3a3f4b;
+    color: #fff;
+}
+</style>
 
 </body>
 </html>
