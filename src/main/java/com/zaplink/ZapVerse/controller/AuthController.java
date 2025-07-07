@@ -21,7 +21,6 @@ public class AuthController {
             model.addAttribute("error", "Invalid email or password");
         }
         return "login";
-
     }
 
     @PostMapping("/login")
@@ -35,22 +34,23 @@ public class AuthController {
         }
     }
 
+
     @PostMapping("/register")
     public String register(@RequestParam String email,
                            @RequestParam String password,
                            @RequestParam String firstName,
                            @RequestParam String lastName,
+                           @RequestParam String avatar,
                            Model model) {
         try {
-            profileService.registerUser(email, password, firstName, lastName);
+            profileService.registerUser(email, password, firstName, lastName, avatar);
             model.addAttribute("success", "Registration successful! You can now login.");
-            return "register"; // Show same register page with success message
+            return "register";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             return "register";
         }
     }
-
 
     @GetMapping("/register")
     public String registerPage(@RequestParam(value = "error", required = false) String error, Model model) {
@@ -59,5 +59,4 @@ public class AuthController {
         }
         return "register";
     }
-
 }
