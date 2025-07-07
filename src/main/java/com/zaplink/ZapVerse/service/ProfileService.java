@@ -3,6 +3,7 @@ package com.zaplink.ZapVerse.service;
 import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.repository.ProfileRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class ProfileService {
 
     ProfileRepository profileRepository;
+    PasswordEncoder passwordEncoder;
 
     public Profile getProfileById(Integer id){
         return profileRepository.findById(id).orElseThrow(
@@ -37,7 +39,7 @@ public class ProfileService {
         existingProfile.setFname(profile.getFname());
         existingProfile.setLname(profile.getLname());
         existingProfile.setPassword(profile.getPassword());
-        existingProfile.setAvatar(profile.getAvatar()); // ✅ if update needed
+        existingProfile.setAvatar(profile.getAvatar()); // if update needed
 
         return profileRepository.save(existingProfile);
     }
@@ -67,7 +69,7 @@ public class ProfileService {
 
         Profile newUser = new Profile();
         newUser.setEmail(email);
-        newUser.setPassword(password);
+        newUser.setPassword(passwordEncoder.encode(password));
         newUser.setFname(firstName);
         newUser.setLname(lastName);
         newUser.setAvatar(avatar);
