@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #1a1a1a;
             height: 100vh;
             margin: 0;
             display: flex;
@@ -17,13 +17,13 @@
 
         .register-container {
             width: 90%;
-            max-width: 600px; /* Increased width for avatar grid */
-            max-height: 90vh; /* Prevent it from overflowing screen */
-            overflow-y: auto; /* Scroll if form gets too tall */
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
             padding: 30px;
-            background: white;
+            background: #2c2c2c;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
         .selected-avatar {
@@ -44,12 +44,62 @@
             overflow-y: auto;
             padding-right: 5px;
         }
-    </style>
 
+        .form-label {
+            color: #e0e0e0;
+        }
+
+        .form-control {
+            background-color: #333333;
+            color: #e0e0e0;
+            border: 1px solid #555555;
+        }
+
+        .form-control:focus {
+            background-color: #333333;
+            color: #e0e0e0;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .text-danger {
+            color: #ff5555 !important;
+        }
+
+        .text-success {
+            color: #55ff55 !important;
+        }
+
+        .btn-primary {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+        }
+
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+            border-color: #0a58ca;
+        }
+
+        a {
+            color: #4dabf7;
+        }
+
+        a:hover {
+            color: #66b0ff;
+        }
+
+        .carousel-inner {
+            padding: 10px;
+        }
+
+        .carousel-item {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div class="register-container">
-    <h2 class="text-center mb-4">Create Your Account</h2>
+    <h2 class="text-center mb-4" style="color: #e0e0e0;">Create Your Account</h2>
 
     <!-- Server-side messages -->
     <p th:if="${error}" class="text-danger text-center mt-2" th:text="${error}"></p>
@@ -77,112 +127,128 @@
         <!-- Avatar selection -->
         <div class="mb-3">
             <label class="form-label">Choose an Avatar</label>
-            <div class="d-flex flex-wrap justify-content-center gap-2 avatar-option">
-                <label>
-                    <input type="radio" name="avatar" value="arthur.png" hidden required>
-                    <img src="/avatars/arthur.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="ava.png" hidden required>
-                    <img src="/avatars/ava.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="cleo.png" hidden required>
-                    <img src="/avatars/cleo.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="dante.png" hidden required>
-                    <img src="/avatars/dante.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="eli.png" hidden required>
-                    <img src="/avatars/eli.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="eliza.png" hidden required>
-                    <img src="/avatars/eliza.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="felix.png" hidden required>
-                    <img src="/avatars/felix.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="grant.png" hidden required>
-                    <img src="/avatars/grant.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="jayden.png" hidden required>
-                    <img src="/avatars/jayden.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="jonas.png" hidden required>
-                    <img src="/avatars/jonas.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="lana.png" hidden required>
-                    <img src="/avatars/lana.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="layla.png" hidden required>
-                    <img src="/avatars/layla.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="liam.png" hidden required>
-                    <img src="/avatars/liam.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-
-                <label>
-                    <input type="radio" name="avatar" value="malik.png" hidden required>
-                    <img src="/avatars/malik.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="mei.png" hidden required>
-                    <img src="/avatars/mei.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="milo.png" hidden required>
-                    <img src="/avatars/milo.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="naomi.png" hidden required>
-                    <img src="/avatars/naomi.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="noah.png" hidden required>
-                    <img src="/avatars/noah.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="omar.png" hidden required>
-                    <img src="/avatars/omar.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="ruby.png" hidden required>
-                    <img src="/avatars/ruby.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="sofia.png" hidden required>
-                    <img src="/avatars/sofia.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-
-                <label>
-                    <input type="radio" name="avatar" value="tess.png" hidden required>
-                    <img src="/avatars/tess.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="theo.png" hidden required>
-                    <img src="/avatars/theo.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
-                <label>
-                    <input type="radio" name="avatar" value="zara.png" hidden required>
-                    <img src="/avatars/zara.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
-                </label>
+            <div id="avatarCarousel" class="carousel slide avatar-option" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
+                            <label>
+                                <input type="radio" name="avatar" value="arthur.png" hidden required>
+                                <img src="/avatars/arthur.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="ava.png" hidden required>
+                                <img src="/avatars/ava.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="cleo.png" hidden required>
+                                <img src="/avatars/cleo.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="dante.png" hidden required>
+                                <img src="/avatars/dante.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="eli.png" hidden required>
+                                <img src="/avatars/eli.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="eliza.png" hidden required>
+                                <img src="/avatars/eliza.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="felix.png" hidden required>
+                                <img src="/avatars/felix.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="grant.png" hidden required>
+                                <img src="/avatars/grant.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="jayden.png" hidden required>
+                                <img src="/avatars/jayden.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="jonas.png" hidden required>
+                                <img src="/avatars/jonas.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="lana.png" hidden required>
+                                <img src="/avatars/lana.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="layla.png" hidden required>
+                                <img src="/avatars/layla.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex flex-wrap justify-content-center gap-2">
+                            <label>
+                                <input type="radio" name="avatar" value="liam.png" hidden required>
+                                <img src="/avatars/liam.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="malik.png" hidden required>
+                                <img src="/avatars/malik.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="mei.png" hidden required>
+                                <img src="/avatars/mei.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="milo.png" hidden required>
+                                <img src="/avatars/milo.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="naomi.png" hidden required>
+                                <img src="/avatars/naomi.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="noah.png" hidden required>
+                                <img src="/avatars/noah.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="omar.png" hidden required>
+                                <img src="/avatars/omar.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="ruby.png" hidden required>
+                                <img src="/avatars/ruby.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="sofia.png" hidden required>
+                                <img src="/avatars/sofia.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="tess.png" hidden required>
+                                <img src="/avatars/tess.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="theo.png" hidden required>
+                                <img src="/avatars/theo.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                            <label>
+                                <input type="radio" name="avatar" value="zara.png" hidden required>
+                                <img src="/avatars/zara.png" class="rounded-circle border" width="40" height="40" onclick="selectAvatar(this)">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#avatarCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#avatarCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">Register</button>
     </form>
 
-    <p class="text-center mt-3">
+    <p class="text-center mt-3 form-label">
         Already have an account? <a th:href="@{/login}">Login here</a>
     </p>
 </div>
