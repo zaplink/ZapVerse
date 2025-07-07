@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PostMapper {
 
@@ -20,10 +21,26 @@ public class PostMapper {
             postDTO.setId(post.getId());
             postDTO.setTopic(post.getTopic());
             postDTO.setContent(post.getContent());
-            postDTO.setTags(TagMapper.toDTO(post.getTags()));
             postDTO.setCreatedAt(post.getCreatedAt());
             postDTO.setModifiedAt(post.getModifiedAt());
-            return postDTO;
+
+        Profile profile = post.getProfile();
+
+        if (profile != null) {
+            postDTO.setUserName(profile.getFname() + " " + profile.getLname());
+        }
+
+        if (post.getTags() != null) {
+            postDTO.setTags(
+                    post.getTags().stream()
+                            .map(tag -> tag.getTagType().name())
+                            .collect(Collectors.toSet())
+            );
+        }
+
+
+
+        return postDTO;
     }
 
     public static List<PostDTO> toDTO(List<Post> posts) {
@@ -44,6 +61,7 @@ public class PostMapper {
         post.setCreatedAt(postCreateDTO.getCreatedAt());
         post.setModifiedAt(postCreateDTO.getCreatedAt());
         post.setProfile(profile);
+        post.setReactions(new ArrayList<>());
 
         Set<Tag> tags = new HashSet<>();
         for(String tagStr : postCreateDTO.getTags()) {

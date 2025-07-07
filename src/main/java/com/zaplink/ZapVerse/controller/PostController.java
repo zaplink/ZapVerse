@@ -1,17 +1,22 @@
 package com.zaplink.ZapVerse.controller;
 
+
 import com.zaplink.ZapVerse.dto.PostCreateDTO;
 import com.zaplink.ZapVerse.dto.PostDTO;
 import com.zaplink.ZapVerse.dto.PostUpdateDTO;
 import com.zaplink.ZapVerse.model.Post;
+import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.model.TagType;
 import com.zaplink.ZapVerse.service.PostService;
+import com.zaplink.ZapVerse.service.ProfileService;
 import com.zaplink.ZapVerse.utility.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -19,6 +24,7 @@ import java.util.List;
 public class PostController {
 
     PostService postService;
+    ProfileService profileService;
 
     @Autowired
     public PostController(PostService postService) {
@@ -72,4 +78,15 @@ public class PostController {
         Post post = postService.updatePost(postId, postUpdateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
     }
+
+    @GetMapping("/home")
+    public String homePage(Model model, Principal principal) {
+        Profile profile = profileService.findByEmail(principal.getName());
+        model.addAttribute("profileId", profile.getId());
+        return "feed";  // Thymeleaf (or JSP) template named feed.html
+    }
+
+
+
+
 }

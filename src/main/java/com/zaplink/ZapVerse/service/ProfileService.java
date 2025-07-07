@@ -64,4 +64,9 @@ public class ProfileService {
         throw new RuntimeException("Invalid email");
     }
 
+    public Profile findByEmail(String email) {
+        return profileRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+    }
+
 }

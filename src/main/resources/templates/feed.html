@@ -252,6 +252,7 @@
 
     <textarea class="content" placeholder="Share your thoughts here..." rows="1" maxlength="256"></textarea>
     <div id="content-count" class="char-count">0 / 256</div>
+    <button onclick="submitPost()">Post</button>
 </div>
 
 <!-- Example posts with top ribbons -->
@@ -359,6 +360,7 @@
 <script>
     const MAX_TOPIC_LENGTH = 72;
     const MAX_CONTENT_LENGTH = 256;
+    const profileId = [[${profileId}]];
 
     const topicInput = document.querySelector('input.topic');
     const contentInput = document.querySelector('textarea.content');
@@ -400,6 +402,81 @@
     });
 
     window.addEventListener('load', () => adjustTextareaHeight(contentInput));
+
+    function submitPost() {
+  const topic = document.querySelector('input.topic').value.trim();
+  const content = document.querySelector('textarea.content').value.trim();
+
+  if (!topic || !content) {
+    alert("Topic and content cannot be empty.");
+    return;
+  }
+
+  const payload = {
+    topic: topic,
+    content: content,
+    tags: [], // Extend this if you support tag input
+    createdAt: new Date().toISOString().split('T')[0],
+    profileId: profileId // Should be set from session or frontend
+  };
+
+  fetch('/api/post', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(response => response.json())
+  .then(post => {
+    appendPostToFeed(post);
+    document.querySelector('input.topic').value = '';
+    document.querySelector('textarea.content').value = '';
+  })
+  .catch(error => {
+    console.error('Post creation failed:', error);
+    alert("Failed to create post.");
+  });
+}
+function appendPostToFeed(post) {
+  const postContainer = document.createElement('div');
+  postContainer.className = 'container post layla'; // You can randomize or assign ribbon color
+  postContainer.setAttribute('data-post-id', post.id);
+
+  const date = new Date().toLocaleDateString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric'
+  });
+
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  postContainer.innerHTML = `
+    <div class="post-ribbon"></div>
+    <div class="post-header">
+        <img src="/avatars/felix.png" alt="Avatar" class="avatar" />
+        <div class="post-user-info">
+            <div class="post-user-name">${post.userName}</div>
+            <div class="post-date-time">${date} · ${time}</div>
+        </div>
+    </div>
+    <div class="post-content-wrapper">
+        <div class="post-content-overlay"></div>
+        <div class="post-content">
+            <div class="post-topic">${post.topic}</div>
+            <div class="post-text">${post.content}</div>
+        </div>
+    </div>
+    <div class="reaction-buttons" data-post-id="${post.id}">
+        <button data-reaction="LIKE" onclick="sendReaction(${post.id}, 'LIKE')">👍</button>
+        <button data-reaction="LOVE" onclick="sendReaction(${post.id}, 'LOVE')">❤️</button>
+        <button data-reaction="HAHA" onclick="sendReaction(${post.id}, 'HAHA')">😂</button>
+        <button data-reaction="WOW" onclick="sendReaction(${post.id}, 'WOW')">😮</button>
+        <button data-reaction="SAD" onclick="sendReaction(${post.id}, 'SAD')">😢</button>
+        <button data-reaction="ANGRY" onclick="sendReaction(${post.id}, 'ANGRY')">😠</button>
+    </div>
+  `;
+
+  // Append the post at the top
+  document.body.insertBefore(postContainer, document.body.querySelector('.container.post'));
+}
+
 </script>
 
 </body>
