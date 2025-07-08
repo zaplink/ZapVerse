@@ -110,13 +110,13 @@ public class DataLoader {
 
         React react = new React();
         react.setPost(post1);
-        react.setReaction(ReactionType.LIKE);
+        react.setReaction("LOVE");
         react.setProfile(profile2);
         reactRespository.save(react);
 
         React react2 = new React();
         react2.setPost(post2);
-        react2.setReaction(ReactionType.LOVE);
+        react2.setReaction("LOVE");
         react2.setProfile(profile4);
         reactRespository.save(react2);
 

@@ -1,6 +1,5 @@
 package com.zaplink.ZapVerse.dto;
 
-import com.zaplink.ZapVerse.model.ReactionType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +11,5 @@ public class ReactDTO {
 
     private int postId;
     private int profileId;
-    private ReactionType reaction;
-
-
+    private String reaction; // true = heart clicked, false = heart unclicked
 }
