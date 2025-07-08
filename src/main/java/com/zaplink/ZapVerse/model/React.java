@@ -26,6 +26,5 @@ public class React {
     @JsonBackReference
     private Profile profile;
 
-    @Enumerated(EnumType.STRING)
-    private ReactionType reaction;
+    private boolean liked;
 }

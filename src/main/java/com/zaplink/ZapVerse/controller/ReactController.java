@@ -1,6 +1,5 @@
 package com.zaplink.ZapVerse.controller;
 
-
 import com.zaplink.ZapVerse.dto.ReactDTO;
 import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.model.Profile;
@@ -8,55 +7,53 @@ import com.zaplink.ZapVerse.model.React;
 import com.zaplink.ZapVerse.repository.PostRepository;
 import com.zaplink.ZapVerse.repository.ProfileRepository;
 import com.zaplink.ZapVerse.repository.ReactRespository;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/react")
-@AllArgsConstructor
 public class ReactController {
 
+    private final ReactRespository reactRepository;
     private final PostRepository postRepository;
     private final ProfileRepository profileRepository;
-    private final ReactRespository reactRepository;
+
+    public ReactController(ReactRespository reactRepository, PostRepository postRepository, ProfileRepository profileRepository) {
+        this.reactRepository = reactRepository;
+        this.postRepository = postRepository;
+        this.profileRepository = profileRepository;
+    }
 
     @PostMapping
-    public ResponseEntity<String> addReaction(@RequestBody ReactDTO dto) {
-        Post post = postRepository.findById(dto.getPostId()).orElse(null);
-        Profile profile = profileRepository.findById(dto.getProfileId()).orElse(null);
+    public ResponseEntity<String> toggleLike(@RequestBody ReactDTO dto) {
+        Optional<Post> postOpt = postRepository.findById(dto.getPostId());
+        Optional<Profile> profileOpt = profileRepository.findById(dto.getProfileId());
 
-        if (post == null || profile == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid post or profile ID.");
+        if (postOpt.isEmpty() || profileOpt.isEmpty()) {
+            return ResponseEntity.badRequest().body("Post or Profile not found");
         }
 
-        // Optional: Update reaction if already exists
-        React react = new React();
-        react.setPost(post);
-        react.setProfile(profile);
-        react.setReaction(dto.getReaction());
+        Post post = postOpt.get();
+        Profile profile = profileOpt.get();
 
-        reactRepository.save(react);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Reaction added.");
+        Optional<React> existing = reactRepository.findByPostAndProfile(post, profile);
+
+        boolean liked = "LOVE".equals(dto.getReaction());
+
+        if (liked) {
+            if (existing.isEmpty()) {
+                React react = new React();
+                react.setPost(post);
+                react.setProfile(profile);
+                react.setLiked(true);
+                reactRepository.save(react);
+            }
+            return ResponseEntity.ok("Liked");
+        } else {
+            existing.ifPresent(reactRepository::delete);
+            return ResponseEntity.ok("Unliked");
+        }
     }
-
-    @GetMapping("/post/{postId}")
-    public List<React> getReactionsForPost(@PathVariable int postId) {
-        return reactRepository.findAll().stream()
-                .filter(r -> r.getPost().getId() == postId)
-                .toList();
-    }
-
-
-
-
-
-
-
-
-
-
 }
