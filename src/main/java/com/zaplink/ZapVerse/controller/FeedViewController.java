@@ -24,6 +24,7 @@ public class FeedViewController {
         String avatar = (profile != null && profile.getAvatar() != null && !profile.getAvatar().isEmpty()) ? profile.getAvatar() : "felix.png";
         model.addAttribute("sidebarAvatar", "/avatars/" + avatar);
         model.addAttribute("sidebarName", displayName);
+        model.addAttribute("sidebarEmail", email);
         return "feed";
     }
 }

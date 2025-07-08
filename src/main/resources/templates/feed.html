@@ -266,7 +266,7 @@
         .sidebar {
           position: fixed;
           top: 0;
-          left: 0;
+          right: 0;
           width: 220px;
           height: 100vh;
           background: #23272f;
@@ -293,6 +293,11 @@
         .sidebar-username {
           font-weight: bold;
           font-size: 1.1rem;
+        }
+        .sidebar-email {
+          font-size: 0.95em;
+          color: #bbb;
+          margin-top: 2px;
         }
         .sidebar-menu {
           list-style: none;
@@ -344,14 +349,14 @@
           background: #3a3f4b;
         }
         .main-content {
-          margin-left: 240px;
+          margin-right: 220px;
           padding: 1rem;
         }
         @media (max-width: 700px) {
           .sidebar { width: 60px; }
           .sidebar-header { display: none; }
           .sidebar-menu a, .sidebar-logout { font-size: 0.9rem; padding: 0.5em 0.2em; width: 100%; }
-          .main-content { margin-left: 70px; }
+          .main-content { margin-right: 70px; }
           .sidebar-logout-container { padding-bottom: 1rem; }
           .sidebar-logout { font-size: 1rem; padding: 0.5em 0.5em; }
         }
@@ -411,6 +416,7 @@
     <div class="sidebar-header">
         <img th:src="${sidebarAvatar}" src="/avatars/felix.png" alt="User Avatar" class="sidebar-avatar" />
         <span class="sidebar-username" th:text="${sidebarName}">Your Name</span>
+        <span class="sidebar-email" th:text="${sidebarEmail}" style="font-size:0.95em;color:#bbb;margin-top:2px;">your@email.com</span>
     </div>
     <ul class="sidebar-menu">
         <li><a href="/feed"><span class="sidebar-icon">🏠</span> Home</a></li>
@@ -423,11 +429,6 @@
                 <li><a href="/friends/requests">Friend Requests</a></li>
                 <li><a href="/friends/all">All Friends</a></li>
             </ul>
-        </li>
-        <li>
-            <form action="/logout" method="post" id="logoutForm" style="display:inline;">
-                <button type="submit" class="sidebar-logout-link"><span class="sidebar-icon">🚪</span> Logout</button>
-            </form>
         </li>
     </ul>
 </div>
