@@ -597,7 +597,7 @@
 <script>
     const MAX_TOPIC_LENGTH = 72;
     const MAX_CONTENT_LENGTH = 256;
-
+    const profileId=1;
     const topicInput = document.querySelector('input.topic');
     const contentInput = document.querySelector('textarea.content');
     const topicCount = document.getElementById('topic-count');
@@ -649,7 +649,7 @@
       });
     }
 
-    const profileId = 1; // Replace this with the actual logged-in user ID
+
 
   function sendReaction(postId, reactionType) {
 
@@ -687,40 +687,56 @@
 });
 }
 
+
+
 function toggleHeart(postId) {
   const heartButton = document.querySelector(`.reaction-buttons[data-post-id="${postId}"] .heart-button`);
   const heartIcon = heartButton.querySelector('i');
 
-  // Toggle the visual state immediately
+  // Toggle UI immediately for better UX
   heartButton.classList.toggle('selected');
-
-  // Update the icon class (solid if selected, regular if not)
   if (heartButton.classList.contains('selected')) {
     heartIcon.classList.replace('fa-regular', 'fa-solid');
   } else {
     heartIcon.classList.replace('fa-solid', 'fa-regular');
   }
 
-  // Determine the new reaction state
   const isSelected = heartButton.classList.contains('selected');
   const newReaction = isSelected ? 'LOVE' : null;
 
-  // (Optional) Simulate API call
-  console.log(`Post ${postId} reaction: ${newReaction || 'Removed'}`);
-  /*
+  // Get CSRF token
+  const csrfToken = document.querySelector('input[name="_csrf"]').value;
+
   fetch('/api/react', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ postId, reaction: newReaction })
-  }).catch(err => {
-    // Revert if API fails
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': csrfToken
+    },
+    body: JSON.stringify({
+      postId: postId,
+      profileId: profileId, // Should come from server
+      reaction: newReaction
+    })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to update reaction');
+    }
+    return response.text();
+  })
+  .then(data => {
+    console.log('Reaction updated:', data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    // Revert UI on error
     heartButton.classList.toggle('selected');
     heartIcon.classList.toggle('fa-regular');
     heartIcon.classList.toggle('fa-solid');
+    alert('Failed to update reaction. Please try again.');
   });
-  */
 }
-
 
 </script>
 

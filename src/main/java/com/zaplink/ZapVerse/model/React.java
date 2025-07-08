@@ -26,5 +26,5 @@ public class React {
     @JsonBackReference
     private Profile profile;
 
-    private boolean liked;
+    private String reaction;
 }

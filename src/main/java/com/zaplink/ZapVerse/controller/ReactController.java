@@ -25,35 +25,30 @@ public class ReactController {
         this.postRepository = postRepository;
         this.profileRepository = profileRepository;
     }
-
     @PostMapping
-    public ResponseEntity<String> toggleLike(@RequestBody ReactDTO dto) {
-        Optional<Post> postOpt = postRepository.findById(dto.getPostId());
-        Optional<Profile> profileOpt = profileRepository.findById(dto.getProfileId());
+    public ResponseEntity<String> toggleReaction(@RequestBody ReactDTO dto) {
+        Post post = postRepository.findById(dto.getPostId())
+                .orElseThrow(() -> new RuntimeException("Post not found"));
 
-        if (postOpt.isEmpty() || profileOpt.isEmpty()) {
-            return ResponseEntity.badRequest().body("Post or Profile not found");
-        }
-
-        Post post = postOpt.get();
-        Profile profile = profileOpt.get();
+        Profile profile = profileRepository.findById(dto.getProfileId())
+                .orElseThrow(() -> new RuntimeException("Profile not found"));
 
         Optional<React> existing = reactRepository.findByPostAndProfile(post, profile);
 
-        boolean liked = "LOVE".equals(dto.getReaction());
-
-        if (liked) {
-            if (existing.isEmpty()) {
-                React react = new React();
-                react.setPost(post);
-                react.setProfile(profile);
-                react.setLiked(true);
-                reactRepository.save(react);
-            }
-            return ResponseEntity.ok("Liked");
-        } else {
+        if (dto.getReaction() == null || dto.getReaction().isEmpty()) {
+            // Remove reaction
             existing.ifPresent(reactRepository::delete);
-            return ResponseEntity.ok("Unliked");
+            return ResponseEntity.ok("Reaction removed");
         }
+
+        // Add or update reaction
+        React react = existing.orElse(new React());
+        react.setPost(post);
+        react.setProfile(profile);
+        react.setReaction(dto.getReaction());
+
+        reactRepository.save(react);
+        return ResponseEntity.ok("Reaction saved: " + dto.getReaction());
     }
+
 }
