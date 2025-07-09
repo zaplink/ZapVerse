@@ -52,8 +52,9 @@
       <img th:src="@{'/avatars/' + ${friend.avatar}}" class="friend-avatar" />
       <div class="friend-info">
         <div class="friend-name" th:text="${friend.fname + ' ' + friend.lname}"></div>
-        <!-- Optionally show mutual friends here -->
-        <!-- <div class="friend-mutual">99 mutual friends</div> -->
+        <div class="friend-mutual"
+             th:text="${mutualCounts[friend.id]} + ' mutual friends'"
+             th:if="${mutualCounts[friend.id] > 0}"></div>
       </div>
       <!-- Optionally add a menu or actions here -->
     </div>

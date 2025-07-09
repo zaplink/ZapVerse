@@ -115,8 +115,24 @@ public class FriendViewController {
     // 7. View All Friends
     @GetMapping("/friends/all")
     public String allFriends(@AuthenticationPrincipal User user, Model model) {
-        Profile current = profileRepository.findByEmail(user.getUsername()).orElseThrow();
-        model.addAttribute("friends", current.getFriends());
+        Profile current = profileRepository.findByEmail(user.getUsername()).orElse(null);
+        if (current == null)
+            return "redirect:/login";
+        Set<Profile> friends = current.getFriends();
+
+        // Map friendId -> mutual friends count
+        Map<Integer, Integer> mutualCounts = new HashMap<>();
+        for (Profile friend : friends) {
+            Set<Profile> theirFriends = friend.getFriends();
+            // Exclude current user and the friend themself
+            int mutual = (int) theirFriends.stream()
+                    .filter(f -> friends.contains(f) && f.getId() != friend.getId())
+                    .count();
+            mutualCounts.put(friend.getId(), mutual);
+        }
+
+        model.addAttribute("friends", friends);
+        model.addAttribute("mutualCounts", mutualCounts);
         return "All-friends";
     }
 }
