@@ -8,6 +8,7 @@ import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.model.Tag;
 import com.zaplink.ZapVerse.model.TagType;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -17,14 +18,20 @@ public class PostMapper {
 
     public static PostDTO toDTO(Post post) {
         PostDTO postDTO = new PostDTO();
-            postDTO.setId(post.getId());
-            postDTO.setTopic(post.getTopic());
-            postDTO.setContent(post.getContent());
-            postDTO.setTags(TagMapper.toDTO(post.getTags()));
-            postDTO.setCreatedAt(post.getCreatedAt());
-            postDTO.setModifiedAt(post.getModifiedAt());
+        postDTO.setId(post.getId());
+        postDTO.setTopic(post.getTopic());
+        postDTO.setContent(post.getContent());
+        postDTO.setTags(TagMapper.toDTO(post.getTags()));
+        postDTO.setCreatedAt(post.getCreatedAt());
+        postDTO.setModifiedAt(post.getModifiedAt());
 
-            return postDTO;
+        if (post.getProfile() != null) {
+            postDTO.setFname(post.getProfile().getFname());
+            postDTO.setLname(post.getProfile().getLname());
+            postDTO.setAvatar(post.getProfile().getAvatar());
+
+        }
+        return postDTO;
     }
 
     public static List<PostDTO> toDTO(List<Post> posts) {
@@ -42,8 +49,8 @@ public class PostMapper {
         Post post = new Post();
         post.setTopic(postCreateDTO.getTopic());
         post.setContent(postCreateDTO.getContent());
-        post.setCreatedAt(postCreateDTO.getCreatedAt());
-        post.setModifiedAt(postCreateDTO.getCreatedAt());
+        post.setCreatedAt(LocalDate.now());
+        post.setModifiedAt(LocalDate.now());
         post.setProfile(profile);
 
         Set<Tag> tags = new HashSet<>();

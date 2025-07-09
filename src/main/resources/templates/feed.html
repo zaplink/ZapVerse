@@ -473,8 +473,8 @@
         <button type="button" class="post-button" onclick="submitPost()">Post</button>
 
     </form>
-    <div id="feed-posts"></div>
-</div>
+    <div id="feed-posts">
+
 
 
     <!-- Example posts with top ribbons -->
@@ -618,6 +618,8 @@
 
 
     </div>
+</div>
+</div>
 </div>
 <form th:action="@{/logout}" method="post"
       style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
@@ -893,9 +895,10 @@ function appendPostToFeed(post) {
     postContainer.innerHTML = `
         <div class="post-ribbon"></div>
         <div class="post-header">
-            <img src="${post.profile.avatar ? '/avatars/' + post.profile.avatar : '/avatars/default.png'}" alt="Avatar" class="avatar" />
-            <div class="post-user-info">
-                <div class="post-user-name">${post.profile.fname} ${post.profile.lname || ''}</div>
+                <img src="${post.avatar ? '/avatars/' + post.avatar : '/avatars/default.png'}" alt="Avatar" class="avatar" />
+<div class="post-user-info">
+    <div class="post-user-name">${post.fname || 'Anonymous'} ${post.lname || ''}</div>
+
                 <div class="post-date-time">${formattedDate}</div>
             </div>
         </div>

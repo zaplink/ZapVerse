@@ -22,4 +22,8 @@ public class PostDTO {
     private Set<String> tags;
     private LocalDate createdAt;
     private LocalDate modifiedAt;
+    private String fname;
+    private String lname;
+    private String avatar;
 }
+
