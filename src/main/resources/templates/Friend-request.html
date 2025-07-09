@@ -1,0 +1,154 @@
+<style>
+body {
+    background: #23242a;
+}
+.requests-header {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    color: #fff;
+}
+.requests-columns {
+    display: flex;
+    gap: 2.5rem;
+    justify-content: center;
+    align-items: flex-start;
+}
+.requests-section {
+    flex: 1 1 0;
+    background: #292b32;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+    min-width: 320px;
+    border: 1px solid #31343b;
+}
+.section-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 1.1rem;
+    color: #1877f2;
+    letter-spacing: 0.5px;
+}
+.requests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+.request-card {
+    background: #23242a;
+    border-radius: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    padding: 1.1rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #31343b;
+}
+.request-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #393c44;
+    background: #181a20;
+    margin-bottom: 0.7rem;
+}
+.request-name {
+    font-weight: 600;
+    font-size: 1.08rem;
+    color: #fff;
+    margin-bottom: 0.2rem;
+    text-align: center;
+}
+.request-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.7rem;
+    width: 100%;
+    justify-content: center;
+}
+.request-actions button {
+    min-width: 80px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    padding: 0.45em 0.9em;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.request-actions .btn-success {
+    background: #1877f2;
+    color: #fff;
+}
+.request-actions .btn-success:hover {
+    background: #166fe0;
+}
+.request-actions .btn-danger {
+    background: #393c44;
+    color: #bfc9d1;
+}
+.request-actions .btn-danger:hover {
+    background: #31343b;
+}
+.empty-text {
+    color: #888;
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+@media (max-width: 900px) {
+    .requests-columns {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    .requests-section {
+        min-width: unset;
+    }
+}
+</style>
+
+<div>
+  <div class="requests-header">Friend requests</div>
+  <div class="requests-columns">
+    <!-- Incoming Requests (Left) -->
+    <div class="requests-section">
+      <div class="section-title">Incoming</div>
+      <div class="requests-list">
+        <div th:if="${#lists.isEmpty(incoming)}" class="empty-text">No incoming requests</div>
+        <div th:each="req : ${incoming}" class="request-card">
+          <img th:src="@{'/avatars/' + ${req.profile.avatar}}" class="request-avatar" />
+          <div class="request-name" th:text="${req.profile.fname + ' ' + req.profile.lname}"></div>
+          <div class="request-actions">
+            <form th:action="@{/friends/accept}" method="post">
+              <input type="hidden" name="requestId" th:value="${req.id}" />
+              <button type="submit" class="btn btn-success">Confirm</button>
+            </form>
+            <form th:action="@{/friends/decline}" method="post">
+              <input type="hidden" name="requestId" th:value="${req.id}" />
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Outgoing Requests (Right) -->
+    <div class="requests-section">
+      <div class="section-title">Outgoing</div>
+      <div class="requests-list">
+        <div th:if="${#lists.isEmpty(outgoing)}" class="empty-text">No outgoing requests</div>
+        <div th:each="req : ${outgoing}" class="request-card">
+          <img th:src="@{'/avatars/' + ${req.receiver.avatar}}" class="request-avatar" />
+          <div class="request-name" th:text="${req.receiver.fname + ' ' + req.receiver.lname}"></div>
+          <div class="request-actions">
+            <form th:action="@{/friends/remove-request}" method="post">
+              <input type="hidden" name="receiverId" th:value="${req.receiver.id}" />
+              <button type="submit" class="btn btn-danger">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

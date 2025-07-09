@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -42,4 +43,8 @@ public class Profile {
 
     @OneToMany
     private Set<Tag> tags;
+
+    @ManyToMany
+    @JoinTable(name = "friends", joinColumns = @JoinColumn(name = "profile_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    private Set<Profile> friends = new HashSet<>();
 }

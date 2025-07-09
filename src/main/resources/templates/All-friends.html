@@ -1,0 +1,67 @@
+<style>
+body {
+    background: #23242a;
+}
+.friends-header {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+.friends-count {
+    color: #bfc9d1;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+}
+.friend-list {
+    margin-top: 1rem;
+}
+.friend-card {
+    display: flex;
+    align-items: center;
+    background: #292b32;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1rem;
+    gap: 1.1rem;
+    border: 1px solid #31343b;
+}
+.friend-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #393c44;
+    background: #181a20;
+}
+.friend-info {
+    flex: 1;
+}
+.friend-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #fff;
+}
+.friend-mutual {
+    color: #8fa1b3;
+    font-size: 0.98rem;
+    margin-top: 0.1rem;
+}
+</style>
+
+<div>
+  <div class="friends-header">All friends</div>
+  <div class="friends-count" th:text="${#lists.size(friends)} + ' friends'"></div>
+  <div class="friend-list">
+    <div th:each="friend : ${friends}" class="friend-card">
+      <img th:src="@{'/avatars/' + ${friend.avatar}}" class="friend-avatar" />
+      <div class="friend-info">
+        <div class="friend-name" th:text="${friend.fname + ' ' + friend.lname}"></div>
+        <div class="friend-mutual"
+             th:text="${mutualCounts[friend.id]} + ' mutual friends'"
+             th:if="${mutualCounts[friend.id] > 0}"></div>
+      </div>
+    </div>
+  </div>
+</div>
