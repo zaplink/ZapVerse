@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
     List<Post> findDistinctByTags_TagType(TagType tagType);
+
+    List<Post> findAllByOrderByCreatedAtDesc();
 }

@@ -8,22 +8,38 @@ import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.model.Tag;
 import com.zaplink.ZapVerse.model.TagType;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PostMapper {
 
     public static PostDTO toDTO(Post post) {
         PostDTO postDTO = new PostDTO();
-            postDTO.setId(post.getId());
-            postDTO.setTopic(post.getTopic());
-            postDTO.setContent(post.getContent());
-            postDTO.setTags(TagMapper.toDTO(post.getTags()));
-            postDTO.setCreatedAt(post.getCreatedAt());
-            postDTO.setModifiedAt(post.getModifiedAt());
-            return postDTO;
+        postDTO.setId(post.getId());
+        postDTO.setTopic(post.getTopic());
+        postDTO.setContent(post.getContent());
+        postDTO.setTags(TagMapper.toDTO(post.getTags()));
+        postDTO.setCreatedAt(post.getCreatedAt());
+        postDTO.setModifiedAt(post.getModifiedAt());
+
+        if (post.getProfile() != null) {
+            postDTO.setFname(post.getProfile().getFname());
+            postDTO.setLname(post.getProfile().getLname());
+            postDTO.setAvatar(post.getProfile().getAvatar());
+
+        }
+        if (post.getTags() != null) {
+            Set<String> tagStrings = post.getTags().stream().map(tag -> tag.getTagType().name()).collect(Collectors.toSet());
+            postDTO.setTags(tagStrings);
+        }
+
+
+        return postDTO;
     }
 
     public static List<PostDTO> toDTO(List<Post> posts) {
@@ -41,8 +57,8 @@ public class PostMapper {
         Post post = new Post();
         post.setTopic(postCreateDTO.getTopic());
         post.setContent(postCreateDTO.getContent());
-        post.setCreatedAt(postCreateDTO.getCreatedAt());
-        post.setModifiedAt(postCreateDTO.getCreatedAt());
+        post.setCreatedAt(LocalDateTime.now());
+        post.setModifiedAt(LocalDateTime.now());
         post.setProfile(profile);
 
         Set<Tag> tags = new HashSet<>();

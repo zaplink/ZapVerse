@@ -77,10 +77,10 @@ public class PostController {
                 .orElseThrow(() -> new RuntimeException("Profile not found!"));
         // Set the profileId to the authenticated user's id
         postCreateDTO.setProfileId(profile.getId());
+
         Post post = postService.createPost(postCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
     }
-
     @PutMapping("/post/{postId}")
     public ResponseEntity<PostDTO> updatePost(@PathVariable int postId, @RequestBody PostUpdateDTO postUpdateDTO) {
         Post post = postService.updatePost(postId, postUpdateDTO);
