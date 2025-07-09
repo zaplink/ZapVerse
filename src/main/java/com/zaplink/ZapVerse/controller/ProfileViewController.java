@@ -33,8 +33,10 @@ public class ProfileViewController {
         // Fetch posts by this profile and sort by createdAt descending
         List<Post> posts = profile != null ? profile.getPosts() : List.of();
         posts = posts.stream()
-                .sorted(Comparator.comparing(Post::getCreatedAt).reversed())
+                .sorted(Comparator.comparing(Post::getCreatedAt,
+                        Comparator.nullsLast(Comparator.naturalOrder())).reversed())
                 .toList();
+
         model.addAttribute("posts", posts);
 
         return "profile";
