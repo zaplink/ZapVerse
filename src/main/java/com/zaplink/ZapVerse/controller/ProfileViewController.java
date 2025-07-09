@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +22,8 @@ import java.util.List;
 public class ProfileViewController {
 
     private final ProfileRepository profileRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/profile")
     public String profilePage(@AuthenticationPrincipal User user, Model model) {
@@ -60,16 +64,53 @@ public class ProfileViewController {
             @AuthenticationPrincipal User user,
             @RequestParam String fname,
             @RequestParam String lname,
-            @RequestParam String email,
-            @RequestParam String avatar) {
+            @RequestParam String avatar,
+            @RequestParam(required = false) String oldPassword,
+            @RequestParam(required = false) String newPassword,
+            @RequestParam(required = false) String confirmPassword,
+            Model model) {
+        // Fetch profile by email (unique) and get its ID
         Profile profile = profileRepository.findByEmail(user.getUsername()).orElse(null);
-        if (profile != null) {
-            profile.setFname(fname);
-            profile.setLname(lname);
-            profile.setEmail(email);
-            profile.setAvatar(avatar);
-            profileRepository.save(profile);
+        if (profile == null) {
+            model.addAttribute("error", "Profile not found.");
+            return "profile-edit";
         }
+
+        // Update fields
+        profile.setFname(fname);
+        profile.setLname(lname);
+        profile.setAvatar(avatar);
+
+        // Handle password change if requested
+        if (oldPassword != null && !oldPassword.isBlank() && newPassword != null && !newPassword.isBlank()) {
+            if (!passwordEncoder.matches(oldPassword, profile.getPassword())) {
+                model.addAttribute("error", "Current password is incorrect.");
+                model.addAttribute("profile", profile);
+                model.addAttribute("avatars", List.of(
+                        "arthur.png", "ava.png", "cleo.png", "dante.png", "eli.png", "eliza.png", "felix.png",
+                        "grant.png",
+                        "jayden.png", "jonas.png", "lana.png", "layla.png", "liam.png", "malik.png", "mei.png",
+                        "milo.png",
+                        "naomi.png", "noah.png", "omar.png"));
+                return "profile-edit";
+            }
+            if (!newPassword.equals(confirmPassword)) {
+                model.addAttribute("error", "New passwords do not match.");
+                model.addAttribute("profile", profile);
+                model.addAttribute("avatars", List.of(
+                        "arthur.png", "ava.png", "cleo.png", "dante.png", "eli.png", "eliza.png", "felix.png",
+                        "grant.png",
+                        "jayden.png", "jonas.png", "lana.png", "layla.png", "liam.png", "malik.png", "mei.png",
+                        "milo.png",
+                        "naomi.png", "noah.png", "omar.png"));
+                return "profile-edit";
+            }
+            profile.setPassword(passwordEncoder.encode(newPassword));
+        }
+
+        // Save the updated profile (by ID, not creating new)
+        profileRepository.save(profile);
+
         return "redirect:/profile";
     }
 }
