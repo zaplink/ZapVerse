@@ -369,28 +369,30 @@
           font-size: 1.2rem;
           user-select: none;
         }
-        .heart-button {
-          background: none;
-          border: none;
-          font-size: 1.8rem;
-          cursor: pointer;
-          transition: transform 0.2s ease, color 0.2s ease;
-          color: white;
-        }
+      .heart-button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  color: white;
+  outline: none; /* Remove focus outline */
+}
 
-        .heart-button i {
-          color: transparent;
-          -webkit-text-stroke: 1px white; /* white border */
-          transition: all 0.3s ease;
+.heart-button i {
+  transition: all 0.3s ease;
+  /* Initial state - transparent fill with white border */
+  color: transparent;
+  -webkit-text-stroke: 1px white;
+}
 
-        }
-
-        .heart-button.selected i {
-          color: red;
-          -webkit-text-stroke: 0; /* remove border when filled */
-          transform: scale(1.5);
-          filter: drop-shadow(0 0 4px red);
-        }
+.heart-button.selected i {
+  /* Selected state - solid red with no border */
+  color: red !important;
+  -webkit-text-stroke: 0 !important;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.5));
+}
 
         .reaction-buttons {
           position: relative;
@@ -463,8 +465,8 @@
             </div>
         </div>
         <div class="reaction-buttons" data-post-id="1">
-            <button class="heart-button" onclick="toggleHeart(1)">
-                <i class="fa-regular fa-heart"></i> <!-- outlined heart by default -->
+            <button class="heart-button" onclick="toggleHeart(1, event)">
+                <i class="fa-regular fa-heart"></i>
             </button>
 
         </div>
@@ -490,8 +492,8 @@
             </div>
         </div>
         <div class="reaction-buttons" data-post-id="2">
-            <button class="heart-button" onclick="toggleHeart(2)">
-                <i class="fa-regular fa-heart"></i> <!-- outlined heart by default -->
+            <button class="heart-button" onclick="toggleHeart(2, event)">
+                <i class="fa-regular fa-heart"></i>
             </button>
 
         </div>
@@ -518,10 +520,9 @@
         </div>
 
         <div class="reaction-buttons" data-post-id="3">
-            <button class="heart-button" onclick="toggleHeart(3)">
-                <i class="fa-regular fa-heart"></i> <!-- outlined heart by default -->
+            <button class="heart-button" onclick="toggleHeart(3, event)">
+                <i class="fa-regular fa-heart"></i>
             </button>
-
         </div>
 
     </div>
@@ -545,10 +546,9 @@
             </div>
         </div>
         <div class="reaction-buttons" data-post-id="4">
-            <button class="heart-button" onclick="toggleHeart(4)">
-                <i class="fa-regular fa-heart"></i> <!-- outlined heart by default -->
+            <button class="heart-button" onclick="toggleHeart(4, event)">
+                <i class="fa-regular fa-heart"></i>
             </button>
-
         </div>
 
 
@@ -577,8 +577,8 @@
             </div>
         </div>
         <div class="reaction-buttons" data-post-id="5">
-            <button class="heart-button" onclick="toggleHeart(5)">
-                <i class="fa-regular fa-heart"></i> <!-- outlined heart by default -->
+            <button class="heart-button" onclick="toggleHeart(5, event)">
+                <i class="fa-regular fa-heart"></i>
             </button>
 
         </div>
@@ -596,11 +596,16 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script th:inline="javascript">
+    const profileId = [[${profileId} ?: 0]];
+</script>
+
+
 
 <script>
     const MAX_TOPIC_LENGTH = 72;
     const MAX_CONTENT_LENGTH = 256;
-    const profileId=1;
+
     const topicInput = document.querySelector('input.topic');
     const contentInput = document.querySelector('textarea.content');
     const topicCount = document.getElementById('topic-count');
@@ -736,61 +741,68 @@
         submenu.style.display = 'none';
         arrow.textContent = '▼';
     }
-
-    // - heart react logic --
-    // --- from develop branch ---
-
-
-function toggleHeart(postId) {
-  const heartButton = document.querySelector(`.reaction-buttons[data-post-id="${postId}"] .heart-button`);
-  const heartIcon = heartButton.querySelector('i');
-
-  // Toggle UI immediately for better UX
-  heartButton.classList.toggle('selected');
-  if (heartButton.classList.contains('selected')) {
-    heartIcon.classList.replace('fa-regular', 'fa-solid');
-  } else {
-    heartIcon.classList.replace('fa-solid', 'fa-regular');
-  }
-
-  const isSelected = heartButton.classList.contains('selected');
-  const newReaction = isSelected ? 'LOVE' : null;
-
-  // Get CSRF token
-  const csrfToken = document.querySelector('input[name="_csrf"]').value;
-
-  fetch('/api/react', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': csrfToken
-    },
-    body: JSON.stringify({
-      postId: postId,
-      profileId: profileId, // Should come from server
-      reaction: newReaction
-    })
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Failed to update reaction');
-    }
-    return response.text();
-  })
-  .then(data => {
-    console.log('Reaction updated:', data);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    // Revert UI on error
-    heartButton.classList.toggle('selected');
-    heartIcon.classList.toggle('fa-regular');
-    heartIcon.classList.toggle('fa-solid');
-    alert('Failed to update reaction. Please try again.');
-  });
-
 }
-      //----------------
+  function toggleHeart(postId, event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const heartButton = event.currentTarget;
+    const heartIcon = heartButton.querySelector('i');
+
+    // Determine the new state (opposite of current)
+    const isSelected = !heartButton.classList.contains('selected');
+
+    // Optimistically update the UI
+    heartButton.classList.toggle('selected', isSelected);
+    if (isSelected) {
+        heartIcon.classList.replace('fa-regular', 'fa-solid');
+        heartIcon.style.color = 'red';
+        heartIcon.style.webkitTextStroke = '0';
+    } else {
+        heartIcon.classList.replace('fa-solid', 'fa-regular');
+        heartIcon.style.color = 'transparent';
+        heartIcon.style.webkitTextStroke = '1px white';
+    }
+
+    // Prepare the request
+    const csrfToken = document.getElementById('csrfToken').value;
+    const reaction = isSelected ? 'LOVE' : null;
+
+    fetch('/api/react', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({
+            postId: postId,
+            profileId: profileId,
+            reaction: reaction
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to update reaction');
+        }
+        return response.text();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Revert UI changes if API call fails
+        heartButton.classList.toggle('selected');
+        if (isSelected) {
+            heartIcon.classList.replace('fa-solid', 'fa-regular');
+            heartIcon.style.color = 'transparent';
+            heartIcon.style.webkitTextStroke = '1px white';
+        } else {
+            heartIcon.classList.replace('fa-regular', 'fa-solid');
+            heartIcon.style.color = 'red';
+            heartIcon.style.webkitTextStroke = '0';
+        }
+    });
+}
+
+
 
 </script>
 
