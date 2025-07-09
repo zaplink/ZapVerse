@@ -268,7 +268,7 @@
         .sidebar {
           position: fixed;
           top: 0;
-          left: 0;
+          right: 0;
           width: 220px;
           height: 100vh;
           background: #23272f;
@@ -295,6 +295,11 @@
         .sidebar-username {
           font-weight: bold;
           font-size: 1.1rem;
+        }
+        .sidebar-email {
+          font-size: 0.95em;
+          color: #bbb;
+          margin-top: 2px;
         }
         .sidebar-menu {
           list-style: none;
@@ -346,98 +351,96 @@
           background: #3a3f4b;
         }
         .main-content {
-          margin-left: 240px;
+          margin-right: 220px;
           padding: 1rem;
         }
         @media (max-width: 700px) {
           .sidebar { width: 60px; }
           .sidebar-header { display: none; }
           .sidebar-menu a, .sidebar-logout { font-size: 0.9rem; padding: 0.5em 0.2em; width: 100%; }
-          .main-content { margin-left: 70px; }
+          .main-content { margin-right: 70px; }
           .sidebar-logout-container { padding-bottom: 1rem; }
           .sidebar-logout { font-size: 1rem; padding: 0.5em 0.5em; }
         }
 
-.reaction-buttons {
-  text-align: left;
-  padding: 0.5rem 1rem 1rem 1rem;
-  font-size: 1.2rem;
-  user-select: none;
-}
-.heart-button {
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  cursor: pointer;
-  transition: transform 0.2s ease, color 0.2s ease;
-  color: white;
-}
+        .reaction-buttons {
+          text-align: left;
+          padding: 0.5rem 1rem 1rem 1rem;
+          font-size: 1.2rem;
+          user-select: none;
+        }
+        .heart-button {
+          background: none;
+          border: none;
+          font-size: 1.8rem;
+          cursor: pointer;
+          transition: transform 0.2s ease, color 0.2s ease;
+          color: white;
+        }
 
-.heart-button i {
-  color: transparent;
-  -webkit-text-stroke: 1px white; /* white border */
-  transition: all 0.3s ease;
+        .heart-button i {
+          color: transparent;
+          -webkit-text-stroke: 1px white; /* white border */
+          transition: all 0.3s ease;
 
-}
+        }
 
+        .heart-button.selected i {
+          color: red;
+          -webkit-text-stroke: 0; /* remove border when filled */
+          transform: scale(1.5);
+          filter: drop-shadow(0 0 4px red);
+        }
 
+        .reaction-buttons {
+          position: relative;
+          z-index: 3;
+        }
 
-
-.heart-button.selected i {
-  color: red;
-  -webkit-text-stroke: 0; /* remove border when filled */
-  transform: scale(1.5);
-  filter: drop-shadow(0 0 4px red);
-}
-
-.reaction-buttons {
-  position: relative;
-  z-index: 3;
-}
-
-
-
-
-
-
-
-
-
-
-    </style>
+</style>
+  
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" th:href="@{/css/feed-style.css}">
 </head>
 <body>
 <div class="sidebar">
     <div class="sidebar-header">
-        <img src="/avatars/felix.png" alt="User Avatar" class="sidebar-avatar" />
-        <span class="sidebar-username">Your Name</span>
+        <img th:src="${sidebarAvatar}" src="/avatars/felix.png" alt="User Avatar" class="sidebar-avatar" />
+        <span class="sidebar-username" th:text="${sidebarName}">Your Name</span>
+        <span class="sidebar-email" th:text="${sidebarEmail}" style="font-size:0.95em;color:#bbb;margin-top:2px;">your@email.com</span>
     </div>
     <ul class="sidebar-menu">
         <li><a href="/feed"><span class="sidebar-icon">🏠</span> Home</a></li>
         <li><a href="/profile"><span class="sidebar-icon">👤</span> Profile</a></li>
         <li><a href="/settings"><span class="sidebar-icon">⚙️</span> Settings</a></li>
         <li>
-            <form action="/logout" method="post" id="logoutForm" style="display:inline;">
-                <button type="submit" class="sidebar-logout-link"><span class="sidebar-icon">🚪</span> Logout</button>
-            </form>
+            <a href="#" class="sidebar-friends-toggle" onclick="toggleFriendsMenu(event)"><span class="sidebar-icon">🤝</span> Friends <span id="friends-arrow" style="margin-left:auto;">▼</span></a>
+            <ul id="friends-submenu" class="sidebar-friends-submenu" style="display:none; list-style:none; padding-left:1.5em; margin:0;">
+                <li><a href="/friends/suggestions">Friend Suggestions</a></li>
+                <li><a href="/friends/requests">Friend Requests</a></li>
+                <li><a href="/friends/all">All Friends</a></li>
+            </ul>
         </li>
     </ul>
 </div>
 <div class="main-content">
 
-    <!-- Post write section -->
-    <div class="container">
+
+<!-- Post write section -->
+<div class="container">
+    <form id="postForm" autocomplete="off">
         <div class="topic-row">
             <img src="/avatars/felix.png" alt="Avatar" class="avatar" />
-            <input type="text" class="topic" placeholder="What's the headline?" maxlength="72" />
+            <input type="text" class="topic" name="topic" placeholder="What's the headline?" maxlength="72" required />
         </div>
         <div id="topic-count" class="char-count">0 / 72</div>
-
-        <textarea class="content" placeholder="Share your thoughts here..." rows="1" maxlength="256"></textarea>
+        <textarea class="content" name="content" placeholder="Share your thoughts here..." rows="1" maxlength="256" required></textarea>
         <div id="content-count" class="char-count">0 / 256</div>
-    </div>
+        <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="btn btn-primary mt-2">Post</button>
+    </form>
+</div>
+
 
     <!-- Example posts with top ribbons -->
 
@@ -687,6 +690,55 @@
 });
 }
 
+    // feature/friends
+    // Post submit logic
+    const postForm = document.getElementById('postForm');
+    if (postForm) {
+      postForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const topic = postForm.topic.value.trim();
+        const content = postForm.content.value.trim();
+        if (!topic || !content) return;
+        // Get CSRF token name and value
+        const csrfInput = document.getElementById('csrfToken');
+        const csrfHeader = csrfInput ? csrfInput.name : 'X-CSRF-TOKEN';
+        const csrfToken = csrfInput ? csrfInput.value : '';
+        fetch('/api/post', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            [csrfHeader]: csrfToken
+          },
+          credentials: 'same-origin',
+          body: JSON.stringify({ topic, content })
+        })
+        .then(res => {
+          if (res.ok) window.location.reload();
+          else return res.text().then(msg => { throw new Error(msg); });
+        })
+        .catch(err => {
+          alert('Failed to post: ' + err.message);
+        });
+      });
+    }
+  
+  // --- Friends Menu Toggle ---
+
+
+    function toggleFriendsMenu(e) {
+    e.preventDefault();
+    const submenu = document.getElementById('friends-submenu');
+    const arrow = document.getElementById('friends-arrow');
+    if (submenu.style.display === 'none' || submenu.style.display === '') {
+        submenu.style.display = 'block';
+        arrow.textContent = '▲';
+    } else {
+        submenu.style.display = 'none';
+        arrow.textContent = '▼';
+    }
+
+    // - heart react logic --
+    // --- from develop branch ---
 
 
 function toggleHeart(postId) {
@@ -736,9 +788,36 @@ function toggleHeart(postId) {
     heartIcon.classList.toggle('fa-solid');
     alert('Failed to update reaction. Please try again.');
   });
+
 }
+      //----------------
 
 </script>
+
+<style>
+.sidebar-friends-submenu {
+    display: none;
+    list-style: none;
+    padding-left: 1.5em;
+    margin: 0;
+    text-align: left;
+}
+.sidebar-friends-submenu a {
+    font-size: 0.98rem;
+    color: #ccc;
+    padding: 0.3em 0.5em;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 0.2em;
+    transition: background 0.2s;
+    text-align: left;
+    width: 100%;
+}
+.sidebar-friends-submenu a:hover {
+    background: #3a3f4b;
+    color: #fff;
+}
+</style>
 
 </body>
 </html>

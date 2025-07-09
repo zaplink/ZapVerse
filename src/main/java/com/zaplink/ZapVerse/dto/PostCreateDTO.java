@@ -14,4 +14,8 @@ public class PostCreateDTO {
     private Set<String> tags;
     private LocalDate createdAt;
     private int profileId;
+
+    public void setProfileId(int profileId) {
+        this.profileId = profileId;
+    }
 }
