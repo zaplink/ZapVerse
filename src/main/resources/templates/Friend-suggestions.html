@@ -1,0 +1,98 @@
+<style>
+.suggestions-header {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.suggestions-sub {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+.suggestion-list {
+    margin-top: 1rem;
+}
+.suggestion-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.1rem;
+    gap: 1.1rem;
+}
+.suggestion-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e4e6eb;
+}
+.suggestion-info {
+    flex: 1;
+}
+.suggestion-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #222;
+}
+.suggestion-mutual {
+    color: #65676b;
+    font-size: 0.98rem;
+    margin-top: 0.1rem;
+}
+.suggestion-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+.suggestion-actions button {
+    min-width: 90px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    padding: 0.5em 0.9em;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.suggestion-actions .btn-primary {
+    background: #1877f2;
+    color: #fff;
+}
+.suggestion-actions .btn-primary:hover {
+    background: #166fe0;
+}
+.suggestion-actions .btn-danger {
+    background: #e4e6eb;
+    color: #050505;
+}
+.suggestion-actions .btn-danger:hover {
+    background: #d8dadf;
+}
+</style>
+
+<div>
+  <div class="suggestions-header">Suggestions</div>
+  <div class="suggestions-sub">People you may know</div>
+  <div class="suggestion-list">
+    <div th:each="user : ${suggestions}" class="suggestion-card">
+      <img th:src="@{'/avatars/' + ${user.avatar}}" class="suggestion-avatar" />
+      <div class="suggestion-info">
+        <div class="suggestion-name" th:text="${user.fname + ' ' + user.lname}"></div>
+        <!-- Optionally show mutual friends here -->
+        <!-- <div class="suggestion-mutual">42 mutual friends</div> -->
+      </div>
+      <div class="suggestion-actions">
+        <form th:action="@{/friends/request}" method="post">
+          <input type="hidden" name="receiverId" th:value="${user.id}" />
+          <button type="submit" class="btn btn-primary">Add friend</button>
+        </form>
+        <form th:action="@{/friends/remove-request}" method="post">
+          <input type="hidden" name="receiverId" th:value="${user.id}" />
+          <button type="submit" class="btn btn-danger">Remove</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

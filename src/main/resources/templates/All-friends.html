@@ -1,0 +1,61 @@
+<style>
+.friends-header {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.friends-count {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+}
+.friend-list {
+    margin-top: 1rem;
+}
+.friend-card {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1rem;
+    gap: 1.1rem;
+}
+.friend-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e4e6eb;
+}
+.friend-info {
+    flex: 1;
+}
+.friend-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #222;
+}
+.friend-mutual {
+    color: #65676b;
+    font-size: 0.98rem;
+    margin-top: 0.1rem;
+}
+</style>
+
+<div>
+  <div class="friends-header">All friends</div>
+  <div class="friends-count" th:text="${#lists.size(friends)} + ' friends'"></div>
+  <div class="friend-list">
+    <div th:each="friend : ${friends}" class="friend-card">
+      <img th:src="@{'/avatars/' + ${friend.avatar}}" class="friend-avatar" />
+      <div class="friend-info">
+        <div class="friend-name" th:text="${friend.fname + ' ' + friend.lname}"></div>
+        <!-- Optionally show mutual friends here -->
+        <!-- <div class="friend-mutual">99 mutual friends</div> -->
+      </div>
+      <!-- Optionally add a menu or actions here -->
+    </div>
+  </div>
+</div>
