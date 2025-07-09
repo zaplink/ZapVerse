@@ -80,7 +80,6 @@ public class PostController {
         Post post = postService.createPost(postCreateDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(PostMapper.toDTO(post));
     }
-
     @PutMapping("/post/{postId}")
     public ResponseEntity<PostDTO> updatePost(@PathVariable int postId, @RequestBody PostUpdateDTO postUpdateDTO) {
         Post post = postService.updatePost(postId, postUpdateDTO);
