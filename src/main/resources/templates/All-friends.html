@@ -1,11 +1,15 @@
 <style>
+body {
+    background: #23242a;
+}
 .friends-header {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    color: #fff;
 }
 .friends-count {
-    color: #555;
+    color: #bfc9d1;
     font-size: 1.1rem;
     margin-bottom: 1.2rem;
 }
@@ -15,19 +19,21 @@
 .friend-card {
     display: flex;
     align-items: center;
-    background: #fff;
+    background: #292b32;
     border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     padding: 0.8rem 1.2rem;
     margin-bottom: 1rem;
     gap: 1.1rem;
+    border: 1px solid #31343b;
 }
 .friend-avatar {
     width: 54px;
     height: 54px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #e4e6eb;
+    border: 2px solid #393c44;
+    background: #181a20;
 }
 .friend-info {
     flex: 1;
@@ -35,10 +41,10 @@
 .friend-name {
     font-weight: 600;
     font-size: 1.1rem;
-    color: #222;
+    color: #fff;
 }
 .friend-mutual {
-    color: #65676b;
+    color: #8fa1b3;
     font-size: 0.98rem;
     margin-top: 0.1rem;
 }
@@ -56,7 +62,6 @@
              th:text="${mutualCounts[friend.id]} + ' mutual friends'"
              th:if="${mutualCounts[friend.id] > 0}"></div>
       </div>
-      <!-- Optionally add a menu or actions here -->
     </div>
   </div>
 </div>

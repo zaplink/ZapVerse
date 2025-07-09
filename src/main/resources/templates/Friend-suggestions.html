@@ -1,11 +1,15 @@
 <style>
+body {
+    background: #23242a;
+}
 .suggestions-header {
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
+    color: #fff;
 }
 .suggestions-sub {
-    color: #555;
+    color: #bfc9d1;
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
 }
@@ -15,19 +19,21 @@
 .suggestion-card {
     display: flex;
     align-items: center;
-    background: #fff;
+    background: #292b32;
     border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
     padding: 1rem 1.2rem;
     margin-bottom: 1.1rem;
     gap: 1.1rem;
+    border: 1px solid #31343b;
 }
 .suggestion-avatar {
     width: 54px;
     height: 54px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #e4e6eb;
+    border: 2px solid #393c44;
+    background: #181a20;
 }
 .suggestion-info {
     flex: 1;
@@ -35,10 +41,10 @@
 .suggestion-name {
     font-weight: 600;
     font-size: 1.1rem;
-    color: #222;
+    color: #fff;
 }
 .suggestion-mutual {
-    color: #65676b;
+    color: #8fa1b3;
     font-size: 0.98rem;
     margin-top: 0.1rem;
 }
@@ -64,11 +70,11 @@
     background: #166fe0;
 }
 .suggestion-actions .btn-danger {
-    background: #e4e6eb;
-    color: #050505;
+    background: #393c44;
+    color: #bfc9d1;
 }
 .suggestion-actions .btn-danger:hover {
-    background: #d8dadf;
+    background: #31343b;
 }
 </style>
 
