@@ -1,5 +1,9 @@
 package com.zaplink.ZapVerse.controller;
 
+import com.zaplink.ZapVerse.dto.PostDTO;
+import com.zaplink.ZapVerse.model.Post;
+import com.zaplink.ZapVerse.repository.PostRepository;
+import com.zaplink.ZapVerse.utility.PostMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +13,16 @@ import com.zaplink.ZapVerse.repository.ProfileRepository;
 import com.zaplink.ZapVerse.model.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Controller
 public class FeedViewController {
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @GetMapping("/feed")
     public String displayFeed(Model model) {
@@ -29,6 +38,11 @@ public class FeedViewController {
         if (profile != null) {
             model.addAttribute("profileId", profile.getId()); // ✅ Inject here
         }
+
+        List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc(); // or modifiedAt if you prefer
+        List<PostDTO> postDTOs = posts.stream().map(PostMapper::toDTO).toList();
+        model.addAttribute("posts", postDTOs);
+
         return "feed";
     }
 }

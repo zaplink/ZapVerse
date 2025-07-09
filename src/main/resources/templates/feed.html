@@ -474,153 +474,34 @@
 
     </form>
     <div id="feed-posts">
+        <div class="container post" th:each="post : ${posts}">
+            <div class="post-ribbon"></div>
 
-
-
-    <!-- Example posts with top ribbons -->
-
-    <div class="container post layla">
-        <div class="post-ribbon"></div>
-        <div class="post-header">
-            <img src="/avatars/layla.png" alt="Avatar" class="avatar" />
-            <div class="post-user-info">
-                <div class="post-user-name">Layla Summers</div>
-                <div class="post-date-time">Jun 26, 2025 · 3:15 PM</div>
-            </div>
-        </div>
-        <div class="post-content-wrapper">
-            <div class="post-content-overlay"></div>
-            <div class="post-content">
-                <div class="post-topic">The Green Reset Button</div>
-                <div class="post-text">
-                    Sometimes stepping away and breathing in nature helps reboot everything. Don’t underestimate a walk under the trees.
+            <div class="post-header">
+                <img th:src="@{'/avatars/' + ${post.avatar}}" src="/avatars/default.png" alt="Avatar" class="avatar" />
+                <div class="post-user-info">
+                    <div class="post-user-name" th:text="${post.fname + ' ' + post.lname}">User Name</div>
+                    <div class="post-date-time" th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy')} + ' · ' + ${#temporals.format(post.createdAt, 'hh:mm a')}">Date</div>
                 </div>
             </div>
-        </div>
-        <div class="reaction-buttons" data-post-id="1">
-            <button class="heart-button" onclick="toggleHeart(1, event)">
-                <i class="fa-regular fa-heart"></i>
-            </button>
 
-        </div>
-
-    </div>
-
-    <div class="container post zara">
-        <div class="post-ribbon"></div>
-        <div class="post-header">
-            <img src="/avatars/zara.png" alt="Avatar" class="avatar" />
-            <div class="post-user-info">
-                <div class="post-user-name">Zara M.</div>
-                <div class="post-date-time">Jun 27, 2025 · 10:45 AM</div>
-            </div>
-        </div>
-        <div class="post-content-wrapper">
-            <div class="post-content-overlay"></div>
-            <div class="post-content">
-                <div class="post-topic">Evening Reflections</div>
-                <div class="post-text">
-                    The sunset painted the sky in shades of purple, reminding me to pause and appreciate the quiet moments.
+            <div class="post-content-wrapper">
+                <div class="post-content-overlay"></div>
+                <div class="post-content">
+                    <div class="post-topic" th:text="${post.topic}">Post Topic</div>
+                    <div class="post-text" th:text="${post.content}">Post content</div>
                 </div>
             </div>
-        </div>
-        <div class="reaction-buttons" data-post-id="2">
-            <button class="heart-button" onclick="toggleHeart(2, event)">
-                <i class="fa-regular fa-heart"></i>
-            </button>
 
+            <div class="reaction-buttons" th:attr="data-post-id=${post.id}">
+                <button class="heart-button" th:onclick="'toggleHeart(' + ${post.id} + ', event)'">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
         </div>
-
     </div>
 
-    <div class="container post grant">
-        <div class="post-ribbon"></div>
-        <div class="post-header">
-            <img src="/avatars/grant.png" alt="Avatar" class="avatar" />
-            <div class="post-user-info">
-                <div class="post-user-name">Grant Stevens</div>
-                <div class="post-date-time">Jun 28, 2025 · 8:30 AM</div>
-            </div>
-        </div>
-        <div class="post-content-wrapper">
-            <div class="post-content-overlay"></div>
-            <div class="post-content">
-                <div class="post-topic">Morning Motivation</div>
-                <div class="post-text">
-                    Start your day with a positive mindset and watch how everything falls into place.
-                </div>
-            </div>
-        </div>
 
-        <div class="reaction-buttons" data-post-id="3">
-            <button class="heart-button" onclick="toggleHeart(3, event)">
-                <i class="fa-regular fa-heart"></i>
-            </button>
-        </div>
-
-    </div>
-
-    <div class="container post milo">
-        <div class="post-ribbon"></div>
-        <div class="post-header">
-            <img src="/avatars/milo.png" alt="Avatar" class="avatar" />
-            <div class="post-user-info">
-                <div class="post-user-name">Milo James</div>
-                <div class="post-date-time">Jun 28, 2025 · 11:15 AM</div>
-            </div>
-        </div>
-        <div class="post-content-wrapper">
-            <div class="post-content-overlay"></div>
-            <div class="post-content">
-                <div class="post-topic">Tech Trends</div>
-                <div class="post-text">
-                    Exploring the latest in AI and how it's reshaping the future of work and creativity.
-                </div>
-            </div>
-        </div>
-        <div class="reaction-buttons" data-post-id="4">
-            <button class="heart-button" onclick="toggleHeart(4, event)">
-                <i class="fa-regular fa-heart"></i>
-            </button>
-        </div>
-
-
-
-
-
-
-    </div>
-
-    <div class="container post jayden">
-        <div class="post-ribbon"></div>
-        <div class="post-header">
-            <img src="/avatars/jayden.png" alt="Avatar" class="avatar" />
-            <div class="post-user-info">
-                <div class="post-user-name">Jayden Lee</div>
-                <div class="post-date-time">Jun 29, 2025 · 5:45 PM</div>
-            </div>
-        </div>
-        <div class="post-content-wrapper">
-            <div class="post-content-overlay"></div>
-            <div class="post-content">
-                <div class="post-topic">Evening Run Thoughts</div>
-                <div class="post-text">
-                    Running clears my mind and fuels my creativity. A daily ritual worth keeping.
-                </div>
-            </div>
-        </div>
-        <div class="reaction-buttons" data-post-id="5">
-            <button class="heart-button" onclick="toggleHeart(5, event)">
-                <i class="fa-regular fa-heart"></i>
-            </button>
-
-        </div>
-
-
-    </div>
-</div>
-</div>
-</div>
 <form th:action="@{/logout}" method="post"
       style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

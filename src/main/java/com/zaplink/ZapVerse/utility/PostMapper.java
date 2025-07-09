@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PostMapper {
 
@@ -31,6 +32,12 @@ public class PostMapper {
             postDTO.setAvatar(post.getProfile().getAvatar());
 
         }
+        if (post.getTags() != null) {
+            Set<String> tagStrings = post.getTags().stream().map(tag -> tag.getTagType().name()).collect(Collectors.toSet());
+            postDTO.setTags(tagStrings);
+        }
+
+
         return postDTO;
     }
 
