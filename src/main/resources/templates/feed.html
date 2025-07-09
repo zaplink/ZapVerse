@@ -909,6 +909,11 @@ function appendPostToFeed(post) {
                 <div class="post-text">${post.content}</div>
             </div>
         </div>
+         <div class="reaction-buttons" data-post-id="${post.id}">
+            <button class="heart-button" onclick="toggleHeart(${post.id}, event)">
+                <i class="fa-regular fa-heart"></i>
+            </button>
+        </div>
     `;
 
     const feed = document.getElementById('feed-posts');
