@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name = "react")
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"post_id", "profile_id"})
+        }
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

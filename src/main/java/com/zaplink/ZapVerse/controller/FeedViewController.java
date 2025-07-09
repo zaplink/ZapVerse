@@ -25,6 +25,10 @@ public class FeedViewController {
         model.addAttribute("sidebarAvatar", "/avatars/" + avatar);
         model.addAttribute("sidebarName", displayName);
         model.addAttribute("sidebarEmail", email);
+
+        if (profile != null) {
+            model.addAttribute("profileId", profile.getId()); // ✅ Inject here
+        }
         return "feed";
     }
 }
