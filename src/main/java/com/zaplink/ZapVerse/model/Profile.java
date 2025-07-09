@@ -21,12 +21,13 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    @Column(unique = true)
     private String email;
+
     private String password;
     private String fname;
     private String lname;
 
-//    @OneToOne
     @JsonIgnore
     private String avatar;
 

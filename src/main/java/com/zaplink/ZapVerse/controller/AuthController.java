@@ -1,6 +1,5 @@
 package com.zaplink.ZapVerse.controller;
 
-import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.service.ProfileService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,14 +15,12 @@ public class AuthController {
     ProfileService profileService;
 
     @GetMapping("/login")
-    public String loginPage(@RequestParam(value = "error", required = false) String error, Model model){
-        if(error != null){
+    public String loginPage(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (error != null) {
             model.addAttribute("error", "Invalid email or password");
         }
         return "login";
     }
-
-
 
     @PostMapping("/register")
     public String register(@RequestParam String email,
@@ -35,11 +32,12 @@ public class AuthController {
         try {
             profileService.registerUser(email, password, firstName, lastName, avatar);
             model.addAttribute("success", "Registration successful! You can now login.");
-            return "register";
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             model.addAttribute("error", e.getMessage());
-            return "register";
+        } catch (Exception e) {
+            model.addAttribute("error", "An unexpected error occurred. Please try again.");
         }
+        return "register";
     }
 
     @GetMapping("/register")
