@@ -481,7 +481,9 @@
                 <img th:src="@{'/avatars/' + ${post.avatar}}" src="/avatars/default.png" alt="Avatar" class="avatar" />
                 <div class="post-user-info">
                     <div class="post-user-name" th:text="${post.fname + ' ' + post.lname}">User Name</div>
-                    <div class="post-date-time" th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy')} + ' · ' + ${#temporals.format(post.createdAt, 'hh:mm a')}">Date</div>
+                    <div class="post-date-time" th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy · hh:mm a')}">
+                    </div>
+
                 </div>
             </div>
 

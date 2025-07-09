@@ -9,6 +9,7 @@ import com.zaplink.ZapVerse.model.Tag;
 import com.zaplink.ZapVerse.model.TagType;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -56,8 +57,8 @@ public class PostMapper {
         Post post = new Post();
         post.setTopic(postCreateDTO.getTopic());
         post.setContent(postCreateDTO.getContent());
-        post.setCreatedAt(LocalDate.now());
-        post.setModifiedAt(LocalDate.now());
+        post.setCreatedAt(LocalDateTime.now());
+        post.setModifiedAt(LocalDateTime.now());
         post.setProfile(profile);
 
         Set<Tag> tags = new HashSet<>();
