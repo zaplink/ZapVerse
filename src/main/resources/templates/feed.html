@@ -20,8 +20,8 @@
         }
 
         .main-content-feed {
-         margin-top: 120px; /* Adjust if your topnav height changes */
-         margin-right: 270px; /* To avoid sidebar overlap */
+         margin-top: 160px; /* Adjust if your topnav height changes */
+         margin-right: 0; /* To avoid sidebar overlap */
         transition: margin-top 0.2s;
        }
        @media (max-width: 1100px) {
@@ -262,14 +262,14 @@
           user-select: none;
         }
       .heart-button {
-  background: none;
-  border: none;
-  font-size: 1.8rem;
-  cursor: pointer;
-  padding: 0;
-  color: white;
-  outline: none; /* Remove focus outline */
-}
+          background: none;
+          border: none;
+          font-size: 1.8rem;
+          cursor: pointer;
+          padding: 0;
+          color: white;
+          outline: none; /* Remove focus outline */
+        }
 
 .heart-button i {
   transition: all 0.3s ease;
@@ -286,7 +286,7 @@
   filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.5));
 }
 
-        .reaction-buttons {
+.reaction-buttons {
           position: relative;
           z-index: 3;
         }
@@ -465,30 +465,34 @@
   
   /* --- TOP NAVIGATION BAR --- */
   .zapverse-topnav {
-      width: 100vw;
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: #181a20;
-      border-bottom: 1.5px solid #31343b;
-      z-index: 1100;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-shadow: 0 2px 16px rgba(24,119,242,0.07);
-      padding: 0 0 0.5rem 0;
-      min-height: 110px;
-  }
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #181a20;
+    border-bottom: 1.5px solid #31343b;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 16px rgba(24,119,242,0.07);
+    padding: 0 0 0.5rem 0;
+    min-height: 110px;
+}
 
-  .zapverse-topnav-icons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3.5rem;
-      width: 100vw;
-      margin-bottom: 0.2rem;
-       height: 70px;  
-  }
+.zapverse-topnav-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3.5rem;
+    width: 100vw;
+    margin-bottom: 0.2rem;
+    height: 70px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
   .topnav-link {
       color: #bfc9d1;
       text-decoration: none;
@@ -526,11 +530,12 @@
       left: 20%;
       bottom: 0;
   }
-  @media (max-width: 700px) {
-      .topnav-link { font-size: 1rem; padding: 0.3em 0.7em 0.2em 0.7em; }
-      .zapverse-topnav-icons { gap: 1.2rem; }
-      .zapverse-topnav { min-height: 70px; }
-  }
+  @media (max-width: 900px) {
+    .zapverse-topnav-icons {
+        gap: 1.2rem;
+        height: 50px;
+    }
+}
   </style>
 
   <!-- Friends Menu Toggle ---> 
