@@ -133,6 +133,7 @@ public class FriendViewController {
 
         model.addAttribute("friends", friends);
         model.addAttribute("mutualCounts", mutualCounts);
+        model.addAttribute("activePage", "friends"); // for friends pages
         return "All-friends";
     }
 }

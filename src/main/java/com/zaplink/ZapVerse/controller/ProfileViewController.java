@@ -112,7 +112,7 @@ public class ProfileViewController {
 
         // Save the updated profile (by ID, not creating new)
         profileRepository.save(profile);
-
+        model.addAttribute("activePage", "profile"); // for profile.html
         return "redirect:/profile";
     }
 }

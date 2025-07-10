@@ -30,7 +30,9 @@ public class FeedViewController {
         String email = authentication.getName();
         Profile profile = profileRepository.findByEmail(email).orElse(null);
         String displayName = (profile != null) ? (profile.getFname() + " " + profile.getLname()) : "User";
-        String avatar = (profile != null && profile.getAvatar() != null && !profile.getAvatar().isEmpty()) ? profile.getAvatar() : "felix.png";
+        String avatar = (profile != null && profile.getAvatar() != null && !profile.getAvatar().isEmpty())
+                ? profile.getAvatar()
+                : "felix.png";
         model.addAttribute("sidebarAvatar", "/avatars/" + avatar);
         model.addAttribute("sidebarName", displayName);
         model.addAttribute("sidebarEmail", email);
@@ -42,7 +44,7 @@ public class FeedViewController {
         List<Post> posts = postRepository.findAllByOrderByCreatedAtDesc(); // or modifiedAt if you prefer
         List<PostDTO> postDTOs = posts.stream().map(PostMapper::toDTO).toList();
         model.addAttribute("posts", postDTOs);
-
+        model.addAttribute("activePage", "home"); // for feed.html
         return "feed";
     }
 }
