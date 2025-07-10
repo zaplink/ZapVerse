@@ -223,6 +223,26 @@
                 height: 44px;
             }
         }
+
+        .unfriend-btn {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 0.5em 1.2em;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-left: 1.2em;
+    cursor: pointer;
+    transition: background 0.18s;
+    box-shadow: 0 2px 8px rgba(179, 58, 54, 0.13);
+}
+.unfriend-btn:hover {
+    background: #c0392b;
+}
+.friend-card {
+    align-items: center;
+}
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
 </head>
@@ -254,9 +274,15 @@
              th:text="${mutualCounts[friend.id]} + ' mutual friends'"
              th:if="${mutualCounts[friend.id] > 0}"></div>
       </div>
+      <form th:action="@{/friends/unfriend}" method="post" style="margin-left:auto;">
+      <input type="hidden" name="friendId" th:value="${friend.id}" />
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+      <button type="submit" class="unfriend-btn">Unfriend</button>
+    </form>
     </div>
   </div>
 </div>
+
 
 <!-- Right Navigation Bar -->
 <div class="friends-right-navbar">

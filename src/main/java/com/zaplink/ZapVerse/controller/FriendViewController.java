@@ -136,4 +136,25 @@ public class FriendViewController {
         model.addAttribute("activePage", "friends"); // for friends pages
         return "All-friends";
     }
+    // ...existing code...
+
+    // 8. Unfriend (Remove Friend)
+    @PostMapping("/friends/unfriend")
+    public String unfriend(@AuthenticationPrincipal User user, @RequestParam int friendId) {
+        Profile current = profileRepository.findByEmail(user.getUsername()).orElseThrow();
+        Profile friend = profileRepository.findById(friendId).orElseThrow();
+
+        // Remove each other from friends list
+        current.getFriends().remove(friend);
+        friend.getFriends().remove(current);
+
+        profileRepository.save(current);
+        profileRepository.save(friend);
+
+        // After unfriending, redirect to all friends (the UI will show them in
+        // suggestions)
+        return "redirect:/friends/all";
+    }
+
+    // ...existing code...
 }
