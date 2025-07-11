@@ -304,19 +304,19 @@
 <div class="friends-right-navbar">
   <ul>
     <li>
-      <a href="/friends/requests" class="rightnav-link [[${page}=='requests'?'active':'']]">
+      <a href="/friends/requests" th:class="'rightnav-link ' + (${page} == 'requests' ? 'active' : '')">
         <span class="rightnav-icon"><i class="fa-solid fa-user-plus"></i></span>
         Friend requests
       </a>
     </li>
     <li>
-      <a href="/friends/suggestions" class="rightnav-link [[${page}=='suggestions'?'active':'']]">
+      <a href="/friends/suggestions" th:class="'rightnav-link ' + (${page} == 'suggestions' ? 'active' : '')">
         <span class="rightnav-icon"><i class="fa-solid fa-user-group"></i></span>
         Suggestions
       </a>
     </li>
     <li>
-      <a href="/friends/all" class="rightnav-link [[${page}=='all'?'active':'']]">
+      <a href="/friends/all" th:class="'rightnav-link ' + (${page} == 'all' ? 'active' : '')">
         <span class="rightnav-icon"><i class="fa-solid fa-users"></i></span>
         All friends
       </a>
