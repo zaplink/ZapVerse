@@ -45,7 +45,7 @@ body {
 }
 .topnav-link.active,
 .topnav-link:hover {
-    background: #31343b;
+    background: #23242a;
     color: #1877f2;
 }
 .topnav-link.active::after {
@@ -58,6 +58,11 @@ body {
     position: absolute;
     left: 20%;
     bottom: 0;
+}
+.sidebar-link.active,
+.sidebar-link:hover {
+    background: #23242a;
+    color: #1877f2;
 }
 @media (max-width: 700px) {
     .zapverse-topnav {
@@ -139,15 +144,15 @@ body {
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <nav class="zapverse-topnav">
-    <a href="/feed" class="topnav-link [[${activePage}=='home'?'active':'']]">
+    <a href="/feed" th:class="'topnav-link ' + (${activePage} == 'home' ? 'active' : '')">
         <i class="fa-solid fa-house"></i>
         <span>Home</span>
     </a>
-    <a href="/friends/requests" class="topnav-link [[${activePage}=='friends'?'active':'']]">
+    <a href="/friends/requests" th:class="'topnav-link ' + (${activePage} == 'friends' ? 'active' : '')">
         <i class="fa-solid fa-user-group"></i>
         <span>Friends</span>
     </a>
-    <a href="/profile" class="topnav-link [[${activePage}=='profile'?'active':'']]">
+    <a href="/profile" th:class="'topnav-link ' + (${activePage} == 'profile' ? 'active' : '')">
         <i class="fa-solid fa-user"></i>
         <span>Profile</span>
     </a>

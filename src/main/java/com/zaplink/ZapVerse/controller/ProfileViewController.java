@@ -38,7 +38,7 @@ public class ProfileViewController {
                 .toList();
 
         model.addAttribute("posts", posts);
-
+        model.addAttribute("activePage", "profile"); // For Profile page
         return "profile";
     }
 
@@ -58,6 +58,7 @@ public class ProfileViewController {
                 "arthur.png", "ava.png", "cleo.png", "dante.png", "eli.png", "eliza.png", "felix.png", "grant.png",
                 "jayden.png", "jonas.png", "lana.png", "layla.png", "liam.png", "malik.png", "mei.png", "milo.png",
                 "naomi.png", "noah.png", "omar.png"));
+        model.addAttribute("activePage", "profile"); // For Profile page
         return "profile-edit";
     }
 
@@ -133,7 +134,8 @@ public class ProfileViewController {
             @RequestParam Integer postId,
             @RequestParam String topic,
             @RequestParam String content,
-            @AuthenticationPrincipal User user) {
+            @AuthenticationPrincipal User user,
+            Model model) {
         Profile profile = profileRepository.findByEmail(user.getUsername()).orElse(null);
         if (profile != null) {
             for (Post p : profile.getPosts()) {

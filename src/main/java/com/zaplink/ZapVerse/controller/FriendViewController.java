@@ -38,6 +38,7 @@ public class FriendViewController {
         model.addAttribute("suggestions", suggestions.subList(from, to));
         model.addAttribute("page", page);
         model.addAttribute("totalPages", (suggestions.size() + size - 1) / size);
+        model.addAttribute("activePage", "friends"); // For Friends pages
         return "Friend-suggestions";
     }
 
@@ -80,6 +81,7 @@ public class FriendViewController {
         List<FriendRequest> outgoing = friendRequestRepository.findByProfileAndStatus(current, RequestStatus.PENDING);
         model.addAttribute("incoming", incoming);
         model.addAttribute("outgoing", outgoing);
+        model.addAttribute("activePage", "friends"); // For Friends pages
         return "Friend-request";
     }
 
