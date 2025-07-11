@@ -38,6 +38,8 @@ public class FriendViewController {
         model.addAttribute("suggestions", suggestions.subList(from, to));
         model.addAttribute("page", page);
         model.addAttribute("totalPages", (suggestions.size() + size - 1) / size);
+        model.addAttribute("activePage", "friends"); // For Friends pages
+        model.addAttribute("page", "suggestions"); // For Friend suggestions page
         return "Friend-suggestions";
     }
 
@@ -80,6 +82,8 @@ public class FriendViewController {
         List<FriendRequest> outgoing = friendRequestRepository.findByProfileAndStatus(current, RequestStatus.PENDING);
         model.addAttribute("incoming", incoming);
         model.addAttribute("outgoing", outgoing);
+        model.addAttribute("activePage", "friends");
+        model.addAttribute("page", "requests"); // <--- THIS IS IMPORTANT
         return "Friend-request";
     }
 
@@ -134,9 +138,9 @@ public class FriendViewController {
         model.addAttribute("friends", friends);
         model.addAttribute("mutualCounts", mutualCounts);
         model.addAttribute("activePage", "friends"); // for friends pages
+        model.addAttribute("page", "all"); // <--- THIS IS IMPORTANT
         return "All-friends";
     }
-    // ...existing code...
 
     // 8. Unfriend (Remove Friend)
     @PostMapping("/friends/unfriend")
@@ -155,6 +159,5 @@ public class FriendViewController {
         // suggestions)
         return "redirect:/friends/all";
     }
-
     // ...existing code...
 }
