@@ -4,8 +4,79 @@
     <title>Edit Profile - ZapVerse</title>
     <link rel="stylesheet" th:href="@{/css/feed-style.css}">
     <style>
-        body { background: #181a20; font-family: 'Segoe UI', Arial, sans-serif; }
-        .profile-container { max-width: 400px; margin: 3rem auto; background: #23272f; color: #fff; border-radius: 18px; padding: 2.5rem 2rem 2rem 2rem; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25); text-align: center; }
+body {
+    background: #181a20;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.zapverse-topnav {
+    width: 100vw;
+    background: #23242a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 0.7rem 0;
+    border-bottom: 1.5px solid #31343b;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+    margin: 0;
+}
+.topnav-link {
+    color: #bfc9d1;
+    text-decoration: none;
+    font-size: 1.08rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.3em 1.2em 0.2em 1.2em;
+    border-radius: 10px;
+    transition: background 0.18s, color 0.18s;
+    position: relative;
+}
+.topnav-link .fa-solid {
+    font-size: 1.5em;
+    margin-bottom: 0.1em;
+}
+.topnav-link.active,
+.topnav-link:hover {
+    background: #31343b;
+    color: #1877f2;
+}
+.topnav-link.active::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 3px;
+    background: #1877f2;
+    border-radius: 2px;
+    position: absolute;
+    left: 20%;
+    bottom: 0;
+}
+@media (max-width: 700px) {
+    .zapverse-topnav {
+        gap: 1.2rem;
+        font-size: 0.95rem;
+    }
+    .topnav-link { padding: 0.3em 0.7em 0.2em 0.7em; }
+}
+.profile-container {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 6.5rem; /* Space for fixed nav */
+    background: #23272f;
+    color: #fff;
+    border-radius: 18px;
+    padding: 2.5rem 2rem 2rem 2rem;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+    text-align: center;
+}
         .profile-container h2 { margin-bottom: 1.5rem; font-weight: 700; font-size: 2rem; letter-spacing: 1px; }
         .profile-avatar { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #0d6efd; margin-bottom: 1.2rem; background: #fff; object-fit: cover; box-shadow: 0 2px 8px rgba(13,110,253,0.15);}
         .avatar-list { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 1.3rem;}
@@ -81,62 +152,6 @@
         <span>Profile</span>
     </a>
 </nav>
-<style>
-.zapverse-topnav {
-    width: 100%;
-    background: #23242a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2.5rem;
-    padding: 0.7rem 0 0.7rem 0;
-    border-bottom: 1.5px solid #31343b;
-    position: sticky;
-    top: 0;
-    z-index: 1001;
-}
-.topnav-link {
-    color: #bfc9d1;
-    text-decoration: none;
-    font-size: 1.08rem;
-    font-weight: 500;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.2rem;
-    padding: 0.3em 1.2em 0.2em 1.2em;
-    border-radius: 10px;
-    transition: background 0.18s, color 0.18s;
-    position: relative;
-}
-.topnav-link .fa-solid {
-    font-size: 1.5em;
-    margin-bottom: 0.1em;
-}
-.topnav-link.active,
-.topnav-link:hover {
-    background: #31343b;
-    color: #1877f2;
-}
-.topnav-link.active::after {
-    content: '';
-    display: block;
-    width: 60%;
-    height: 3px;
-    background: #1877f2;
-    border-radius: 2px;
-    position: absolute;
-    left: 20%;
-    bottom: 0;
-}
-@media (max-width: 700px) {
-    .zapverse-topnav {
-        gap: 1.2rem;
-        font-size: 0.95rem;
-    }
-    .topnav-link { padding: 0.3em 0.7em 0.2em 0.7em; }
-}
-</style>
 <div class="profile-container">
     <h2>Edit Profile</h2>
     <form th:action="@{/profile/edit}" method="post" autocomplete="off">
@@ -194,6 +209,9 @@
         </div>
     </form>
 </div>
+<a href="/profile" class="btn btn-save" style="display:block; width:max-content; margin:2.5rem auto 1.5rem auto; text-align:center;">
+    <i class="fa-solid fa-arrow-left"></i> Back to Profile
+</a>
 <script>
     // Avatar selection logic
     document.addEventListener('DOMContentLoaded', function() {
