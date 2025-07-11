@@ -35,6 +35,7 @@ public class ReactionService {
 
         if (dto.getReaction() == null || dto.getReaction().isEmpty()) {
             existing.ifPresent(reactionRepository::delete);
+            updateLoveCount(post);
             return;
         }
 
@@ -44,11 +45,18 @@ public class ReactionService {
         reaction.setReaction(dto.getReaction());
 
         reactionRepository.save(reaction);
+
+        updateLoveCount(post);
+    }
+    private void updateLoveCount(Post post) {
+        long loveCount = reactionRepository.countByPostAndReaction(post, "LOVE");
+        post.setLoveCount(loveCount);
+        postRepository.save(post);
     }
 
 
-
-
-
-
 }
+
+
+
+

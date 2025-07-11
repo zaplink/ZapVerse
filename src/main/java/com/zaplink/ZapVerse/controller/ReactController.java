@@ -8,8 +8,10 @@ import com.zaplink.ZapVerse.repository.PostRepository;
 import com.zaplink.ZapVerse.repository.ProfileRepository;
 import com.zaplink.ZapVerse.repository.ReactRespository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +27,8 @@ public class ReactController {
         this.postRepository = postRepository;
         this.profileRepository = profileRepository;
     }
+
+    @Transactional
     @PostMapping
     public ResponseEntity<String> toggleReaction(@RequestBody ReactDTO dto) {
         Post post = postRepository.findById(dto.getPostId())
@@ -39,16 +43,24 @@ public class ReactController {
             // Remove reaction
             existing.ifPresent(reactRepository::delete);
             return ResponseEntity.ok("Reaction removed");
+        } else {
+            React react = existing.orElse(new React());
+            react.setPost(post);
+            react.setProfile(profile);
+            react.setReaction(dto.getReaction());
+
+            reactRepository.save(react);
+            reactRepository.flush();
         }
 
-        // Add or update reaction
-        React react = existing.orElse(new React());
-        react.setPost(post);
-        react.setProfile(profile);
-        react.setReaction(dto.getReaction());
+        long loveCount = reactRepository.countByPostAndReaction(post, "LOVE");
+        post.setLoveCount(loveCount);
 
-        reactRepository.save(react);
-        return ResponseEntity.ok("Reaction saved: " + dto.getReaction());
+        postRepository.save(post);
+        post.setModifiedAt(LocalDateTime.now());
+        postRepository.save(post);
+        return ResponseEntity.ok(String.valueOf(loveCount));
+
     }
 
 }

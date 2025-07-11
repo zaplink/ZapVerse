@@ -51,4 +51,10 @@ public class Post {
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
+
+    @Column(name = "love_count", nullable = false)
+    private Long loveCount =0L;
+
+
+
 }

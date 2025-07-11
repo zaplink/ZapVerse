@@ -11,4 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ReactRespository extends JpaRepository<React, Integer> {
     Optional<React> findByPostAndProfile(Post post, Profile profile);
+
+    long countByPostAndReaction(Post post, String reaction);
+
+    boolean existsByPostAndProfile(Post post, Profile currentUser);
 }
