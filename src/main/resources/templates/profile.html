@@ -109,6 +109,30 @@
                 max-width: 100%;
             }
         }
+
+        /* styles of post actions*/
+.post-actions {
+    margin-top: 0.7em;
+    display: flex;
+    gap: 0.7em;
+}
+.delete-btn, .edit-btn, .save-btn {
+    background: #23242a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.3em 1em;
+    font-size: 0.98rem;
+    cursor: pointer;
+    transition: background 0.18s;
+    margin-right: 0.3em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+}
+.delete-btn:hover { background: #d32f2f; color: #fff; }
+.edit-btn:hover, .save-btn:hover { background: #1877f2; color: #fff; }
+.edit-post-form { margin-top: 0.7em; }
     </style>
 </head>
 <body>
@@ -193,15 +217,44 @@
     </div>
 
     <!-- Post List (Right) -->
-    <div class="posts-section">
-        <h3>Your Posts</h3>
-        <div th:if="${#lists.isEmpty(posts)}" style="color:#aaa;">No posts yet.</div>
-        <div th:each="post : ${posts}" class="post">
-            <div class="post-topic" th:text="${post.topic}">Post Topic</div>
-            <div class="post-text" th:text="${post.content}">Post content goes here...</div>
-            <div class="post-date-time" th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy')}">Date</div>
-        </div>
+    <div th:each="post : ${posts}" class="post" th:attr="data-post-id=${post.id}">
+    <div class="post-topic" th:text="${post.topic}">Post Topic</div>
+    <div class="post-text" th:text="${post.content}"></div>
+    <!-- Edit form (hidden by default) -->
+    <form th:action="@{/profile/post/edit}" method="post" class="edit-post-form" style="display:none;">
+        <input type="hidden" name="postId" th:value="${post.id}" />
+        <input type="text" name="topic" th:value="${post.topic}" required style="width:100%;margin-bottom:0.5em;" />
+        <textarea name="content" required style="width:100%;min-height:60px;">[[${post.content}]]</textarea>
+        <button type="submit" class="save-btn">Save</button>
+    </form>
+    <div class="post-date-time" th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy')}">Date</div>
+    <div class="post-actions">
+        <form th:action="@{/profile/post/delete}" method="post" style="display:inline;">
+            <input type="hidden" name="postId" th:value="${post.id}" />
+            <button type="submit" class="delete-btn" onclick="return confirm('Delete this post?')">
+                <i class="fa-solid fa-trash"></i> Delete
+            </button>
+        </form>
+        <button type="button" class="edit-btn" onclick="editPost(this)">
+            <i class="fa-solid fa-pen"></i> Edit
+        </button>
     </div>
 </div>
+</div>
+
+<script>
+function editPost(btn) {
+    // Hide all edit forms and show all post-text
+    document.querySelectorAll('.edit-post-form').forEach(f => f.style.display = 'none');
+    document.querySelectorAll('.post-text').forEach(t => t.style.display = '');
+
+    // Hide the post-text and show the edit form for this post
+    const postDiv = btn.closest('.post');
+    postDiv.querySelector('.post-text').style.display = 'none';
+    let form = postDiv.querySelector('.edit-post-form');
+    if (form) form.style.display = '';
+}
+</script>
+
 </body>
 </html>

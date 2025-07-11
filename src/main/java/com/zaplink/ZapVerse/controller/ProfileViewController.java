@@ -115,4 +115,36 @@ public class ProfileViewController {
         model.addAttribute("activePage", "profile"); // for profile.html
         return "redirect:/profile";
     }
+
+    @PostMapping("/profile/post/delete")
+    public String deletePost(@RequestParam Integer postId, @AuthenticationPrincipal User user) {
+        Profile profile = profileRepository.findByEmail(user.getUsername()).orElse(null);
+        if (profile != null) {
+            profile.getPosts().removeIf(p -> p.getId() == postId);
+            profileRepository.save(profile);
+        }
+        // Optionally, use a PostRepository to delete by id
+        // postRepository.deleteById(postId);
+        return "redirect:/profile";
+    }
+
+    @PostMapping("/profile/post/edit")
+    public String editPost(
+            @RequestParam Integer postId,
+            @RequestParam String topic,
+            @RequestParam String content,
+            @AuthenticationPrincipal User user) {
+        Profile profile = profileRepository.findByEmail(user.getUsername()).orElse(null);
+        if (profile != null) {
+            for (Post p : profile.getPosts()) {
+                if (p.getId() == postId) {
+                    p.setTopic(topic);
+                    p.setContent(content);
+                    break;
+                }
+            }
+            profileRepository.save(profile);
+        }
+        return "redirect:/profile";
+    }
 }
