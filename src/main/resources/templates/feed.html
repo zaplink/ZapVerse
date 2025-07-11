@@ -573,6 +573,7 @@
 
         #postForm{
             width: 100%;
+            margin-top: 30%;
             padding: 5% 2%;
             border: #1877f2 2px solid;
             border-radius: 10px;
@@ -602,10 +603,28 @@
 <div class="left-section">
 
     <!--    logo-->
-    <a href="/feed" class="zapverse-logo-link">
-        <img src="/logo/zapverse-logo.png" alt="Zapverse Logo" class="zapverse-logo-nav-img">
-    </a>
-    <br> <br>
+    <nav class="zapverse-topnav">
+        <div class="zapverse-logo-nav-left">
+            <a th:href="@{/feed}" class="zapverse-logo-link">
+                <img src="/logo/zapverse-logo.png" alt="Zapverse Logo" class="zapverse-logo-nav-img">
+            </a>
+        </div>
+        <div class="zapverse-topnav-icons">
+            <a th:href="@{/feed}" th:class="'topnav-link ' + (${activePage} == 'home' ? 'active' : '')">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a th:href="@{/friends/requests}" th:class="'topnav-link ' + (${activePage} == 'friends' ? 'active' : '')">
+                <i class="fa-solid fa-user-group"></i>
+                <span>Friends</span>
+            </a>
+            <a th:href="@{/profile}" th:class="'topnav-link ' + (${activePage} == 'profile' ? 'active' : '')">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
+
 
     <!--    Aticle post-->
     <form id="postForm" autocomplete="off">
