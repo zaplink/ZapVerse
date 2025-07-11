@@ -17,28 +17,63 @@
            font-family: 'Poppins', Arial, sans-serif;
            padding: 0;
            margin: 0;
+           display: flex;
+           height: 100vh;
+           overflow: hidden;
         }
 
+        /* Left Section (Logo and post form) */
+        .left-section {
+            width: 30%;
+            background: #181a20;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        /* Middle Section (Feed) */
         .main-content-feed {
-    margin-top: 160px; /* or your nav height */
-    margin-right: 350px; /* slightly more than sidebar width for spacing */
-    margin-left: auto;   /* push container to the right */
-    max-width: 600px;    /* keep your feed width */
-    transition: margin-top 0.2s;
-}
-@media (max-width: 1100px) {
-    .main-content-feed {
-        margin-right: 80px;
-        margin-left: auto;
-    }
-}
-@media (max-width: 700px) {
-    .main-content-feed {
-        margin-top: 80px;
-        margin-right: 0;
-        margin-left: 0;
-    }
-}
+            width: 50%;
+            margin: 0;
+            padding: 160px 20px 20px 20px;
+            max-width: none;
+            transition: padding-top 0.2s;
+            overflow-y: auto;
+            height: 100vh;
+        }
+        @media (max-width: 1100px) {
+            .main-content-feed {
+                padding-right: 20px;
+                padding-left: 20px;
+            }
+        }
+        @media (max-width: 700px) {
+            .main-content-feed {
+                padding-top: 80px;
+                padding-right: 0;
+                padding-left: 0;
+                width: 100%;
+            }
+        }
+
+        /* Right Section (Sidebar) */
+        .zapverse-sidebar {
+            width: 20%;
+            height: 100vh;
+            background: linear-gradient(135deg, #181a20 70%, #23242a 100%);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 2.2rem;
+            z-index: 1200;
+            box-shadow: -2px 0 24px 0 rgba(33,150,243,0.08);
+            border-left: 1.5px solid #31343b;
+            position: relative;
+            overflow-y: auto;
+        }
 
         .topic-row {
           display: flex;
@@ -133,25 +168,24 @@
           position: relative;
           box-shadow: 0 0 8px rgba(0,0,0,0.3);
           overflow: hidden;
-          padding: 0; /* remove default padding so ribbon can reach edges */
+          padding: 0;
         }
 
         .post-ribbon {
-          height: 4px;               /* keep thin height */
+          height: 4px;
           width: 100%;
           margin: 0;
           padding: 0;
-
           background-color: var(--ribbon-color);
           opacity: 0;
           transform: scaleX(0);
           transform-origin: left center;
           transition: opacity 0.3s ease, transform 0.3s ease;
-          pointer-events: none;  /* so ribbon doesn’t interfere with mouse */
+          pointer-events: none;
           position: absolute;
           top: 0;
           left: 0;
-          border-radius: 12px 12px 0 0; /* match container top radius */
+          border-radius: 12px 12px 0 0;
         }
 
         .post:hover .post-ribbon {
@@ -159,22 +193,21 @@
           transform: scaleX(1);
         }
 
-
         /* Colors for ribbons */
         .post.grant .post-ribbon {
-          background-color: #b9770e; /* muted dark orange */
+          background-color: #b9770e;
         }
         .post.milo .post-ribbon {
-          background-color: #2a7bbd; /* softer medium blue */
+          background-color: #2a7bbd;
         }
         .post.jayden .post-ribbon {
-          background-color: #b33a36; /* muted deep red */
+          background-color: #b33a36;
         }
         .post.layla .post-ribbon {
-          background-color: #3a7d68; /* original green */
+          background-color: #3a7d68;
         }
         .post.zara .post-ribbon {
-          background-color: #7e57c2; /* original purple */
+          background-color: #7e57c2;
         }
 
         /* Post header */
@@ -218,9 +251,9 @@
           position: relative;
           padding: 1rem 1rem 1.25rem 1rem;
           background: #555;
-          border-radius: 12px; /* rounded all corners */
+          border-radius: 12px;
           overflow: hidden;
-          margin: 0 1rem 1rem 1rem; /* add margin so ribbon and edges remain flush but content below ribbon */
+          margin: 0 1rem 1rem 1rem;
         }
 
         /* Dark opacity layer with border-radius on all sides */
@@ -229,7 +262,7 @@
           top: 0; left: 0; right: 0; bottom: 0;
           background: rgba(0, 0, 0, 0.35);
           pointer-events: none;
-          border-radius: 12px; /* round all corners */
+          border-radius: 12px;
           z-index: 1;
         }
 
@@ -254,516 +287,433 @@
           line-height: 1.5;
         }
 
-        
         .reaction-buttons {
           text-align: left;
           padding: 0.5rem 1rem 1rem 1rem;
           font-size: 1.2rem;
           user-select: none;
         }
-      .heart-button {
+        .heart-button {
           background: none;
           border: none;
           font-size: 1.8rem;
           cursor: pointer;
           padding: 0;
           color: white;
-          outline: none; /* Remove focus outline */
+          outline: none;
         }
 
-.heart-button i {
-  transition: all 0.3s ease;
-  /* Initial state - transparent fill with white border */
-  color: transparent;
-  -webkit-text-stroke: 1px white;
-}
+        .heart-button i {
+          transition: all 0.3s ease;
+          color: transparent;
+          -webkit-text-stroke: 1px white;
+        }
 
-.heart-button.selected i {
-  /* Selected state - solid red with no border */
-  color: red !important;
-  -webkit-text-stroke: 0 !important;
-  transform: scale(1.1);
-  filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.5));
-}
+        .heart-button.selected i {
+          color: red !important;
+          -webkit-text-stroke: 0 !important;
+          transform: scale(1.1);
+          filter: drop-shadow(0 0 4px rgba(255, 0, 0, 0.5));
+        }
 
-.reaction-buttons {
+        .reaction-buttons {
           position: relative;
           z-index: 3;
         }
 
-  .post-button {
-  background: linear-gradient(135deg, #4a6bff, #8a2be2);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 25px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  width: auto;
-  margin-top: 0.5rem;
-  align-self: flex-end;
-  min-width: 100px;
-}
+        .post-button {
+          background: linear-gradient(135deg, #4a6bff, #8a2be2);
+          color: white;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 25px;
+          font-size: 0.95rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          width: auto;
+          margin-top: 0.5rem;
+          align-self: flex-end;
+          min-width: 100px;
+        }
 
-.post-button:hover {
-  background: linear-gradient(135deg, #3a5bef, #7b1be2);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-}
+        .post-button:hover {
+          background: linear-gradient(135deg, #3a5bef, #7b1be2);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Sidebar Styles */
+        .sidebar-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 2.2rem;
+        }
+        .sidebar-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin-bottom: 0.7rem;
+            border: 3px solid #1877f2;
+            box-shadow: 0 2px 12px #1877f255;
+            object-fit: cover;
+        }
+        .sidebar-username {
+            font-weight: bold;
+            font-size: 1.18rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+        .sidebar-email {
+            font-size: 0.97em;
+            color: #bfc9d1;
+            margin-top: 2px;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            flex: 1 1 auto;
+        }
+        .sidebar-menu li {
+            width: 100%;
+            margin-bottom: 1.1rem;
+            text-align: left;
+        }
+        .sidebar-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.09rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.7em 1.2em;
+            border-radius: 10px;
+            transition: background 0.18s, color 0.18s;
+            display: flex;
+            align-items: center;
+            gap: 0.9em;
+            font-weight: 600;
+        }
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: #23242a;
+            color: #1877f2;
+        }
+        .sidebar-icon {
+            font-size: 1.25em;
+            vertical-align: middle;
+        }
+        .sidebar-friends-toggle .fa-chevron-down {
+            font-size: 1em;
+            margin-left: auto;
+        }
+        .sidebar-friends-submenu {
+            display: none;
+            list-style: none;
+            padding-left: 2.2em;
+            margin: 0.2em 0 0 0;
+            text-align: left;
+            animation: fadeIn 0.25s;
+        }
+        .sidebar-friends-submenu li {
+            margin-bottom: 0.8em;
+        }
+        .sidebar-friends-submenu a {
+            font-size: 1.01rem;
+            color: #bfc9d1;
+            padding: 0.3em 0.5em;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 0.7em;
+            transition: background 0.18s, color 0.18s;
+            width: 100%;
+            text-decoration: none !important;
+        }
+        .sidebar-friends-submenu a:hover {
+            background: #31343b;
+            color: #fff;
+        }
+        .sidebar-logout-container {
+            width: 100%;
+            padding-bottom: 4.5rem;
+            display: flex;
+            justify-content: center;
+        }
+        .sidebar-logout-link {
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 0.7em 2.2em;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(179, 58, 54, 0.13);
+            transition: background 0.18s;
+            display: flex;
+            align-items: center;
+            gap: 0.7em;
+        }
+        .sidebar-logout-link:hover {
+            background: #c0392b;
+        }
+        @media (max-width: 1100px) {
+            .zapverse-sidebar { width: 70px; }
+            .sidebar-header { display: none; }
+            .sidebar-link, .sidebar-logout-link { font-size: 0.9rem; padding: 0.5em 0.2em; width: 100%; }
+            .sidebar-friends-submenu { padding-left: 1em; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Top Navigation Bar */
+        .zapverse-topnav {
+          width: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          background: #181a20;
+          border-bottom: 1.5px solid #31343b;
+          z-index: 1100;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          box-shadow: 0 2px 16px rgba(24,119,242,0.07);
+          padding: 0 0 0.5rem 0;
+          min-height: 110px;
+        }
+
+        .zapverse-logo-nav-left {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          height: 100%;
+          padding-left: 2.5rem;
+        }
+
+        .zapverse-logo-link {
+          display: inline-block;
+          transition: transform 0.18s;
+        }
+        .zapverse-logo-link:hover {
+          transform: scale(1.06) rotate(-2deg);
+        }
+        .zapverse-logo-nav-img {
+          height: 90px;
+          width: auto;
+          object-fit: contain;
+          filter: drop-shadow(0 0 24px #7ee8fa88) drop-shadow(0 0 18px #a174ff55);
+          background: transparent;
+          border-radius: 18px;
+          transition: box-shadow 0.18s;
+          display: block;
+        }
+
+        .zapverse-topnav-icons {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 3.5rem;
+          flex: 1;
+          margin-bottom: 0.2rem;
+          height: 70px;
+        }
+
+        .topnav-link {
+          color: #bfc9d1;
+          text-decoration: none;
+          font-size: 1.18rem;
+          font-weight: 600;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.2rem;
+          padding: 0.3em 2.2em 0.2em 2.2em;
+          border-radius: 12px;
+          transition: background 0.18s, color 0.18s;
+          position: relative;
+          margin: 0 0.5rem;
+          justify-content: center;
+          height: 100%;
+        }
+        .topnav-link .fa-solid {
+          font-size: 1.1em;
+          margin-bottom: 0.2em;
+        }
+        .topnav-link.active,
+        .topnav-link:hover {
+          background: #23242a;
+          color: #1877f2;
+        }
+        .topnav-link.active::after {
+          content: '';
+          display: block;
+          width: 60%;
+          height: 3px;
+          background: #1877f2;
+          border-radius: 2px;
+          position: absolute;
+          left: 20%;
+          bottom: 0;
+        }
+        @media (max-width: 900px) {
+          .zapverse-logo-nav-img { height: 38px; max-width: 120px; }
+          .zapverse-logo-nav-left { padding-left: 0.7rem; }
+          .zapverse-topnav-icons { gap: 1.2rem; height: 50px; }
+        }
+
+        #postForm{
+            width: 100%;
+            margin-top: 30%;
+            padding: 5% 2%;
+            border: #1877f2 2px solid;
+            border-radius: 10px;
+        }
     </style>
-  
-  <style>
-  /* --- RIGHT SIDEBAR --- */
-  .zapverse-sidebar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 270px;
-      height: 100vh;
-      background: linear-gradient(135deg, #181a20 70%, #23242a 100%);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 2.2rem;
-      z-index: 1200;
-      box-shadow: -2px 0 24px 0 rgba(33,150,243,0.08);
-      border-left: 1.5px solid #31343b;
-  }
-  .sidebar-header {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2.2rem;
-  }
-  .sidebar-avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      margin-bottom: 0.7rem;
-      border: 3px solid #1877f2;
-      box-shadow: 0 2px 12px #1877f255;
-      object-fit: cover;
-  }
-  .sidebar-username {
-      font-weight: bold;
-      font-size: 1.18rem;
-      color: #fff;
-      letter-spacing: 0.5px;
-  }
-  .sidebar-email {
-      font-size: 0.97em;
-      color: #bfc9d1;
-      margin-top: 2px;
-  }
-  .sidebar-menu {
-      list-style: none;
-      padding: 0;
-      width: 100%;
-      flex: 1 1 auto;
-  }
-  .sidebar-menu li {
-      width: 100%;
-      margin-bottom: 1.1rem;
-      text-align: left;
-  }
-  .sidebar-link {
-      color: #fff;
-      text-decoration: none;
-      font-size: 1.09rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.7em 1.2em;
-      border-radius: 10px;
-      transition: background 0.18s, color 0.18s;
-      display: flex;
-      align-items: center;
-      gap: 0.9em;
-      font-weight: 600;
-  }
-  .sidebar-link:hover,
-  .sidebar-link.active {
-      background: #23242a;
-      color: #1877f2;
-  }
-  .sidebar-icon {
-      font-size: 1.25em;
-      vertical-align: middle;
-  }
-  .sidebar-friends-toggle .fa-chevron-down {
-      font-size: 1em;
-      margin-left: auto;
-  }
-  .sidebar-friends-submenu {
-      display: none;
-      list-style: none;
-      padding-left: 2.2em;
-      margin: 0.2em 0 0 0;
-      text-align: left;
-      animation: fadeIn 0.25s;
-  }
-  .sidebar-friends-submenu li {
-      margin-bottom: 0.8em;
-  }
-  .sidebar-friends-submenu a {
-      font-size: 1.01rem;
-      color: #bfc9d1;
-      padding: 0.3em 0.5em;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      gap: 0.7em;
-      transition: background 0.18s, color 0.18s;
-      width: 100%;
-      text-decoration: none !important;
-  }
-  .sidebar-friends-submenu a:hover {
-      background: #31343b;
-      color: #fff;
-  }
-  .sidebar-logout-container {
-      width: 100%;
-      padding-bottom: 4.5rem;
-      display: flex;
-      justify-content: center;
-  }
-  .sidebar-logout-link {
-      background: #e74c3c;
-      color: #fff;
-      border: none;
-      padding: 0.7em 2.2em;
-      border-radius: 25px;
-      font-size: 1.1rem;
-      font-weight: 700;
-      box-shadow: 0 2px 8px rgba(179, 58, 54, 0.13);
-      transition: background 0.18s;
-      display: flex;
-      align-items: center;
-      gap: 0.7em;
-  }
-  .sidebar-logout-link:hover {
-      background: #c0392b;
-  }
-  @media (max-width: 1100px) {
-      .zapverse-sidebar { width: 70px; }
-      .sidebar-header { display: none; }
-      .sidebar-link, .sidebar-logout-link { font-size: 0.9rem; padding: 0.5em 0.2em; width: 100%; }
-      .sidebar-friends-submenu { padding-left: 1em; }
-  }
-  @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-8px);}
-      to { opacity: 1; transform: translateY(0);}
-  }
-  
-  /* --- TOP NAVIGATION BAR --- */
-  .zapverse-logo-nav-left {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%;
-  padding-left: 2.5rem;
-}
+</head>
 
-.zapverse-logo-link {
-    display: inline-block;
-    transition: transform 0.18s;
-}
-.zapverse-logo-link:hover {
-    transform: scale(1.06) rotate(-2deg);
-}
-.zapverse-logo-nav-img {
-  height: 90px;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 24px #7ee8fa88) drop-shadow(0 0 18px #a174ff55);
-  background: transparent;
-  border-radius: 18px;
-  transition: box-shadow 0.18s;
-  display: block;
-}
+<body>
 
-  .zapverse-topnav {
-  width: 100vw;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #181a20;
-  border-bottom: 1.5px solid #31343b;
-  z-index: 1100;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  box-shadow: 0 2px 16px rgba(24,119,242,0.07);
-  padding: 0 0 0.5rem 0;
-  min-height: 110px;
-}
+<!-- Friends Menu Toggle -->
+<script>
+    function toggleFriendsMenu(e) {
+        e.preventDefault();
+        const submenu = document.getElementById('friends-submenu');
+        const arrow = document.getElementById('friends-arrow');
+        if (submenu.style.display === 'none' || submenu.style.display === '') {
+            submenu.style.display = 'block';
+            arrow.style.transform = 'rotate(180deg)';
+        } else {
+            submenu.style.display = 'none';
+            arrow.style.transform = 'rotate(0deg)';
+        }
+    }
+</script>
+
+<!-- Left Section -->
+<div class="left-section">
+
+    <!--    logo-->
+    <nav class="zapverse-topnav">
+        <div class="zapverse-logo-nav-left">
+            <a th:href="@{/feed}" class="zapverse-logo-link">
+                <img src="/logo/zapverse-logo.png" alt="Zapverse Logo" class="zapverse-logo-nav-img">
+            </a>
+        </div>
+        <div class="zapverse-topnav-icons">
+            <a th:href="@{/feed}" th:class="'topnav-link ' + (${activePage} == 'home' ? 'active' : '')">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+            <a th:href="@{/friends/requests}" th:class="'topnav-link ' + (${activePage} == 'friends' ? 'active' : '')">
+                <i class="fa-solid fa-user-group"></i>
+                <span>Friends</span>
+            </a>
+            <a th:href="@{/profile}" th:class="'topnav-link ' + (${activePage} == 'profile' ? 'active' : '')">
+                <i class="fa-solid fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </div>
+    </nav>
 
 
-.zapverse-topnav-icons {
-  display: flex;
-  justify-content: flex-start; /* Align icons to the left */
-  align-items: left;
-  gap: 2.2rem;                 /* Reduce gap if needed */
-  flex: 1;
-  margin-bottom: 0.2rem;
-  height: 70px;
-}
-
-  .topnav-link {
-      color: #bfc9d1;
-      text-decoration: none;
-      font-size: 1.18rem;
-      font-weight: 600;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.2rem;
-      padding: 0.3em 2.2em 0.2em 2.2em;
-      border-radius: 12px;
-      transition: background 0.18s, color 0.18s;
-      position: relative;
-      margin: 0 0.5rem;
-      justify-content: center; /* Vertically center icon and text within each link */
-      height: 100%;
-  }
-  .topnav-link .fa-solid {
-      font-size: 1.1em;
-      margin-bottom: 0.2em;
-  }
-  .topnav-link.active,
-  .topnav-link:hover {
-      background: #23242a;
-      color: #1877f2;
-  }
-  .topnav-link.active::after {
-      content: '';
-      display: block;
-      width: 60%;
-      height: 3px;
-      background: #1877f2;
-      border-radius: 2px;
-      position: absolute;
-      left: 20%;
-      bottom: 0;
-  }
- /* Add to your <style> section */
-.zapverse-topnav {
-  width: 100vw;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #181a20;
-  border-bottom: 1.5px solid #31343b;
-  z-index: 1100;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  box-shadow: 0 2px 16px rgba(24,119,242,0.07);
-  padding: 0 0 0.5rem 0;
-  min-height: 110px;
-}
-
-.zapverse-logo-nav-left {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 100%;
-  padding-left: 2.5rem;
-}
-
-.zapverse-logo-link {
-  display: inline-block;
-  transition: transform 0.18s;
-}
-
-.zapverse-logo-link:hover {
-  transform: scale(1.06) rotate(-2deg);
-}
-
-.zapverse-logo-nav-img {
-  height: 60px;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 0 18px #7ee8fa88) drop-shadow(0 0 12px #a174ff55);
-  background: transparent;
-  border-radius: 16px;
-  transition: box-shadow 0.18s;
-  display: block;
-}
-
-.zapverse-topnav-icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 3.5rem;
-  flex: 1;
-  margin-bottom: 0.2rem;
-  height: 70px;
-}
-
-@media (max-width: 900px) {
-  .zapverse-logo-nav-img { height: 38px; max-width: 120px; }
-  .zapverse-logo-nav-left { padding-left: 0.7rem; }
-  .zapverse-topnav-icons { gap: 1.2rem; height: 50px; }
-}
-
-
-  </style>
-
-  <!-- Friends Menu Toggle ---> 
-  <script>
-  function toggleFriendsMenu(e) {
-      e.preventDefault();
-      const submenu = document.getElementById('friends-submenu');
-      const arrow = document.getElementById('friends-arrow');
-      if (submenu.style.display === 'none' || submenu.style.display === '') {
-          submenu.style.display = 'block';
-          arrow.style.transform = 'rotate(180deg)';
-      } else {
-          submenu.style.display = 'none';
-          arrow.style.transform = 'rotate(0deg)';
-      }
-  }
-  </script>
-
-  <!-- Place this code at the top of your <body> (before .main-content or .container) and remove your old nav/sidebar markup. -->
-  
-  <!-- RIGHT SIDEBAR (fixed at top, above topnav) -->
-  <div class="zapverse-sidebar">
-      <div class="sidebar-header">
-          <img th:src="${sidebarAvatar}" src="/avatars/felix.png" alt="User Avatar" class="sidebar-avatar" />
-          <span class="sidebar-username" th:text="${sidebarName}">Ada Lovelace</span>
-          <span class="sidebar-email" th:text="${sidebarEmail}">ada@zapverse.dev</span>
-      </div>
-      <ul class="sidebar-menu">
-          <li>
-              <a href="/feed" class="sidebar-link">
-                  <i class="fa-solid fa-house sidebar-icon"></i>
-                  <span>Home</span>
-              </a>
-          </li>
-          <li>
-              <a href="/profile" class="sidebar-link">
-                  <i class="fa-solid fa-user sidebar-icon"></i>
-                  <span>Profile</span>
-              </a>
-          </li>
-          <li>
-              <a href="#" class="sidebar-link sidebar-friends-toggle" onclick="toggleFriendsMenu(event)">
-                  <i class="fa-solid fa-handshake sidebar-icon"></i>
-                  <span>Friends</span>
-                  <i id="friends-arrow" class="fa-solid fa-chevron-down" style="margin-left:auto; transition:transform 0.2s;"></i>
-              </a>
-              <ul id="friends-submenu" class="sidebar-friends-submenu">
-                  <li><a href="/friends/suggestions"><i class="fa-solid fa-user-plus sidebar-icon"></i> Friend Suggestions</a></li>
-                  <li><a href="/friends/requests"><i class="fa-solid fa-user-clock sidebar-icon"></i> Friend Requests</a></li>
-                  <li><a href="/friends/all"><i class="fa-solid fa-users sidebar-icon"></i> All Friends</a></li>
-              </ul>
-          </li>
-      </ul>
-      <form th:action="@{/logout}" method="post" class="sidebar-logout-container">
-          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-          <button type="submit" class="sidebar-logout-link">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-          </button>
-      </form>
-  </div>
-  
-  <!-- TOP NAVIGATION BAR (full width, logo centered, icons centered below logo) -->
-<nav class="zapverse-topnav">
-  <div class="zapverse-logo-nav-left">
-    <a href="/feed" class="zapverse-logo-link">
-      <img src="/logo/zapverse-logo.png" alt="Zapverse Logo" class="zapverse-logo-nav-img">
-    </a>
-  </div>
-  <div class="zapverse-topnav-icons">
-    <a href="/feed" class="topnav-link [[${activePage}=='home'?'active':'']]">
-      <i class="fa-solid fa-house"></i>
-      <span>Home</span>
-    </a>
-    <a href="/friends/requests" class="topnav-link [[${activePage}=='friends'?'active':'']]">
-      <i class="fa-solid fa-user-group"></i>
-      <span>Friends</span>
-    </a>
-    <a href="/profile" class="topnav-link [[${activePage}=='profile'?'active':'']]">
-      <i class="fa-solid fa-user"></i>
-      <span>Profile</span>
-    </a>
-  </div>
-</nav>
-  
-
-<!-- Post write section -->
-<div class="main-content-feed">
-  <div class="container">
-  
+    <!--    Aticle post-->
     <form id="postForm" autocomplete="off">
         <div class="topic-row">
-            <img src="/avatars/felix.png" alt="Avatar" class="avatar" />
+            <img th:src="${sidebarAvatar}" src="/avatars/felix.png" alt="Avatar" class="avatar" />
             <input type="text" class="topic" name="topic" placeholder="What's the headline?" maxlength="72" required />
         </div>
         <div id="topic-count" class="char-count">0 / 72</div>
-        <textarea class="content" name="content" placeholder="Share your thoughts here..." rows="1" maxlength="256" required></textarea>
+        <textarea class="content" name="content" placeholder="Share your thoughts here..." rows="1" maxlength="256" required ></textarea>
         <div id="content-count" class="char-count">0 / 256</div>
         <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-
         <button type="button" class="post-button" onclick="submitPost()">Post</button>
-
     </form>
-    <div id="feed-posts">
-        <div class="container post" th:each="post : ${posts}">
-            <div class="post-ribbon"></div>
+</div>
 
-            <div class="post-header">
-                <img th:src="@{'/avatars/' + ${post.avatar}}" src="/avatars/default.png" alt="Avatar" class="avatar" />
-                <div class="post-user-info">
-                    <div class="post-user-name" th:text="${post.fname + ' ' + post.lname}">User Name</div>
-                    <div class="post-date-time" th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy · hh:mm a')}">
+<!--    Middle Section-->
+<div class="main-content-feed">
+    <div class="container">
+        <div id="feed-posts">
+            <div class="container post" th:each="post : ${posts}">
+                <div class="post-ribbon"></div>
+                <div class="post-header">
+                    <img th:src="@{'/avatars/' + ${post.avatar}}" src="/avatars/default.png" alt="Avatar" class="avatar" />
+                    <div class="post-user-info">
+                        <div class="post-user-name" th:text="${post.fname + ' ' + post.lname}">User Name</div>
+                        <div class="post-date-time" th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy · hh:mm a')}"></div>
                     </div>
-
                 </div>
-            </div>
-
-            <div class="post-content-wrapper">
-                <div class="post-content-overlay"></div>
-                <div class="post-content">
-                    <div class="post-topic" th:text="${post.topic}">Post Topic</div>
-                    <div class="post-text" th:text="${post.content}">Post content</div>
+                <div class="post-content-wrapper">
+                    <div class="post-content-overlay"></div>
+                    <div class="post-content">
+                        <div class="post-topic" th:text="${post.topic}">Post Topic</div>
+                        <div class="post-text" th:text="${post.content}">Post content</div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="reaction-buttons" th:attr="data-post-id=${post.id}">
-                <button class="heart-button" th:onclick="'toggleHeart(' + ${post.id} + ', event)'">
-                    <i class="fa-regular fa-heart"></i>
-                </button>
+                <div class="reaction-buttons" th:attr="data-post-id=${post.id}">
+                    <button class="heart-button" th:onclick="'toggleHeart(' + ${post.id} + ', event)'">
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-
-
-<form th:action="@{/logout}" method="post"
-      style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-    <button type="submit" class="btn btn-danger btn-lg shadow rounded-pill">
-        <i class="bi bi-box-arrow-right"></i> Logout
-    </button>
-</form>
 </div>
 
-
+<!--    Right section -->
+<div class="zapverse-sidebar">
+    <div class="sidebar-header">
+        <img th:src="${sidebarAvatar}" src="/avatars/felix.png" alt="User Avatar" class="sidebar-avatar" />
+        <span class="sidebar-username" th:text="${sidebarName}">Ada Lovelace</span>
+        <span class="sidebar-email" th:text="${sidebarEmail}">ada@zapverse.dev</span>
+    </div>
+    <ul class="sidebar-menu">
+        <li>
+            <a href="/feed" class="sidebar-link">
+                <i class="fa-solid fa-house sidebar-icon"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li>
+            <a href="/profile" class="sidebar-link">
+                <i class="fa-solid fa-user sidebar-icon"></i>
+                <span>Profile</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="sidebar-link sidebar-friends-toggle" onclick="toggleFriendsMenu(event)">
+                <i class="fa-solid fa-handshake sidebar-icon"></i>
+                <span>Friends</span>
+                <i id="friends-arrow" class="fa-solid fa-chevron-down" style="margin-left:auto; transition:transform 0.2s;"></i>
+            </a>
+            <ul id="friends-submenu" class="sidebar-friends-submenu">
+                <li><a href="/friends/suggestions"><i class="fa-solid fa-user-plus sidebar-icon"></i> Friend Suggestions</a></li>
+                <li><a href="/friends/requests"><i class="fa-solid fa-user-clock sidebar-icon"></i> Friend Requests</a></li>
+                <li><a href="/friends/all"><i class="fa-solid fa-users sidebar-icon"></i> All Friends</a></li>
+            </ul>
+        </li>
+    </ul>
+    <form th:action="@{/logout}" method="post" class="sidebar-logout-container">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="sidebar-logout-link">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </button>
+    </form>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script th:inline="javascript">
-    const profileId = /*[[${profileId}]]*/ 0; // fallback if Thymeleaf fails
-
+    const profileId = /*[[${profileId}]]*/ 0;
 </script>
 
 <script>
@@ -792,7 +742,6 @@
       const lineHeight = parseFloat(getComputedStyle(el).lineHeight);
       const minHeight = lineHeight * 1;
       const maxHeight = lineHeight * 4;
-
       el.style.height = 'auto';
       const newHeight = Math.min(Math.max(el.scrollHeight, minHeight), maxHeight);
       el.style.height = newHeight + 'px';
@@ -811,7 +760,6 @@
 
     window.addEventListener('load', () => adjustTextareaHeight(contentInput));
 
-    // Add logout redirect logic
     const logoutForm = document.getElementById('logoutForm');
     if (logoutForm) {
       logoutForm.addEventListener('submit', function(e) {
@@ -821,44 +769,36 @@
       });
     }
 
-
-  function sendReaction(postId, reactionType) {
-
-    const payload = {
-      postId: postId,
-      profileId: profileId,
-      reaction: reactionType
-    };
-
-    fetch('/api/react', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(res => {
-      if (res.ok) return res.text();
-      throw new Error('Failed to send reaction');
-    })
-    .then(msg => {
-  const container = document.querySelector(`.reaction-buttons[data-post-id="${postId}"]`);
-  const buttons = container.querySelectorAll('button');
-
-  buttons.forEach(btn => {
-    btn.classList.remove('selected');
-    if (btn.dataset.reaction === reactionType) {
-      btn.classList.add('selected');
+    function sendReaction(postId, reactionType) {
+      const payload = {
+        postId: postId,
+        profileId: profileId,
+        reaction: reactionType
+      };
+      fetch('/api/react', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => {
+        if (res.ok) return res.text();
+        throw new Error('Failed to send reaction');
+      })
+      .then(msg => {
+        const container = document.querySelector(`.reaction-buttons[data-post-id="${postId}"]`);
+        const buttons = container.querySelectorAll('button');
+        buttons.forEach(btn => {
+          btn.classList.remove('selected');
+          if (btn.dataset.reaction === reactionType) {
+            btn.classList.add('selected');
+          }
+        });
+      })
+      .catch(err => {
+        console.error('Reaction error:', err);
+      });
     }
-  });
 
-  // (Optional) update counts if you're using that
-})
-.catch(err => {
-  console.error('Reaction error:', err);
-});
-}
-
-    // feature/friends
-    // Post submit logic
     const postForm = document.getElementById('postForm');
     if (postForm) {
       postForm.addEventListener('submit', function(e) {
@@ -866,7 +806,6 @@
         const topic = postForm.topic.value.trim();
         const content = postForm.content.value.trim();
         if (!topic || !content) return;
-        // Get CSRF token name and value
         const csrfInput = document.getElementById('csrfToken');
         const csrfHeader = csrfInput ? csrfInput.name : 'X-CSRF-TOKEN';
         const csrfToken = csrfInput ? csrfInput.value : '';
@@ -888,151 +827,129 @@
         });
       });
     }
-  
-  function toggleHeart(postId, event) {
-    event.preventDefault();
-    event.stopPropagation();
 
-    const heartButton = event.currentTarget;
-    const heartIcon = heartButton.querySelector('i');
-
-    // Determine the new state (opposite of current)
-    const isSelected = !heartButton.classList.contains('selected');
-
-    // Optimistically update the UI
-    heartButton.classList.toggle('selected', isSelected);
-    if (isSelected) {
+    function toggleHeart(postId, event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const heartButton = event.currentTarget;
+      const heartIcon = heartButton.querySelector('i');
+      const isSelected = !heartButton.classList.contains('selected');
+      heartButton.classList.toggle('selected', isSelected);
+      if (isSelected) {
         heartIcon.classList.replace('fa-regular', 'fa-solid');
         heartIcon.style.color = 'red';
         heartIcon.style.webkitTextStroke = '0';
-    } else {
+      } else {
         heartIcon.classList.replace('fa-solid', 'fa-regular');
         heartIcon.style.color = 'transparent';
         heartIcon.style.webkitTextStroke = '1px white';
-    }
-
-    // Prepare the request
-    const csrfToken = document.getElementById('csrfToken').value;
-    const reaction = isSelected ? 'LOVE' : null;
-
-    fetch('/api/react', {
+      }
+      const csrfToken = document.getElementById('csrfToken').value;
+      const reaction = isSelected ? 'LOVE' : null;
+      fetch('/api/react', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken
         },
         body: JSON.stringify({
-            postId: postId,
-            profileId: profileId,
-            reaction: reaction
+          postId: postId,
+          profileId: profileId,
+          reaction: reaction
         })
-    })
-    .then(response => {
+      })
+      .then(response => {
         if (!response.ok) {
-            throw new Error('Failed to update reaction');
+          throw new Error('Failed to update reaction');
         }
         return response.text();
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Error:', error);
-        // Revert UI changes if API call fails
         heartButton.classList.toggle('selected');
         if (isSelected) {
-            heartIcon.classList.replace('fa-solid', 'fa-regular');
-            heartIcon.style.color = 'transparent';
-            heartIcon.style.webkitTextStroke = '1px white';
+          heartIcon.classList.replace('fa-solid', 'fa-regular');
+          heartIcon.style.color = 'transparent';
+          heartIcon.style.webkitTextStroke = '1px white';
         } else {
-            heartIcon.classList.replace('fa-regular', 'fa-solid');
-            heartIcon.style.color = 'red';
-            heartIcon.style.webkitTextStroke = '0';
+          heartIcon.classList.replace('fa-regular', 'fa-solid');
+          heartIcon.style.color = 'red';
+          heartIcon.style.webkitTextStroke = '0';
         }
-    });
-}
-
-
-function submitPost() {
-    const topic = document.querySelector('input.topic').value.trim();
-    const content = document.querySelector('textarea.content').value.trim();
-    const csrfToken = document.getElementById('csrfToken')?.value || '';
-    if (!topic || !content) {
-        alert("Topic and content cannot be empty.");
-        return;
+      });
     }
 
-    const payload = {
+    function submitPost() {
+      const topic = document.querySelector('input.topic').value.trim();
+      const content = document.querySelector('textarea.content').value.trim();
+      const csrfToken = document.getElementById('csrfToken')?.value || '';
+      if (!topic || !content) {
+        alert("Topic and content cannot be empty.");
+        return;
+      }
+      const payload = {
         topic: topic,
         content: content,
-        tags: [], // You can add tag functionality later
+        tags: [],
         profileId: profileId
-    };
-
-    fetch('/api/post', {
+      };
+      fetch('/api/post', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': csrfToken
         },
         body: JSON.stringify(payload)
-    })
-    .then(response => {
+      })
+      .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+          throw new Error('Network response was not ok');
         }
         return response.json();
-    })
-    .then(post => {
+      })
+      .then(post => {
         console.log('Post created:', post);
-        appendPostToFeed(post); // Update the feed with the new post
-        // Clear input fields if needed
+        appendPostToFeed(post);
         document.querySelector('input.topic').value = '';
         document.querySelector('textarea.content').value = '';
-        // Reset textarea height if needed
         adjustTextareaHeight(document.querySelector('textarea.content'));
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Post creation failed:', error);
         alert("Failed to create post. Please try again.");
-    });
-}
+      });
+    }
 
-function appendPostToFeed(post) {
-    const postContainer = document.createElement('div');
-    postContainer.className = 'container post'; // Add appropriate class for ribbon
-
-    // Format date (you may need to adjust this based on your actual data structure)
-    const date = new Date(post.createdAt); // Assuming post object has a createdAt field
-    const formattedDate = `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} · ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-
-    postContainer.innerHTML = `
+    function appendPostToFeed(post) {
+      const postContainer = document.createElement('div');
+      postContainer.className = 'container post';
+      const date = new Date(post.createdAt);
+      const formattedDate = `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} · ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+      postContainer.innerHTML = `
         <div class="post-ribbon"></div>
         <div class="post-header">
-                <img src="${post.avatar ? '/avatars/' + post.avatar : '/avatars/default.png'}" alt="Avatar" class="avatar" />
-<div class="post-user-info">
-    <div class="post-user-name">${post.fname || 'Anonymous'} ${post.lname || ''}</div>
-
-                <div class="post-date-time">${formattedDate}</div>
-            </div>
+          <img src="${post.avatar ? '/avatars/' + post.avatar : '/avatars/default.png'}" alt="Avatar" class="avatar" />
+          <div class="post-user-info">
+            <div class="post-user-name">${post.fname || 'Anonymous'} ${post.lname || ''}</div>
+            <div class="post-date-time">${formattedDate}</div>
+          </div>
         </div>
         <div class="post-content-wrapper">
-            <div class="post-content-overlay"></div>
-            <div class="post-content">
-                <div class="post-topic">${post.topic}</div>
-                <div class="post-text">${post.content}</div>
-            </div>
+          <div class="post-content-overlay"></div>
+          <div class="post-content">
+            <div class="post-topic">${post.topic}</div>
+            <div class="post-text">${post.content}</div>
+          </div>
         </div>
-         <div class="reaction-buttons" data-post-id="${post.id}">
-            <button class="heart-button" onclick="toggleHeart(${post.id}, event)">
-                <i class="fa-regular fa-heart"></i>
-            </button>
+        <div class="reaction-buttons" data-post-id="${post.id}">
+          <button class="heart-button" onclick="toggleHeart(${post.id}, event)">
+            <i class="fa-regular fa-heart"></i>
+          </button>
         </div>
-    `;
-
-    const feed = document.getElementById('feed-posts');
-    feed.insertBefore(postContainer, feed.firstChild); // Insert new post at the beginning of the feed
-}
-
+      `;
+      const feed = document.getElementById('feed-posts');
+      feed.insertBefore(postContainer, feed.firstChild);
+    }
 </script>
-</style>
-
 </body>
 </html>
