@@ -573,6 +573,9 @@
 
         #postForm{
             width: 100%;
+            padding: 5% 2%;
+            border: #1877f2 2px solid;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -597,17 +600,21 @@
 
 <!-- Left Section -->
 <div class="left-section">
+
+    <!--    logo-->
     <a href="/feed" class="zapverse-logo-link">
         <img src="/logo/zapverse-logo.png" alt="Zapverse Logo" class="zapverse-logo-nav-img">
     </a>
     <br> <br>
+
+    <!--    Aticle post-->
     <form id="postForm" autocomplete="off">
         <div class="topic-row">
             <img th:src="${sidebarAvatar}" src="/avatars/felix.png" alt="Avatar" class="avatar" />
             <input type="text" class="topic" name="topic" placeholder="What's the headline?" maxlength="72" required />
         </div>
         <div id="topic-count" class="char-count">0 / 72</div>
-        <textarea class="content" name="content" placeholder="Share your thoughts here..." rows="1" maxlength="256" required></textarea>
+        <textarea class="content" name="content" placeholder="Share your thoughts here..." rows="1" maxlength="256" required ></textarea>
         <div id="content-count" class="char-count">0 / 256</div>
         <input type="hidden" id="csrfToken" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         <button type="button" class="post-button" onclick="submitPost()">Post</button>
