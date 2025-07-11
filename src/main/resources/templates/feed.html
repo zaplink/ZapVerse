@@ -661,9 +661,13 @@
                     </div>
                 </div>
                 <div class="reaction-buttons" th:attr="data-post-id=${post.id}">
-                    <button class="heart-button" th:onclick="'toggleHeart(' + ${post.id} + ', event)'">
-                        <i class="fa-regular fa-heart"></i>
+                    <button class="heart-button [[${post.userReacted} ? 'selected' : '']]"
+                            data-reaction="LOVE"
+                            th:onclick="'toggleHeart(' + ${post.id} + ', event)'">
+                        <i th:class="${post.userReacted} ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
                     </button>
+
+                    <span class="love-count" th:text="${post.loveCount} ?: 0" style="margin-left: 8px; font-size: 1rem; color: #ff6b6b;">0</span>
                 </div>
             </div>
         </div>
@@ -859,11 +863,20 @@
         })
       })
       .then(response => {
-        if (!response.ok) {
+        if (!response.ok)
           throw new Error('Failed to update reaction');
-        }
+
         return response.text();
       })
+      .then(() => {
+  const countSpan = document.querySelector(`.reaction-buttons[data-post-id="${postId}"] .love-count`);
+  if (countSpan) {
+    const currentCount = parseInt(countSpan.textContent) || 0;
+    countSpan.textContent = isSelected ? currentCount + 1 : Math.max(0, currentCount - 1);
+  }
+})
+
+
       .catch(error => {
         console.error('Error:', error);
         heartButton.classList.toggle('selected');
@@ -945,6 +958,7 @@
           <button class="heart-button" onclick="toggleHeart(${post.id}, event)">
             <i class="fa-regular fa-heart"></i>
           </button>
+           <span class="love-count" style="margin-left: 8px; font-size: 1rem; color: #ff6b6b;">0</span>
         </div>
       `;
       const feed = document.getElementById('feed-posts');

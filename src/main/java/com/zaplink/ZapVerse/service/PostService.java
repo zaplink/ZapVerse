@@ -7,7 +7,9 @@ import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.model.TagType;
 import com.zaplink.ZapVerse.repository.PostRepository;
 import com.zaplink.ZapVerse.repository.ProfileRepository;
+import com.zaplink.ZapVerse.repository.ReactRespository;
 import com.zaplink.ZapVerse.utility.PostMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,8 @@ public class PostService {
 
     PostRepository postRepository;
     ProfileRepository profileRepository;
+    @Autowired
+    private ReactRespository reactRespository;
 
     public PostService(PostRepository postRepository, ProfileRepository profileRepository) {
         this.postRepository = postRepository;
@@ -72,6 +76,11 @@ public class PostService {
         newPost.setId(postId);
 
         return postRepository.save(newPost);
+
+    }
+
+    public ReactRespository getReactRepository() {
+        return  reactRespository;
 
     }
 }

@@ -7,6 +7,7 @@ import com.zaplink.ZapVerse.model.Post;
 import com.zaplink.ZapVerse.model.Profile;
 import com.zaplink.ZapVerse.model.Tag;
 import com.zaplink.ZapVerse.model.TagType;
+import com.zaplink.ZapVerse.repository.ReactRespository;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,9 +39,28 @@ public class PostMapper {
             postDTO.setTags(tagStrings);
         }
 
+        postDTO.setLoveCount(post.getLoveCount() == null ? 0L : post.getLoveCount().longValue());
 
         return postDTO;
     }
+
+    public static PostDTO toDTO(Post post, Profile currentUser, ReactRespository reactRepository) {
+        PostDTO postDTO = toDTO(post); // call base method
+
+        // Check if current user has reacted
+        boolean userReacted = reactRepository.existsByPostAndProfile(post, currentUser);
+        postDTO.setUserReacted(userReacted);
+
+        return postDTO;
+    }
+
+    public static List<PostDTO> toDTO(List<Post> posts, Profile currentUser, ReactRespository reactRepository) {
+        return posts.stream()
+                .map(post -> toDTO(post, currentUser, reactRepository))
+                .collect(Collectors.toList());
+    }
+
+
 
     public static List<PostDTO> toDTO(List<Post> posts) {
 

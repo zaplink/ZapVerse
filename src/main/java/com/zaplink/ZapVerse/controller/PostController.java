@@ -39,6 +39,12 @@ public class PostController {
 
     @GetMapping("/posts")
     public ResponseEntity<List<PostDTO>> getAllPosts(@RequestParam(required = false) String tag) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        var profile = profileRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Profile not found"));
+
+
         List<Post> posts;
         if ((tag != null) && (!tag.isEmpty())) {
             TagType tagType;
@@ -51,7 +57,13 @@ public class PostController {
         } else {
             posts = postService.getAllPosts();
         }
-        return ResponseEntity.ok(PostMapper.toDTO(posts));
+
+        List<PostDTO> dtos = posts.stream()
+                .map(post -> PostMapper.toDTO(post, profile, postService.getReactRepository()))
+                .toList();
+
+
+        return ResponseEntity.ok(dtos);
     }
 
     @DeleteMapping("/post/{postId}")

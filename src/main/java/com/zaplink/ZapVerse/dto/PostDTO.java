@@ -26,5 +26,7 @@ public class PostDTO {
     private String fname;
     private String lname;
     private String avatar;
+    private long loveCount;
+    private boolean userReacted;
 }
 
