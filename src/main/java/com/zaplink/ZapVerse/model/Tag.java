@@ -2,26 +2,19 @@ package com.zaplink.ZapVerse.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity(name = "react")
-@Table(
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = {"post_id", "profile_id"})
-        }
-)
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity(name = "tag")
 @Getter
 @Setter
-public class React {
+public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private TagType tagType;
 
     @ManyToOne
     @JsonBackReference
@@ -30,6 +23,4 @@ public class React {
     @ManyToOne
     @JsonBackReference
     private Profile profile;
-
-    private String reaction;
 }

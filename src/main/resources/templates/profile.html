@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile - ZapVerse</title>
+    <link rel="stylesheet" th:href="@{/css/feed-style.css}" />
+    <style>
+        body {
+          background: #181a20;
+          font-family: "Poppins", Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+        .profile-main-layout {
+          display: flex;
+          gap: 2.5rem;
+          max-width: 1200px;
+          margin: 3rem auto 0 auto;
+          align-items: flex-start;
+        }
+        .profile-card {
+          background: #23242a;
+          border-radius: 18px;
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+          color: #fff;
+          padding: 2.5rem 2rem 2rem 2rem;
+          min-width: 320px;
+          max-width: 350px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .profile-avatar {
+          width: 110px;
+          height: 110px;
+          border-radius: 50%;
+          border: 3px solid #1877f2;
+          margin-bottom: 1.2rem;
+          background: #fff;
+          object-fit: cover;
+          box-shadow: 0 2px 8px rgba(13, 110, 253, 0.15);
+        }
+        .profile-name {
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-bottom: 0.2rem;
+        }
+        .profile-email {
+          color: #bfc9d1;
+          margin-bottom: 1.5rem;
+          font-size: 1rem;
+        }
+        .edit-btn {
+          background: linear-gradient(90deg, #2563eb, #6366f1);
+          color: #fff;
+          border: none;
+          padding: 0.5em 1.5em;
+          border-radius: 6px;
+          font-size: 1rem;
+          cursor: pointer;
+          margin-top: 1.2rem;
+          text-decoration: none;
+          font-weight: 600;
+          transition: background 0.2s;
+        }
+        .edit-btn:hover {
+          background: linear-gradient(90deg, #1d4ed8, #4f46e5);
+        }
+        .posts-section {
+          flex: 1 1 0;
+          max-width: 700px;
+        }
+        .posts-title {
+          color: #fff;
+          margin-bottom: 1.5rem;
+          font-size: 1.4rem;
+          font-weight: 700;
+          letter-spacing: 1px;
+        }
+        .posts-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        .post-card {
+          background: #292b32;
+          border-radius: 14px;
+          box-shadow: 0 2px 12px rgba(24, 119, 242, 0.07);
+          padding: 1.2rem 1.5rem;
+          color: #f3f6fa;
+          transition: box-shadow 0.2s;
+          position: relative;
+        }
+        .post-card:hover {
+          box-shadow: 0 4px 24px rgba(24, 119, 242, 0.13);
+        }
+        .post-topic {
+          font-weight: 600;
+          font-size: 1.15rem;
+          color: #fff;
+          margin-bottom: 0.4rem;
+        }
+        .post-text {
+          color: #dbeafe;
+          font-size: 1.01rem;
+          line-height: 1.6;
+          margin-bottom: 0.7em;
+        }
+        .post-date-time {
+          color: #bfc9d1;
+          font-size: 0.85rem;
+          margin-bottom: 0.7em;
+        }
+
+        .delete-btn,
+        .edit-btn,
+        .save-btn {
+          background: #23242a;
+          color: #fff;
+          border: none;
+          border-radius: 6px;
+          padding: 0.3em 1em;
+          font-size: 0.98rem;
+          cursor: pointer;
+          transition: background 0.18s;
+          margin-right: 0.3em;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4em;
+        }
+        .delete-btn:hover {
+          background: #d32f2f;
+          color: #fff;
+        }
+        .edit-btn:hover,
+        .save-btn:hover {
+          background: #1877f2;
+          color: #fff;
+        }
+        .edit-post-form {
+          margin-bottom: 0.7em;
+        }
+        @media (max-width: 900px) {
+          .profile-main-layout {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1.5rem;
+          }
+          .profile-card,
+          .posts-section {
+            max-width: 100%;
+          }
+        }
+
+        /* styles of post actions*/
+        .post-actions {
+          margin-top: 0.7em;
+          display: flex;
+          gap: 0.7em;
+          justify-content: flex-end;
+        }
+        .delete-btn,
+        .edit-btn,
+        .save-btn {
+          background: #23242a;
+          color: #fff;
+          border: none;
+          border-radius: 6px;
+          padding: 0.3em 1em;
+          font-size: 0.98rem;
+          cursor: pointer;
+          transition: background 0.18s;
+          margin-right: 0.3em;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4em;
+        }
+        .delete-btn:hover {
+          background: #d32f2f;
+          color: #fff;
+        }
+        .edit-btn:hover,
+        .save-btn:hover {
+          background: #1877f2;
+          color: #fff;
+        }
+        .edit-post-form {
+          margin-top: 0.7em;
+        }
+
+        /* Beautify the edit post form */
+        .edit-post-form input[type="text"] {
+          width: 100%;
+          padding: 0.6em 1em;
+          border-radius: 8px;
+          border: 1.5px solid #31343b;
+          background: #23242a;
+          color: #f3f6fa;
+          font-size: 1.08rem;
+          margin-bottom: 0.7em;
+          outline: none;
+          transition: border 0.18s;
+        }
+        .edit-post-form input[type="text"]:focus {
+          border: 1.5px solid #1877f2;
+          background: #23243a;
+        }
+
+        .edit-post-form textarea {
+          width: 100%;
+          min-height: 90px;
+          padding: 0.7em 1em;
+          border-radius: 8px;
+          border: 1.5px solid #31343b;
+          background: #23242a;
+          color: #f3f6fa;
+          font-size: 1.08rem;
+          resize: vertical;
+          outline: none;
+          margin-bottom: 0.7em;
+          transition: border 0.18s;
+        }
+        .edit-post-form textarea:focus {
+          border: 1.5px solid #1877f2;
+          background: #23243a;
+        }
+
+        /* Profile Edit Button - make it stand out */
+        .profile-card .edit-btn {
+          background: linear-gradient(90deg, #ff512f, #dd2476);
+          color: #fff;
+          border: none;
+          padding: 0.6em 2em;
+          border-radius: 24px;
+          font-size: 1.08rem;
+          cursor: pointer;
+          margin-top: 1.2rem;
+          text-decoration: none;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          box-shadow: 0 2px 16px 0 rgba(221, 36, 118, 0.1);
+          transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+          display: inline-block;
+        }
+        .profile-card .edit-btn:hover {
+          background: linear-gradient(90deg, #dd2476, #ff512f);
+          box-shadow: 0 4px 24px 0 rgba(221, 36, 118, 0.18);
+          transform: translateY(-2px) scale(1.04);
+        }
+
+        .zapverse-topnav {
+          width: 100%;
+          background: #23242a;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 2.5rem;
+          padding: 0.7rem 0 0.7rem 0;
+          border-bottom: 1.5px solid #31343b;
+          position: sticky;
+          top: 0;
+          z-index: 1001;
+        }
+        .topnav-link {
+          color: #bfc9d1;
+          text-decoration: none;
+          font-size: 1.08rem;
+          font-weight: 500;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.2rem;
+          padding: 0.3em 1.2em 0.2em 1.2em;
+          border-radius: 10px;
+          transition: background 0.18s, color 0.18s;
+          position: relative;
+        }
+        .topnav-link .fa-solid {
+          font-size: 1.5em;
+          margin-bottom: 0.1em;
+        }
+        .topnav-link.active,
+        .topnav-link:hover {
+          background: #23242a;
+          color: #1877f2;
+        }
+        .topnav-link.active::after {
+          content: "";
+          display: block;
+          width: 60%;
+          height: 3px;
+          background: #1877f2;
+          border-radius: 2px;
+          position: absolute;
+          left: 20%;
+          bottom: 0;
+        }
+        .sidebar-link.active,
+        .sidebar-link:hover {
+          background: #23242a;
+          color: #1877f2;
+        }
+        @media (max-width: 700px) {
+          .zapverse-topnav {
+            gap: 1.2rem;
+            font-size: 0.95rem;
+          }
+          .topnav-link {
+            padding: 0.3em 0.7em 0.2em 0.7em;
+          }
+        }
+
+        .trash-button {
+          margin-top: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+<link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+<nav class="zapverse-topnav">
+    <a
+            href="/feed"
+            th:class="'topnav-link ' + (${activePage} == 'home' ? 'active' : '')"
+    >
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+    <a
+            href="/friends/requests"
+            th:class="'topnav-link ' + (${activePage} == 'friends' ? 'active' : '')"
+    >
+        <i class="fa-solid fa-user-group"></i>
+        <span>Friends</span>
+    </a>
+    <a
+            href="/profile"
+            th:class="'topnav-link ' + (${activePage} == 'profile' ? 'active' : '')"
+    >
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+    </a>
+</nav>
+
+<div class="profile-main-layout">
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <img
+                th:src="@{'/avatars/' + ${profile.avatar}}"
+                alt="Avatar"
+                class="profile-avatar"
+        />
+        <div
+                class="profile-name"
+                th:text="${profile.fname} + ' ' + ${profile.lname}"
+        >
+            Your Name
+        </div>
+        <div class="profile-email" th:text="${profile.email}">
+            your@email.com
+        </div>
+        <a href="/profile/edit" class="edit-btn">Edit Profile</a>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="posts-section">
+        <h2 class="posts-title">Your Posts</h2>
+        <div class="posts-list">
+            <div
+                    th:each="post : ${posts}"
+                    class="post-card"
+                    th:attr="data-post-id=${post.id}"
+            >
+                <div class="post-topic" th:text="${post.topic}">Post Topic</div>
+                <div class="post-text" th:text="${post.content}"></div>
+                <!-- Edit form (hidden by default) -->
+                <form
+                        th:action="@{/profile/post/edit}"
+                        method="post"
+                        class="edit-post-form"
+                        style="display: none"
+                >
+                    <input type="hidden" name="postId" th:value="${post.id}" />
+                    <input
+                            type="text"
+                            name="topic"
+                            th:value="${post.topic}"
+                            required
+                            style="width: 100%; margin-bottom: 0.5em"
+                    />
+                    <textarea
+                            name="content"
+                            required
+                            style="width: 100%; min-height: 60px"
+                    >
+[[${post.content}]]</textarea
+                    >
+                    <button type="submit" class="save-btn">Save</button>
+                </form>
+                <div
+                        class="post-date-time"
+                        th:text="${#temporals.format(post.createdAt, 'MMM d, yyyy')}"
+                >
+                    Date
+                </div>
+                <div class="post-actions">
+                    <button type="button" class="edit-btn" onclick="editPost(this)">
+                        <i class="fa-solid fa-pen"></i> Edit
+                    </button>
+                    <form
+                            th:action="@{/profile/post/delete}"
+                            method="post"
+                            class="trash-button"
+                    >
+                        <input type="hidden" name="postId" th:value="${post.id}" />
+                        <button
+                                type="submit"
+                                class="delete-btn"
+                                onclick="return confirm('Delete this post?')"
+                        >
+                            <i class="fa-solid fa-trash"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function editPost(btn) {
+      // Hide all edit forms and show all post-text
+      document
+        .querySelectorAll(".edit-post-form")
+        .forEach((f) => (f.style.display = "none"));
+      document
+        .querySelectorAll(".post-text")
+        .forEach((t) => (t.style.display = ""));
+
+      // Hide the post-text and show the edit form for this post
+      const postDiv = btn.closest(".post-card");
+      postDiv.querySelector(".post-text").style.display = "none";
+      let form = postDiv.querySelector(".edit-post-form");
+      if (form) form.style.display = "";
+    }
+</script>
+</body>
+</html>

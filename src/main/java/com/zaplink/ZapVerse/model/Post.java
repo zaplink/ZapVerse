@@ -1,12 +1,19 @@
 package com.zaplink.ZapVerse.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "post")
 @AllArgsConstructor
@@ -15,18 +22,39 @@ import java.util.List;
 @Setter
 public class Post {
 
+    public Post(String topic, String content, Profile profile, List<React> reactions) {
+        this.topic = topic;
+        this.content = content;
+        this.profile = profile;
+        this.reactions = reactions;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String content;
     private String topic;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+//    @JsonBackReference
+    @JsonIgnoreProperties("posts")
     private Profile profile;
 
-    @OneToMany
-    private List<React> reacts;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<React> reactions;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Tag> tags;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+
+    @Column(name = "love_count", nullable = false)
+    private Long loveCount =0L;
+
+
 
 }

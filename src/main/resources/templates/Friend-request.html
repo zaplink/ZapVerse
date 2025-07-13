@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Friend Requests - ZapVerse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #23242a;
+            margin: 0;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+        }
+        .zapverse-topnav {
+            width: 100%;
+            background: #23242a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            padding: 0.7rem 0 0.7rem 0;
+            border-bottom: 1.5px solid #31343b;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+        }
+        .topnav-link {
+            color: #bfc9d1;
+            text-decoration: none;
+            font-size: 1.08rem;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            padding: 0.3em 1.2em 0.2em 1.2em;
+            border-radius: 10px;
+            transition: background 0.18s, color 0.18s;
+            position: relative;
+        }
+        .topnav-link .fa-solid {
+            font-size: 1.5em;
+            margin-bottom: 0.1em;
+        }
+        .topnav-link.active,
+        .topnav-link:hover {
+            background: #23242a;
+            color: #1877f2;
+        }
+        .topnav-link.active::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 3px;
+            background: #1877f2;
+            border-radius: 2px;
+            position: absolute;
+            left: 20%;
+            bottom: 0;
+        }
+        .sidebar-link.active,
+        .sidebar-link:hover {
+            background: #23242a;
+            color: #1877f2;
+        }
+        @media (max-width: 700px) {
+            .zapverse-topnav {
+                gap: 1.2rem;
+                font-size: 0.95rem;
+            }
+            .topnav-link { padding: 0.3em 0.7em 0.2em 0.7em; }
+        }
+
+        .main-requests-content {
+            max-width: 1100px;
+            margin: 2.5rem auto 0 3.5rem;
+            padding-right: 270px;
+        }
+        .requests-header {
+            font-size: 2.3rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: #fff;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 12px rgba(24,119,242,0.07);
+        }
+        .requests-columns {
+            display: flex;
+            gap: 2.5rem;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .requests-section {
+            flex: 1 1 0;
+            background: linear-gradient(90deg, #292b32 80%, #23242a 100%);
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+            padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+            min-width: 320px;
+            border: 1px solid #31343b;
+            transition: box-shadow 0.18s, border 0.18s;
+        }
+        .requests-section:hover {
+            box-shadow: 0 8px 32px 0 rgba(33,150,243,0.13), 0 2.5px 10px 0 rgba(0,0,0,0.13);
+            border-color: #1877f2;
+        }
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 1.1rem;
+            color: #1877f2;
+            letter-spacing: 0.5px;
+        }
+        .requests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .request-card {
+            background: #23242a;
+            border-radius: 14px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            padding: 1.1rem 1rem 1rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #31343b;
+            transition: box-shadow 0.18s, border 0.18s;
+            position: relative;
+        }
+        .request-card:hover {
+            box-shadow: 0 4px 16px 0 rgba(33,150,243,0.10), 0 1.5px 6px 0 rgba(0,0,0,0.10);
+            border-color: #1877f2;
+        }
+        .request-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #393c44;
+            background: #181a20;
+            margin-bottom: 0.7rem;
+            box-shadow: 0 2px 8px rgba(24,119,242,0.09);
+        }
+        .request-name {
+            font-weight: 700;
+            font-size: 1.13rem;
+            color: #fff;
+            margin-bottom: 0.2rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 6px rgba(24,119,242,0.07);
+        }
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.7rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .request-actions button {
+            min-width: 80px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            padding: 0.45em 0.9em;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .request-actions .btn-success {
+            background: #1877f2;
+            color: #fff;
+        }
+        .request-actions .btn-success:hover {
+            background: #166fe0;
+        }
+        .request-actions .btn-danger {
+            background: #393c44;
+            color: #bfc9d1;
+        }
+        .request-actions .btn-danger:hover {
+            background: #31343b;
+        }
+        .empty-text {
+            color: #888;
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        /* Right Navbar */
+        .friends-right-navbar {
+            position: fixed;
+            top: 90px;
+            right: 0;
+            width: 260px;
+            background: #23242a;
+            border-left: 1.5px solid #31343b;
+            min-height: 260px;
+            padding: 2.2rem 0 1.2rem 0;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: -2px 0 16px 0 rgba(0,0,0,0.07);
+        }
+        .friends-right-navbar ul {
+            list-style: none;
+            padding: 0 0 0 0.5rem;
+            margin: 0;
+            width: 100%;
+        }
+        .friends-right-navbar li {
+            margin-bottom: 1.7rem;
+            width: 100%;
+        }
+        .rightnav-link {
+            display: flex;
+            align-items: center;
+            gap: 1.1rem;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.08rem;
+            font-weight: 500;
+            padding: 0.5em 1em;
+            border-radius: 12px 0 0 12px;
+            transition: background 0.18s, color 0.18s;
+            width: 97%;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+        .rightnav-link .rightnav-icon {
+            background: #e4e6eb;
+            color: #23242a;
+            border-radius: 50%;
+            width: 2em;
+            height: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35em;
+            margin-right: 0.5em;
+            transition: background 0.18s, color 0.18s;
+        }
+        .rightnav-link.active,
+        .rightnav-link:hover {
+            background: #31343b;
+            color: #1877f2;
+        }
+        .rightnav-link.active .rightnav-icon,
+        .rightnav-link:hover .rightnav-icon {
+            background: #1877f2;
+            color: #fff;
+        }
+        @media (max-width: 1200px) {
+            .main-requests-content {
+                margin: 2.5rem 1rem 0 1rem;
+                padding-right: 0;
+            }
+            .friends-right-navbar {
+                display: none;
+            }
+        }
+        @media (max-width: 900px) {
+            .requests-columns {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .requests-section {
+                min-width: unset;
+            }
+        }
+        @media (max-width: 700px) {
+            .main-requests-content {
+                margin: 1.2rem 0.2rem 0 0.2rem;
+            }
+            .requests-header {
+                font-size: 1.5rem;
+            }
+            .requests-section {
+                padding: 1rem 0.7rem 0.7rem 0.7rem;
+            }
+            .request-avatar {
+                width: 44px;
+                height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="zapverse-topnav">
+    <a href="/feed" th:class="'topnav-link ' + (${activePage} == 'home' ? 'active' : '')">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+    <a href="/friends/requests" th:class="'topnav-link ' + (${activePage} == 'friends' ? 'active' : '')">
+        <i class="fa-solid fa-user-group"></i>
+        <span>Friends</span>
+    </a>
+    <a href="/profile" th:class="'topnav-link ' + (${activePage} == 'profile' ? 'active' : '')">
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+    </a>
+</nav>
+
+<div class="main-requests-content">
+  <div class="requests-header">Friend requests</div>
+  <div class="requests-columns">
+    <!-- Incoming Requests (Left) -->
+    <div class="requests-section">
+      <div class="section-title">Incoming</div>
+      <div class="requests-list">
+        <div th:if="${#lists.isEmpty(incoming)}" class="empty-text">No incoming requests</div>
+        <div th:each="req : ${incoming}" class="request-card">
+          <img th:src="@{'/avatars/' + ${req.profile.avatar}}" class="request-avatar" />
+          <div class="request-name" th:text="${req.profile.fname + ' ' + req.profile.lname}"></div>
+          <div class="request-actions">
+            <form th:action="@{/friends/accept}" method="post">
+              <input type="hidden" name="requestId" th:value="${req.id}" />
+              <button type="submit" class="btn btn-success">Confirm</button>
+            </form>
+            <form th:action="@{/friends/decline}" method="post">
+              <input type="hidden" name="requestId" th:value="${req.id}" />
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Outgoing Requests (Right) -->
+    <div class="requests-section">
+      <div class="section-title">Outgoing</div>
+      <div class="requests-list">
+        <div th:if="${#lists.isEmpty(outgoing)}" class="empty-text">No outgoing requests</div>
+        <div th:each="req : ${outgoing}" class="request-card">
+          <img th:src="@{'/avatars/' + ${req.receiver.avatar}}" class="request-avatar" />
+          <div class="request-name" th:text="${req.receiver.fname + ' ' + req.receiver.lname}"></div>
+          <div class="request-actions">
+            <form th:action="@{/friends/remove-request}" method="post">
+              <input type="hidden" name="receiverId" th:value="${req.receiver.id}" />
+              <button type="submit" class="btn btn-danger">Cancel</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Right Navigation Bar -->
+<div class="friends-right-navbar">
+  <ul>
+    <li>
+      <a href="/friends/requests" th:class="'rightnav-link ' + (${page} == 'requests' ? 'active' : '')">
+        <span class="rightnav-icon"><i class="fa-solid fa-user-plus"></i></span>
+        Friend requests
+      </a>
+    </li>
+    <li>
+      <a href="/friends/suggestions" th:class="'rightnav-link ' + (${page} == 'suggestions' ? 'active' : '')">
+        <span class="rightnav-icon"><i class="fa-solid fa-user-group"></i></span>
+        Suggestions
+      </a>
+    </li>
+    <li>
+      <a href="/friends/all" th:class="'rightnav-link ' + (${page} == 'all' ? 'active' : '')">
+        <span class="rightnav-icon"><i class="fa-solid fa-users"></i></span>
+        All friends
+      </a>
+    </li>
+  </ul>
+</div>
+</body>
+</html>

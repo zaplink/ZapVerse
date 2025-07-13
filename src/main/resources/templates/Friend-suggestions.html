@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Friend Suggestions - ZapVerse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #23242a;
+            margin: 0;
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+        }
+        .zapverse-topnav {
+            width: 100%;
+            background: #23242a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            padding: 0.7rem 0 0.7rem 0;
+            border-bottom: 1.5px solid #31343b;
+            position: sticky;
+            top: 0;
+            z-index: 1001;
+        }
+        .topnav-link {
+            color: #bfc9d1;
+            text-decoration: none;
+            font-size: 1.08rem;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            padding: 0.3em 1.2em 0.2em 1.2em;
+            border-radius: 10px;
+            transition: background 0.18s, color 0.18s;
+            position: relative;
+        }
+        .topnav-link .fa-solid {
+            font-size: 1.5em;
+            margin-bottom: 0.1em;
+        }
+        .topnav-link.active,
+        .topnav-link:hover {
+            background: #23242a;
+            color: #1877f2;
+        }
+        .topnav-link.active::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 3px;
+            background: #1877f2;
+            border-radius: 2px;
+            position: absolute;
+            left: 20%;
+            bottom: 0;
+        }
+        .sidebar-link.active,
+        .sidebar-link:hover {
+            background: #23242a;
+            color: #1877f2;
+        }
+        @media (max-width: 700px) {
+            .zapverse-topnav {
+                gap: 1.2rem;
+                font-size: 0.95rem;
+            }
+            .topnav-link { padding: 0.3em 0.7em 0.2em 0.7em; }
+        }
+
+        .main-suggestions-content {
+            max-width: 900px;
+            margin: 2.5rem auto 0 3.5rem;
+            padding-right: 270px;
+        }
+        .suggestions-header {
+            font-size: 2.3rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: #fff;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 12px rgba(24,119,242,0.07);
+        }
+        .suggestions-sub {
+            color: #bfc9d1;
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+        }
+        .suggestion-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.3rem;
+        }
+        .suggestion-card {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(90deg, #292b32 80%, #23242a 100%);
+            border-radius: 18px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+            padding: 1.1rem 1.5rem;
+            gap: 1.3rem;
+            border: 1px solid #31343b;
+            transition: box-shadow 0.18s, transform 0.18s;
+            position: relative;
+        }
+        .suggestion-card:hover {
+            box-shadow: 0 8px 32px 0 rgba(33,150,243,0.13), 0 2.5px 10px 0 rgba(0,0,0,0.13);
+            transform: translateY(-2px) scale(1.01);
+            border-color: #1877f2;
+        }
+        .suggestion-avatar {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #393c44;
+            background: #181a20;
+            box-shadow: 0 2px 8px rgba(24,119,242,0.09);
+        }
+        .suggestion-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .suggestion-name {
+            font-weight: 600;
+            font-size: 1.22rem;
+            color: #fff;
+            margin-bottom: 0.2rem;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 6px rgba(24,119,242,0.07);
+        }
+        .suggestion-mutual {
+            color: #8fa1b3;
+            font-size: 1.01rem;
+            margin-top: 0.1rem;
+        }
+        .suggestion-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .suggestion-actions button {
+            min-width: 90px;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            padding: 0.5em 0.9em;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .suggestion-actions .btn-primary {
+            background: #1877f2;
+            color: #fff;
+        }
+        .suggestion-actions .btn-primary:hover {
+            background: #166fe0;
+        }
+        .suggestion-actions .btn-danger {
+            background: #393c44;
+            color: #bfc9d1;
+        }
+        .suggestion-actions .btn-danger:hover {
+            background: #31343b;
+        }
+        /* Right Navbar */
+        .friends-right-navbar {
+            position: fixed;
+            top: 90px;
+            right: 0;
+            width: 260px;
+            background: #23242a;
+            border-left: 1.5px solid #31343b;
+            min-height: 260px;
+            padding: 2.2rem 0 1.2rem 0;
+            z-index: 1002;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: -2px 0 16px 0 rgba(0,0,0,0.07);
+        }
+        .friends-right-navbar ul {
+            list-style: none;
+            padding: 0 0 0 0.5rem;
+            margin: 0;
+            width: 100%;
+        }
+        .friends-right-navbar li {
+            margin-bottom: 1.7rem;
+            width: 100%;
+        }
+        .rightnav-link {
+            display: flex;
+            align-items: center;
+            gap: 1.1rem;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.08rem;
+            font-weight: 500;
+            padding: 0.5em 1em;
+            border-radius: 12px 0 0 12px;
+            transition: background 0.18s, color 0.18s;
+            width: 97%;
+            position: relative;
+            letter-spacing: 0.5px;
+        }
+        .rightnav-link .rightnav-icon {
+            background: #e4e6eb;
+            color: #23242a;
+            border-radius: 50%;
+            width: 2em;
+            height: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35em;
+            margin-right: 0.5em;
+            transition: background 0.18s, color 0.18s;
+        }
+        .rightnav-link.active,
+        .rightnav-link:hover {
+            background: #31343b;
+            color: #1877f2;
+        }
+        .rightnav-link.active .rightnav-icon,
+        .rightnav-link:hover .rightnav-icon {
+            background: #1877f2;
+            color: #fff;
+        }
+        @media (max-width: 1200px) {
+            .main-suggestions-content {
+                margin: 2.5rem 1rem 0 1rem;
+                padding-right: 0;
+            }
+            .friends-right-navbar {
+                display: none;
+            }
+        }
+        @media (max-width: 700px) {
+            .main-suggestions-content {
+                margin: 1.2rem 0.2rem 0 0.2rem;
+            }
+            .suggestions-header {
+                font-size: 1.5rem;
+            }
+            .suggestion-card {
+                padding: 0.7rem 0.7rem;
+                gap: 0.7rem;
+            }
+            .suggestion-avatar {
+                width: 44px;
+                height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+<nav class="zapverse-topnav">
+    <a href="/feed" th:class="'topnav-link ' + (${activePage} == 'home' ? 'active' : '')">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+    </a>
+    <a href="/friends/requests" th:class="'topnav-link ' + (${activePage} == 'friends' ? 'active' : '')">
+        <i class="fa-solid fa-user-group"></i>
+        <span>Friends</span>
+    </a>
+    <a href="/profile" th:class="'topnav-link ' + (${activePage} == 'profile' ? 'active' : '')">
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+    </a>
+</nav>
+
+<div class="main-suggestions-content">
+  <div class="suggestions-header">Suggestions</div>
+  <div class="suggestions-sub">People you may know</div>
+  <div class="suggestion-list">
+    <div th:each="user : ${suggestions}" class="suggestion-card">
+      <img th:src="@{'/avatars/' + ${user.avatar}}" class="suggestion-avatar" />
+      <div class="suggestion-info">
+        <div class="suggestion-name" th:text="${user.fname + ' ' + user.lname}"></div>
+        <!-- Optionally show mutual friends here -->
+        <!-- <div class="suggestion-mutual">42 mutual friends</div> -->
+      </div>
+      <div class="suggestion-actions">
+        <form th:action="@{/friends/request}" method="post">
+          <input type="hidden" name="receiverId" th:value="${user.id}" />
+          <button type="submit" class="btn btn-primary">Add friend</button>
+        </form>
+        <form th:action="@{/friends/remove-request}" method="post">
+          <input type="hidden" name="receiverId" th:value="${user.id}" />
+          <button type="submit" class="btn btn-danger">Remove</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Right Navigation Bar -->
+<div class="friends-right-navbar">
+  <ul>
+    <li>
+      <a href="/friends/requests" th:class="'rightnav-link ' + (${page} == 'requests' ? 'active' : '')">
+        <span class="rightnav-icon"><i class="fa-solid fa-user-plus"></i></span>
+        Friend requests
+      </a>
+    </li>
+    <li>
+      <a href="/friends/suggestions" th:class="'rightnav-link ' + (${page} == 'suggestions' ? 'active' : '')">
+        <span class="rightnav-icon"><i class="fa-solid fa-user-group"></i></span>
+        Suggestions
+      </a>
+    </li>
+    <li>
+      <a href="/friends/all" th:class="'rightnav-link ' + (${page} == 'all' ? 'active' : '')">
+        <span class="rightnav-icon"><i class="fa-solid fa-users"></i></span>
+        All friends
+      </a>
+    </li>
+  </ul>
+</div>
+</body>
+</html>
